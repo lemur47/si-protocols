@@ -1,10 +1,13 @@
 """Tests for the hybrid threat filter."""
 
+from pathlib import Path
+
 import pytest
 
 from si_protocols.threat_filter import (
     ThreatResult,
     hybrid_score,
+    main,
     psychic_heuristic,
     tech_analysis,
 )
@@ -92,3 +95,25 @@ class TestHybridScore:
     def test_message_present(self) -> None:
         result = hybrid_score(BENIGN_TEXT, seed=42)
         assert "local tool" in result.message.lower()
+
+
+# --- CLI main ---
+
+
+class TestMain:
+    @pytest.mark.slow
+    def test_analyses_file(
+        self, tmp_path: Path, monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]
+    ) -> None:
+        sample = tmp_path / "sample.txt"
+        sample.write_text(SUSPICIOUS_TEXT)
+        monkeypatch.setattr("sys.argv", ["si-threat-filter", str(sample)])
+        main()
+        captured = capsys.readouterr()
+        assert "Threat Analysis" in captured.out
+        assert "Overall Threat Score" in captured.out
+
+    def test_missing_file_exits(self, monkeypatch: pytest.MonkeyPatch) -> None:
+        monkeypatch.setattr("sys.argv", ["si-threat-filter", "nonexistent.txt"])
+        with pytest.raises(SystemExit, match="1"):
+            main()
