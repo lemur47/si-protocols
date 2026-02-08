@@ -49,3 +49,55 @@ URGENCY_PATTERNS: list[str] = [
     "the window is closing",
     "failure to comply",
 ]
+
+# Emotional manipulation: fear/doom words (lemma base forms for spaCy matching)
+FEAR_WORDS: frozenset[str] = frozenset(
+    {
+        "annihilation",
+        "calamity",
+        "catastrophe",
+        "collapse",
+        "damnation",
+        "despair",
+        "destruction",
+        "devastation",
+        "doom",
+        "peril",
+        "ruin",
+        "suffer",
+        "torment",
+        "tribulation",
+        "wrath",
+    }
+)
+
+# Emotional manipulation: fear/doom phrases (multi-word, matched via substring)
+FEAR_PHRASES: list[str] = [
+    "old earth",
+]
+
+# Emotional manipulation: euphoria/promise words (lemma base forms for spaCy matching)
+EUPHORIA_WORDS: frozenset[str] = frozenset(
+    {
+        "abundance",
+        "ascension",
+        "awakening",
+        "bliss",
+        "enlightenment",
+        "harmony",
+        "liberation",
+        "miracle",
+        "nirvana",
+        "paradise",
+        "rapture",
+        "rebirth",
+        "salvation",
+        "transcendence",
+        "utopia",
+    }
+)
+
+# Emotional manipulation: euphoria/promise phrases (multi-word, matched via substring)
+EUPHORIA_PHRASES: list[str] = [
+    "new earth",
+]

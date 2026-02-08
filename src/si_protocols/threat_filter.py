@@ -11,7 +11,15 @@ from pathlib import Path
 
 import spacy
 
-from si_protocols.markers import AUTHORITY_PHRASES, URGENCY_PATTERNS, VAGUE_ADJECTIVES
+from si_protocols.markers import (
+    AUTHORITY_PHRASES,
+    EUPHORIA_PHRASES,
+    EUPHORIA_WORDS,
+    FEAR_PHRASES,
+    FEAR_WORDS,
+    URGENCY_PATTERNS,
+    VAGUE_ADJECTIVES,
+)
 
 # Lazy-load to avoid import-time side effects in tests
 _nlp = None
@@ -35,16 +43,19 @@ class ThreatResult:
     detected_entities: list[str] = field(default_factory=list)
     authority_hits: list[str] = field(default_factory=list)
     urgency_hits: list[str] = field(default_factory=list)
+    emotion_hits: list[str] = field(default_factory=list)
     message: str = "Run on your own texts only — this is a local tool."
 
 
-def tech_analysis(text: str) -> tuple[float, list[str], list[str], list[str]]:
+def tech_analysis(
+    text: str,
+) -> tuple[float, list[str], list[str], list[str], list[str]]:
     """Tech layer: NLP-based suspicion signals.
 
-    Returns (score, entities, authority_hits, urgency_hits).
+    Returns (score, entities, authority_hits, urgency_hits, emotion_hits).
     """
     if not text.strip():
-        return 0.0, [], [], []
+        return 0.0, [], [], [], []
 
     nlp = _get_nlp()
     doc = nlp(text)
@@ -66,10 +77,29 @@ def tech_analysis(text: str) -> tuple[float, list[str], list[str], list[str]]:
     urgency_hits = [pattern for pattern in URGENCY_PATTERNS if pattern in text_lower]
     urgency_score = min(len(urgency_hits) * 0.2, 1.0)
 
-    # Weighted composite -- all sub-scores normalised to 0-1
-    tech_score = vagueness_score * 40 + authority_score * 35 + urgency_score * 25
+    # --- Emotional manipulation detection ---
+    fear_hits = [token.text for token in doc if token.lemma_.lower() in FEAR_WORDS]
+    fear_hits += [phrase for phrase in FEAR_PHRASES if phrase in text_lower]
+    euphoria_hits = [token.text for token in doc if token.lemma_.lower() in EUPHORIA_WORDS]
+    euphoria_hits += [phrase for phrase in EUPHORIA_PHRASES if phrase in text_lower]
 
-    return min(tech_score, 100.0), entities, authority_hits, urgency_hits
+    fear_density = min(len(fear_hits) * 0.12, 1.0)
+    euphoria_density = min(len(euphoria_hits) * 0.12, 1.0)
+
+    # Contrast bonus: both fear AND euphoria = classic manipulation
+    contrast_bonus = 0.0
+    if fear_hits and euphoria_hits:
+        contrast_bonus = min(fear_density * euphoria_density * 1.5, 0.5)
+
+    emotion_score = min(fear_density + euphoria_density + contrast_bonus, 1.0)
+    emotion_hits = fear_hits + euphoria_hits
+
+    # Weighted composite -- all sub-scores normalised to 0-1
+    tech_score = (
+        vagueness_score * 30 + authority_score * 30 + urgency_score * 20 + emotion_score * 20
+    )
+
+    return min(tech_score, 100.0), entities, authority_hits, urgency_hits, emotion_hits
 
 
 def psychic_heuristic(density_bias: float = 0.75, *, seed: int | None = None) -> float:
@@ -91,7 +121,7 @@ def hybrid_score(
     seed: int | None = None,
 ) -> ThreatResult:
     """Combine layers: 60% tech + 40% heuristic intuition."""
-    tech_score, entities, authority_hits, urgency_hits = tech_analysis(text)
+    tech_score, entities, authority_hits, urgency_hits, emotion_hits = tech_analysis(text)
     intuition_score = psychic_heuristic(density_bias, seed=seed)
 
     overall = (tech_score * 0.6) + (intuition_score * 0.4)
@@ -103,6 +133,7 @@ def hybrid_score(
         detected_entities=entities,
         authority_hits=authority_hits,
         urgency_hits=urgency_hits,
+        emotion_hits=emotion_hits,
     )
 
 
@@ -143,6 +174,8 @@ def main() -> None:
         print(f"Authority claims: {', '.join(result.authority_hits)}")
     if result.urgency_hits:
         print(f"Urgency patterns: {', '.join(result.urgency_hits)}")
+    if result.emotion_hits:
+        print(f"Emotion triggers: {', '.join(result.emotion_hits)}")
     print(f"\n{result.message}")
 
 

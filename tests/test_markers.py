@@ -1,6 +1,14 @@
 """Tests for disinformation marker definitions."""
 
-from si_protocols.markers import AUTHORITY_PHRASES, URGENCY_PATTERNS, VAGUE_ADJECTIVES
+from si_protocols.markers import (
+    AUTHORITY_PHRASES,
+    EUPHORIA_PHRASES,
+    EUPHORIA_WORDS,
+    FEAR_PHRASES,
+    FEAR_WORDS,
+    URGENCY_PATTERNS,
+    VAGUE_ADJECTIVES,
+)
 
 
 class TestVagueAdjectives:
@@ -32,3 +40,67 @@ class TestUrgencyPatterns:
     def test_all_lowercase(self) -> None:
         for pattern in URGENCY_PATTERNS:
             assert pattern == pattern.lower(), f"Pattern '{pattern}' should be lowercase"
+
+
+class TestFearWords:
+    def test_is_frozenset(self) -> None:
+        assert isinstance(FEAR_WORDS, frozenset)
+
+    def test_all_lowercase(self) -> None:
+        for word in FEAR_WORDS:
+            assert word == word.lower(), f"Marker '{word}' should be lowercase"
+
+    def test_not_empty(self) -> None:
+        assert len(FEAR_WORDS) > 0
+
+    def test_contains_known_markers(self) -> None:
+        expected = {"doom", "catastrophe", "destruction", "despair", "wrath"}
+        assert expected.issubset(FEAR_WORDS)
+
+    def test_no_overlap_with_euphoria(self) -> None:
+        overlap = FEAR_WORDS & EUPHORIA_WORDS
+        assert overlap == frozenset(), f"Fear/euphoria overlap: {overlap}"
+
+
+class TestFearPhrases:
+    def test_not_empty(self) -> None:
+        assert len(FEAR_PHRASES) > 0
+
+    def test_all_lowercase(self) -> None:
+        for phrase in FEAR_PHRASES:
+            assert phrase == phrase.lower(), f"Phrase '{phrase}' should be lowercase"
+
+    def test_contains_old_earth(self) -> None:
+        assert "old earth" in FEAR_PHRASES
+
+
+class TestEuphoriaWords:
+    def test_is_frozenset(self) -> None:
+        assert isinstance(EUPHORIA_WORDS, frozenset)
+
+    def test_all_lowercase(self) -> None:
+        for word in EUPHORIA_WORDS:
+            assert word == word.lower(), f"Marker '{word}' should be lowercase"
+
+    def test_not_empty(self) -> None:
+        assert len(EUPHORIA_WORDS) > 0
+
+    def test_contains_known_markers(self) -> None:
+        expected = {"bliss", "paradise", "miracle", "salvation", "rapture"}
+        assert expected.issubset(EUPHORIA_WORDS)
+
+    def test_no_overlap_with_fear(self) -> None:
+        overlap = EUPHORIA_WORDS & FEAR_WORDS
+        assert overlap == frozenset(), f"Euphoria/fear overlap: {overlap}"
+
+
+class TestEuphoriaPhrases:
+    def test_not_empty(self) -> None:
+        assert len(EUPHORIA_PHRASES) > 0
+
+    def test_all_lowercase(self) -> None:
+        for phrase in EUPHORIA_PHRASES:
+            assert phrase == phrase.lower(), f"Phrase '{phrase}' should be lowercase"
+
+    def test_contains_new_earth(self) -> None:
+        assert "new earth" in EUPHORIA_PHRASES

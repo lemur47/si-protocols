@@ -22,6 +22,12 @@ SUSPICIOUS_TEXT = (
     "before the window is closing. Only the chosen will transcend."
 )
 
+EMOTIONAL_TEXT = (
+    "Catastrophe and doom await those who ignore the signs. Destruction and "
+    "devastation will consume the unworthy. But salvation and bliss await the "
+    "chosen few who embrace the miracle of ascension and transcendence."
+)
+
 EMPTY_TEXT = ""
 
 
@@ -51,22 +57,54 @@ class TestPsychicHeuristic:
 class TestTechAnalysis:
     @pytest.mark.slow
     def test_empty_text_returns_zero(self) -> None:
-        score, entities, auth, urgency = tech_analysis(EMPTY_TEXT)
+        score, entities, auth, urgency, emotion = tech_analysis(EMPTY_TEXT)
         assert score == 0.0
         assert entities == []
         assert auth == []
         assert urgency == []
+        assert emotion == []
 
     @pytest.mark.slow
     def test_benign_text_low_score(self) -> None:
-        score, _, _, _ = tech_analysis(BENIGN_TEXT)
+        score, _, _, _, _ = tech_analysis(BENIGN_TEXT)
         assert score < 20.0
 
     @pytest.mark.slow
     def test_suspicious_text_higher_score(self) -> None:
-        score, _, auth, urgency = tech_analysis(SUSPICIOUS_TEXT)
+        score, _, auth, urgency, _ = tech_analysis(SUSPICIOUS_TEXT)
         assert score > 0.0
         assert len(auth) > 0 or len(urgency) > 0
+
+    @pytest.mark.slow
+    def test_emotional_text_detects_emotion_hits(self) -> None:
+        _, _, _, _, emotion = tech_analysis(EMOTIONAL_TEXT)
+        assert len(emotion) > 0
+
+    @pytest.mark.slow
+    def test_emotional_text_scores_higher_than_benign(self) -> None:
+        benign_score, _, _, _, _ = tech_analysis(BENIGN_TEXT)
+        emotional_score, _, _, _, _ = tech_analysis(EMOTIONAL_TEXT)
+        assert emotional_score > benign_score
+
+    @pytest.mark.slow
+    def test_contrast_scores_higher_than_single_pole(self) -> None:
+        fear_only = "Doom and catastrophe and destruction await all of humanity."
+        both = "Doom and catastrophe await, but salvation and bliss come to the chosen ones."
+        fear_score, _, _, _, _ = tech_analysis(fear_only)
+        both_score, _, _, _, _ = tech_analysis(both)
+        assert both_score > fear_score
+
+    @pytest.mark.slow
+    def test_benign_text_no_emotion_hits(self) -> None:
+        _, _, _, _, emotion = tech_analysis(BENIGN_TEXT)
+        assert emotion == []
+
+    @pytest.mark.slow
+    def test_earth_polarity_detected(self) -> None:
+        text = "The old earth is crumbling. Welcome to the new earth of light."
+        _, _, _, _, emotion = tech_analysis(text)
+        assert "old earth" in emotion
+        assert "new earth" in emotion
 
 
 # --- hybrid_score ---
@@ -96,6 +134,16 @@ class TestHybridScore:
         result = hybrid_score(BENIGN_TEXT, seed=42)
         assert "local tool" in result.message.lower()
 
+    @pytest.mark.slow
+    def test_emotion_hits_populated(self) -> None:
+        result = hybrid_score(EMOTIONAL_TEXT, seed=42)
+        assert len(result.emotion_hits) > 0
+
+    @pytest.mark.slow
+    def test_emotion_hits_empty_for_benign(self) -> None:
+        result = hybrid_score(BENIGN_TEXT, seed=42)
+        assert result.emotion_hits == []
+
 
 # --- CLI main ---
 
@@ -117,3 +165,14 @@ class TestMain:
         monkeypatch.setattr("sys.argv", ["si-threat-filter", "nonexistent.txt"])
         with pytest.raises(SystemExit, match="1"):
             main()
+
+    @pytest.mark.slow
+    def test_analyses_emotional_file(
+        self, tmp_path: Path, monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]
+    ) -> None:
+        sample = tmp_path / "emotional.txt"
+        sample.write_text(EMOTIONAL_TEXT)
+        monkeypatch.setattr("sys.argv", ["si-threat-filter", str(sample)])
+        main()
+        captured = capsys.readouterr()
+        assert "Emotion triggers" in captured.out
