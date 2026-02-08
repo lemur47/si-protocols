@@ -35,7 +35,7 @@ cd site && npm run build         # Production build
 
 The threat filter produces a 0–100 score by combining two analysis layers:
 
-1. **Tech layer** (`threat_filter.py:tech_analysis`) — spaCy NLP pipeline that scores text across three dimensions: vagueness (adjective density against `markers.VAGUE_ADJECTIVES`), authority claims (phrase matching against `markers.AUTHORITY_PHRASES`), and urgency/fear patterns (`markers.URGENCY_PATTERNS`). Weighted composite: 40% vagueness + 35% authority + 25% urgency.
+1. **Tech layer** (`threat_filter.py:tech_analysis`) — spaCy NLP pipeline that scores text across four dimensions: vagueness (adjective density against `markers.VAGUE_ADJECTIVES`), authority claims (phrase matching against `markers.AUTHORITY_PHRASES`), urgency/fear patterns (`markers.URGENCY_PATTERNS`), and emotional manipulation (lemma-based matching against `markers.FEAR_WORDS` and `markers.EUPHORIA_WORDS` with a contrast bonus when both polarities appear). Weighted composite: 30% vagueness + 30% authority + 20% urgency + 20% emotion.
 
 2. **Heuristic layer** (`threat_filter.py:psychic_heuristic`) — probabilistic dissonance scanner using `random.Random` (intentional — placeholder for future biofeedback integration). Accepts a `seed` param for deterministic testing.
 
