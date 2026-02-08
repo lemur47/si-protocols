@@ -7,7 +7,7 @@ tags: [announcement, open-source]
 
 ## Cybersecurity for the soul
 
-The spiritual and metaphysical space has a disinformation problem. Vague authority claims, manufactured urgency, and fear-based manipulation patterns are common in channelled material, self-help content, and new-age narratives. Yet there are virtually no tools to help people identify these patterns.
+The spiritual and metaphysical space has a disinformation problem. Vague authority claims, manufactured urgency, emotional manipulation, and fear-based patterns are common in channelled material, self-help content, and new-age narratives. Yet there are virtually no tools to help people identify these patterns.
 
 **si-protocols** is our attempt to change that.
 
@@ -15,7 +15,7 @@ The spiritual and metaphysical space has a disinformation problem. Vague authori
 
 The threat filter analyses text across two layers:
 
-1. **Tech layer** — a spaCy NLP pipeline that detects vagueness patterns (adjective density), authority claims (phrase matching), and urgency/fear triggers. Each dimension is scored independently, then combined with configurable weights.
+1. **Tech layer** — a spaCy NLP pipeline that detects vagueness patterns (adjective density), authority claims (phrase matching), urgency/fear triggers, and emotional manipulation (lemma-based fear/euphoria detection with a contrast bonus when both polarities appear). Each dimension is scored independently, then combined with configurable weights (30/30/20/20).
 
 2. **Heuristic layer** — a probabilistic dissonance scanner. Currently a randomised placeholder, this layer is designed to eventually integrate biofeedback signals for a more holistic analysis.
 

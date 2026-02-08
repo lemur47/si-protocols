@@ -30,7 +30,7 @@ uv run si-threat-filter examples/synthetic_suspicious.txt
 
 The filter produces a **0–100 threat score** with a breakdown:
 
-- **Tech score** — NLP-based detection of vagueness, authority claims, and urgency patterns
+- **Tech score** — NLP-based detection of vagueness, authority claims, urgency patterns, and emotional manipulation
 - **Heuristic score** — probabilistic dissonance scanner
 - **Hybrid score** — weighted composite: 60% tech + 40% heuristic
 
