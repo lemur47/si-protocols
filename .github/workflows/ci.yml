@@ -33,7 +33,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: astral-sh/setup-uv@v5
       - run: uv sync --all-extras
-      - run: uv run bandit -r src/
+      - run: uv run bandit -c pyproject.toml -r src/
 
   test:
     runs-on: ubuntu-latest
@@ -46,7 +46,7 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
       - run: uv sync --all-extras
-      - run: uv run python -m spacy download en_core_web_sm
+      - run: uv pip install en_core_web_sm@https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.8.0/en_core_web_sm-3.8.0-py3-none-any.whl
       - run: uv run pytest --cov=si_protocols --cov-report=term-missing
 
   gitleaks:
