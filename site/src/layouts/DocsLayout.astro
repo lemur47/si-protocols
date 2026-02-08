@@ -1,0 +1,86 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description } = Astro.props;
+
+const allDocs = await getCollection('docs');
+const sortedDocs = allDocs.sort((a, b) => (a.data.order ?? 99) - (b.data.order ?? 99));
+---
+
+<BaseLayout title={title} description={description}>
+  <div class="docs-grid">
+    <aside>
+      <h3>Documentation</h3>
+      <ul>
+        {sortedDocs.map(doc => (
+          <li>
+            <a href={`/docs/${doc.id}/`}>{doc.data.title}</a>
+          </li>
+        ))}
+      </ul>
+    </aside>
+    <article class="doc-content">
+      <h1>{title}</h1>
+      <slot />
+    </article>
+  </div>
+</BaseLayout>
+
+<style>
+  .docs-grid {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 2rem;
+  }
+
+  aside {
+    border-right: 1px solid var(--colour-border);
+    padding-right: 1.5rem;
+  }
+
+  aside h3 {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--colour-text-muted);
+    margin-bottom: 0.75rem;
+  }
+
+  aside ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  aside li {
+    margin-bottom: 0.5rem;
+  }
+
+  aside a {
+    color: var(--colour-text-muted);
+    font-size: 0.85rem;
+  }
+
+  aside a:hover {
+    color: var(--colour-primary);
+  }
+
+  @media (max-width: 640px) {
+    .docs-grid {
+      grid-template-columns: 1fr;
+    }
+
+    aside {
+      border-right: none;
+      border-bottom: 1px solid var(--colour-border);
+      padding-right: 0;
+      padding-bottom: 1rem;
+      margin-bottom: 1rem;
+    }
+  }
+</style>

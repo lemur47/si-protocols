@@ -1,0 +1,164 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Home">
+  <section class="hero">
+    <p class="tagline">$ si-protocols</p>
+    <h1 class="glow">Cybersecurity for the soul</h1>
+    <p class="subtitle">
+      Open-source tools to detect disinformation in metaphysical and spiritual content.
+      Run locally. Transparent markers. No data collection.
+    </p>
+    <div class="cta-row">
+      <a href="/docs/quickstart/" class="cta primary">Get started</a>
+      <a href="https://github.com/lemur47/si-protocols" class="cta secondary" target="_blank" rel="noopener noreferrer">
+        View source &#8599;
+      </a>
+    </div>
+  </section>
+
+  <section class="features">
+    <div class="card">
+      <h3>Tech layer</h3>
+      <p>
+        spaCy NLP pipeline detecting vagueness patterns, authority claims, and urgency/fear triggers.
+        Weighted composite scoring across three dimensions.
+      </p>
+    </div>
+    <div class="card">
+      <h3>Heuristic layer</h3>
+      <p>
+        Probabilistic dissonance scanner. Placeholder for future biofeedback integration &mdash;
+        bridging analytical and intuitive assessment.
+      </p>
+    </div>
+    <div class="card">
+      <h3>Hybrid scoring</h3>
+      <p>
+        60% tech + 40% heuristic. Produces a 0&ndash;100 threat score with full breakdown
+        of what triggered it.
+      </p>
+    </div>
+  </section>
+
+  <section class="quickstart">
+    <h2>Quick start</h2>
+    <pre><code>git clone https://github.com/lemur47/si-protocols.git
+cd si-protocols
+uv sync --all-extras
+uv run si-threat-filter examples/synthetic_suspicious.txt</code></pre>
+    <p>
+      Requires Python 3.12+ and <a href="https://docs.astral.sh/uv/">uv</a>.
+      See the <a href="/docs/quickstart/">full quickstart guide</a> for details.
+    </p>
+  </section>
+</BaseLayout>
+
+<style>
+  .hero {
+    text-align: center;
+    padding: 3rem 0 2rem;
+  }
+
+  .tagline {
+    font-size: 0.85rem;
+    color: var(--colour-primary);
+    margin-bottom: 0.75rem;
+  }
+
+  .hero h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .subtitle {
+    color: var(--colour-text-muted);
+    max-width: 540px;
+    margin: 0 auto 2rem;
+    font-size: 0.95rem;
+  }
+
+  .cta-row {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+  }
+
+  .cta {
+    display: inline-block;
+    padding: 0.6em 1.5em;
+    border-radius: var(--radius);
+    font-size: 0.85rem;
+    font-weight: 500;
+  }
+
+  .cta.primary {
+    background: var(--colour-primary);
+    color: var(--colour-bg);
+  }
+
+  .cta.primary:hover {
+    background: var(--colour-secondary);
+    color: var(--colour-bg);
+  }
+
+  .cta.secondary {
+    border: 1px solid var(--colour-border);
+    color: var(--colour-text-muted);
+  }
+
+  .cta.secondary:hover {
+    border-color: var(--colour-primary);
+    color: var(--colour-primary);
+  }
+
+  .features {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+    margin: 3rem 0;
+  }
+
+  .card {
+    background: var(--colour-surface);
+    border: 1px solid var(--colour-border);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+  }
+
+  .card h3 {
+    color: var(--colour-primary);
+    font-size: 0.95rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .card p {
+    font-size: 0.85rem;
+    color: var(--colour-text-muted);
+    margin: 0;
+  }
+
+  .quickstart {
+    margin: 2rem 0;
+  }
+
+  .quickstart h2 {
+    margin-bottom: 1rem;
+  }
+
+  @media (max-width: 640px) {
+    .hero h1 {
+      font-size: 1.75rem;
+    }
+
+    .features {
+      grid-template-columns: 1fr;
+    }
+
+    .cta-row {
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+</style>

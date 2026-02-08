@@ -24,6 +24,13 @@ pre-commit run --all-files                    # Run all hooks (lint, format, git
 
 CLI entry point: `uv run si-threat-filter examples/synthetic_suspicious.txt`
 
+### Site (Astro)
+
+```bash
+cd site && npm run dev           # Local dev server
+cd site && npm run build         # Production build
+```
+
 ## Architecture
 
 The threat filter produces a 0–100 score by combining two analysis layers:

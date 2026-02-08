@@ -1,0 +1,69 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const allPosts = await getCollection('blog', ({ data }) => !data.draft);
+const sortedPosts = allPosts.sort(
+  (a, b) => b.data.date.getTime() - a.data.date.getTime()
+);
+---
+
+<BaseLayout title="Blog">
+  <h1>Blog</h1>
+  <ul class="post-list">
+    {sortedPosts.map(post => (
+      <li>
+        <a href={`/blog/${post.id}/`}>
+          <time datetime={post.data.date.toISOString()}>
+            {post.data.date.toLocaleDateString('en-GB', { year: 'numeric', month: 'short', day: 'numeric' })}
+          </time>
+          <strong>{post.data.title}</strong>
+          {post.data.description && <span>{post.data.description}</span>}
+        </a>
+      </li>
+    ))}
+  </ul>
+</BaseLayout>
+
+<style>
+  .post-list {
+    list-style: none;
+    padding: 0;
+    margin-top: 1.5rem;
+  }
+
+  .post-list li {
+    margin-bottom: 0.75rem;
+  }
+
+  .post-list a {
+    display: block;
+    background: var(--colour-surface);
+    border: 1px solid var(--colour-border);
+    border-radius: var(--radius);
+    padding: 1rem 1.25rem;
+    transition: border-color 0.2s;
+  }
+
+  .post-list a:hover {
+    border-color: var(--colour-primary);
+  }
+
+  .post-list time {
+    display: block;
+    font-size: 0.75rem;
+    color: var(--colour-text-muted);
+    margin-bottom: 0.25rem;
+  }
+
+  .post-list strong {
+    display: block;
+    color: var(--colour-text);
+    margin-bottom: 0.25rem;
+  }
+
+  .post-list span {
+    font-size: 0.85rem;
+    color: var(--colour-text-muted);
+  }
+</style>

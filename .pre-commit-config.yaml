@@ -22,6 +22,18 @@ repos:
         args: ["-c", "pyproject.toml", "-r", "src/"]
         additional_dependencies: ["bandit[toml]"]
 
+  # --- Pyright: type checking ---
+  - repo: local
+    hooks:
+      - id: pyright
+        name: pyright
+        entry: uv run pyright
+        language: system
+        types: [python]
+        pass_filenames: false
+        always_run: true
+        stages: [pre-commit]
+
   # --- Pytest: run tests on commit ---
   - repo: local
     hooks:

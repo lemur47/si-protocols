@@ -1,0 +1,74 @@
+---
+const links = [
+  { href: '/', label: 'Home' },
+  { href: '/docs/', label: 'Docs' },
+  { href: '/blog/', label: 'Blog' },
+  { href: 'https://github.com/lemur47/si-protocols', label: 'GitHub', external: true },
+];
+const currentPath = Astro.url.pathname;
+---
+
+<header>
+  <nav>
+    <a href="/" class="logo glow">[SI]</a>
+    <ul>
+      {links.map(link => (
+        <li>
+          <a
+            href={link.href}
+            class:list={[{ active: currentPath.startsWith(link.href) && link.href !== '/' || currentPath === link.href && link.href === '/' }]}
+            {...(link.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+          >
+            {link.label}{link.external ? ' \u2197' : ''}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </nav>
+</header>
+
+<style>
+  header {
+    border-bottom: 1px solid var(--colour-border);
+    background: var(--colour-surface);
+  }
+
+  nav {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0.75rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .logo {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--colour-primary);
+  }
+
+  .logo:hover {
+    color: var(--colour-primary);
+  }
+
+  ul {
+    display: flex;
+    list-style: none;
+    gap: 1.5rem;
+    padding: 0;
+    margin: 0;
+  }
+
+  li { margin: 0; }
+
+  a {
+    color: var(--colour-text-muted);
+    font-size: 0.85rem;
+  }
+
+  a:hover,
+  a.active {
+    color: var(--colour-primary);
+  }
+</style>

@@ -1,0 +1,57 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const allDocs = await getCollection('docs');
+const sortedDocs = allDocs.sort((a, b) => (a.data.order ?? 99) - (b.data.order ?? 99));
+---
+
+<BaseLayout title="Documentation">
+  <h1>Documentation</h1>
+  <ul class="doc-list">
+    {sortedDocs.map(doc => (
+      <li>
+        <a href={`/docs/${doc.id}/`}>
+          <strong>{doc.data.title}</strong>
+          {doc.data.description && <span>{doc.data.description}</span>}
+        </a>
+      </li>
+    ))}
+  </ul>
+</BaseLayout>
+
+<style>
+  .doc-list {
+    list-style: none;
+    padding: 0;
+    margin-top: 1.5rem;
+  }
+
+  .doc-list li {
+    margin-bottom: 0.75rem;
+  }
+
+  .doc-list a {
+    display: block;
+    background: var(--colour-surface);
+    border: 1px solid var(--colour-border);
+    border-radius: var(--radius);
+    padding: 1rem 1.25rem;
+    transition: border-color 0.2s;
+  }
+
+  .doc-list a:hover {
+    border-color: var(--colour-primary);
+  }
+
+  .doc-list strong {
+    display: block;
+    color: var(--colour-text);
+    margin-bottom: 0.25rem;
+  }
+
+  .doc-list span {
+    font-size: 0.85rem;
+    color: var(--colour-text-muted);
+  }
+</style>

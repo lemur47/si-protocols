@@ -1,0 +1,117 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap');
+
+:root {
+  --colour-bg: #0a0a0f;
+  --colour-surface: #12121a;
+  --colour-surface-alt: #1a1a28;
+  --colour-border: #2a2a3a;
+  --colour-text: #e0e0e8;
+  --colour-text-muted: #8888a0;
+  --colour-primary: #00ffa3;
+  --colour-secondary: #00d4ff;
+  --colour-accent: #a855f7;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'Cascadia Code', 'Fira Code', monospace;
+  --max-width: 960px;
+  --radius: 6px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  color-scheme: dark;
+}
+
+body {
+  font-family: var(--font-mono);
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--colour-text);
+  background-color: var(--colour-bg);
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  -webkit-font-smoothing: antialiased;
+}
+
+main {
+  flex: 1;
+  width: 100%;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+}
+
+a {
+  color: var(--colour-primary);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+a:hover {
+  color: var(--colour-secondary);
+}
+
+h1, h2, h3, h4 {
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--colour-text);
+}
+
+h1 { font-size: 2rem; margin-bottom: 1rem; }
+h2 { font-size: 1.5rem; margin: 2rem 0 0.75rem; }
+h3 { font-size: 1.2rem; margin: 1.5rem 0 0.5rem; }
+
+p { margin-bottom: 1rem; }
+
+ul, ol {
+  margin-bottom: 1rem;
+  padding-left: 1.5rem;
+}
+
+li { margin-bottom: 0.25rem; }
+
+code {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+  background: var(--colour-surface-alt);
+  padding: 0.15em 0.4em;
+  border-radius: var(--radius);
+}
+
+pre {
+  background: var(--colour-surface);
+  border: 1px solid var(--colour-border);
+  border-radius: var(--radius);
+  padding: 1.25rem;
+  overflow-x: auto;
+  margin-bottom: 1.5rem;
+}
+
+pre code {
+  background: none;
+  padding: 0;
+  font-size: 0.85em;
+}
+
+blockquote {
+  border-left: 3px solid var(--colour-primary);
+  padding-left: 1rem;
+  margin-bottom: 1rem;
+  color: var(--colour-text-muted);
+}
+
+hr {
+  border: none;
+  border-top: 1px solid var(--colour-border);
+  margin: 2rem 0;
+}
+
+.glow {
+  text-shadow: 0 0 10px var(--colour-primary), 0 0 40px rgba(0, 255, 163, 0.15);
+}
