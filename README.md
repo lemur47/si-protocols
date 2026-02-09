@@ -11,7 +11,7 @@ Cybersecurity for the soul. Run locally on your own texts only.
 git clone https://github.com/lemur47/si-protocols.git
 cd si-protocols
 uv sync --all-extras
-uv run python -m spacy download en_core_web_sm
+uv pip install en_core_web_sm@https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.8.0/en_core_web_sm-3.8.0-py3-none-any.whl
 
 # Analyse a text file
 uv run si-threat-filter examples/synthetic_suspicious.txt
@@ -24,7 +24,7 @@ uv run pytest
 
 The threat filter combines two analysis layers:
 
-- **Tech layer** — NLP-based detection of vagueness patterns, authority claims, and urgency/fear triggers commonly found in spiritual disinformation
+- **Tech layer** — NLP-based detection of vagueness patterns, authority claims, urgency/fear triggers, emotional manipulation, and logical contradictions commonly found in spiritual disinformation
 - **Heuristic layer** — probabilistic dissonance scanner (placeholder for future biofeedback integration)
 
 Output is a 0–100 threat score with a breakdown of what triggered it.
