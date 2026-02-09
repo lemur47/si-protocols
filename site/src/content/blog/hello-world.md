@@ -1,7 +1,7 @@
 ---
 title: Introducing si-protocols
 description: Why we built open-source tools for detecting disinformation in spiritual content.
-date: 2025-06-01
+date: 2026-02-08
 tags: [announcement, open-source]
 ---
 
