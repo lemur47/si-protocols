@@ -35,7 +35,7 @@ cd site && npm run build         # Production build
 
 The threat filter produces a 0–100 score by combining two analysis layers:
 
-1. **Tech layer** (`threat_filter.py:tech_analysis`) — spaCy NLP pipeline that scores text across four dimensions: vagueness (adjective density against `markers.VAGUE_ADJECTIVES`), authority claims (phrase matching against `markers.AUTHORITY_PHRASES`), urgency/fear patterns (`markers.URGENCY_PATTERNS`), and emotional manipulation (lemma-based matching against `markers.FEAR_WORDS` and `markers.EUPHORIA_WORDS` with a contrast bonus when both polarities appear). Weighted composite: 30% vagueness + 30% authority + 20% urgency + 20% emotion.
+1. **Tech layer** (`threat_filter.py:tech_analysis`) — spaCy NLP pipeline that scores text across five dimensions: vagueness (adjective density against `markers.VAGUE_ADJECTIVES`), authority claims (phrase matching against `markers.AUTHORITY_PHRASES`), urgency/fear patterns (`markers.URGENCY_PATTERNS`), emotional manipulation (lemma-based matching against `markers.FEAR_WORDS` and `markers.EUPHORIA_WORDS` with a contrast bonus when both polarities appear), and logical contradictions (detecting when both poles of `markers.CONTRADICTION_PAIRS` appear in the same text — e.g. empowerment alongside dependency). Weighted composite: 25% vagueness + 25% authority + 15% urgency + 15% emotion + 20% contradiction.
 
 2. **Heuristic layer** (`threat_filter.py:psychic_heuristic`) — probabilistic dissonance scanner using `random.Random` (intentional — placeholder for future biofeedback integration). Accepts a `seed` param for deterministic testing.
 
@@ -44,6 +44,10 @@ The threat filter produces a 0–100 score by combining two analysis layers:
 The spaCy model (`_nlp`) is lazy-loaded via `_get_nlp()` to avoid import-time side effects in tests. Tests that exercise the NLP pipeline are marked `@pytest.mark.slow`.
 
 Marker definitions in `markers.py` are static word/phrase lists (frozenset for adjectives, lists for phrases/patterns). All markers must be lowercase.
+
+## Git workflow
+
+- **GitHub Flow** — always create a `feature/*` branch, push, and open a PR. Never commit directly to `main`.
 
 ## Key conventions
 
