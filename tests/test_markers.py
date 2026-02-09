@@ -2,6 +2,7 @@
 
 from si_protocols.markers import (
     AUTHORITY_PHRASES,
+    CONTRADICTION_PAIRS,
     EUPHORIA_PHRASES,
     EUPHORIA_WORDS,
     FEAR_PHRASES,
@@ -104,3 +105,29 @@ class TestEuphoriaPhrases:
 
     def test_contains_new_earth(self) -> None:
         assert "new earth" in EUPHORIA_PHRASES
+
+
+class TestContradictionPairs:
+    def test_is_list_of_3_tuples(self) -> None:
+        assert isinstance(CONTRADICTION_PAIRS, list)
+        for entry in CONTRADICTION_PAIRS:
+            assert isinstance(entry, tuple)
+            assert len(entry) == 3
+
+    def test_all_patterns_lowercase(self) -> None:
+        for _label, pole_a, pole_b in CONTRADICTION_PAIRS:
+            for pattern in pole_a:
+                assert pattern == pattern.lower(), f"Pole A pattern '{pattern}' not lowercase"
+            for pattern in pole_b:
+                assert pattern == pattern.lower(), f"Pole B pattern '{pattern}' not lowercase"
+
+    def test_labels_and_poles_non_empty(self) -> None:
+        for label, pole_a, pole_b in CONTRADICTION_PAIRS:
+            assert label, "Label must not be empty"
+            assert len(pole_a) > 0, f"Pole A empty for '{label}'"
+            assert len(pole_b) > 0, f"Pole B empty for '{label}'"
+
+    def test_no_pattern_in_both_poles(self) -> None:
+        for label, pole_a, pole_b in CONTRADICTION_PAIRS:
+            overlap = set(pole_a) & set(pole_b)
+            assert overlap == set(), f"Overlap in '{label}': {overlap}"

@@ -101,3 +101,38 @@ EUPHORIA_WORDS: frozenset[str] = frozenset(
 EUPHORIA_PHRASES: list[str] = [
     "new earth",
 ]
+
+# Logical contradiction pairs: (label, pole_a_patterns, pole_b_patterns)
+# When patterns from both poles appear in the same text, a contradiction is flagged.
+CONTRADICTION_PAIRS: list[tuple[str, list[str], list[str]]] = [
+    (
+        "empowerment vs. dependency",
+        ["you have the power", "power is within", "inner power", "you are the creator"],
+        ["you need this", "you must follow", "without guidance", "only through me"],
+    ),
+    (
+        "universality vs. exclusivity",
+        ["all paths", "many paths", "every path", "truth is everywhere"],
+        ["the only way", "the only path", "the one true", "no other way"],
+    ),
+    (
+        "non-judgement vs. blame",
+        ["no judgement", "without judgement", "free of judgement", "do not judge"],
+        ["low vibration", "attract suffering", "karmic debt", "you chose this suffering"],
+    ),
+    (
+        "ego dissolution vs. inflation",
+        ["let go of ego", "release the ego", "ego is illusion", "dissolve the ego"],
+        ["you are chosen", "you are special", "the select few", "your soul is advanced"],
+    ),
+    (
+        "autonomy vs. doubt suppression",
+        ["trust your intuition", "trust yourself", "inner knowing", "your own truth"],
+        ["doubt is fear", "doubt is resistance", "ego is resisting", "your mind deceives"],
+    ),
+    (
+        "unconditional vs. transactional",
+        ["unconditional love", "love without condition", "love is free", "love has no price"],
+        ["if you leave", "lose your progress", "fall behind", "miss this opportunity"],
+    ),
+]

@@ -28,6 +28,18 @@ EMOTIONAL_TEXT = (
     "chosen few who embrace the miracle of ascension and transcendence."
 )
 
+CONTRADICTORY_TEXT = (
+    "Remember, you have the power within you — your inner power is limitless. "
+    "But you need this programme to unlock it, and without guidance you will "
+    "remain lost. Trust your intuition above all, yet know that doubt is fear "
+    "and your mind deceives you at every turn."
+)
+
+SINGLE_POLE_TEXT = (
+    "You have the power within you. Your inner power is limitless. "
+    "Trust your intuition and follow your own truth."
+)
+
 EMPTY_TEXT = ""
 
 
@@ -57,54 +69,77 @@ class TestPsychicHeuristic:
 class TestTechAnalysis:
     @pytest.mark.slow
     def test_empty_text_returns_zero(self) -> None:
-        score, entities, auth, urgency, emotion = tech_analysis(EMPTY_TEXT)
+        score, entities, auth, urgency, emotion, contradictions = tech_analysis(EMPTY_TEXT)
         assert score == 0.0
         assert entities == []
         assert auth == []
         assert urgency == []
         assert emotion == []
+        assert contradictions == []
 
     @pytest.mark.slow
     def test_benign_text_low_score(self) -> None:
-        score, _, _, _, _ = tech_analysis(BENIGN_TEXT)
+        score, _, _, _, _, _ = tech_analysis(BENIGN_TEXT)
         assert score < 20.0
 
     @pytest.mark.slow
     def test_suspicious_text_higher_score(self) -> None:
-        score, _, auth, urgency, _ = tech_analysis(SUSPICIOUS_TEXT)
+        score, _, auth, urgency, _, _ = tech_analysis(SUSPICIOUS_TEXT)
         assert score > 0.0
         assert len(auth) > 0 or len(urgency) > 0
 
     @pytest.mark.slow
     def test_emotional_text_detects_emotion_hits(self) -> None:
-        _, _, _, _, emotion = tech_analysis(EMOTIONAL_TEXT)
+        _, _, _, _, emotion, _ = tech_analysis(EMOTIONAL_TEXT)
         assert len(emotion) > 0
 
     @pytest.mark.slow
     def test_emotional_text_scores_higher_than_benign(self) -> None:
-        benign_score, _, _, _, _ = tech_analysis(BENIGN_TEXT)
-        emotional_score, _, _, _, _ = tech_analysis(EMOTIONAL_TEXT)
+        benign_score, _, _, _, _, _ = tech_analysis(BENIGN_TEXT)
+        emotional_score, _, _, _, _, _ = tech_analysis(EMOTIONAL_TEXT)
         assert emotional_score > benign_score
 
     @pytest.mark.slow
     def test_contrast_scores_higher_than_single_pole(self) -> None:
         fear_only = "Doom and catastrophe and destruction await all of humanity."
         both = "Doom and catastrophe await, but salvation and bliss come to the chosen ones."
-        fear_score, _, _, _, _ = tech_analysis(fear_only)
-        both_score, _, _, _, _ = tech_analysis(both)
+        fear_score, _, _, _, _, _ = tech_analysis(fear_only)
+        both_score, _, _, _, _, _ = tech_analysis(both)
         assert both_score > fear_score
 
     @pytest.mark.slow
     def test_benign_text_no_emotion_hits(self) -> None:
-        _, _, _, _, emotion = tech_analysis(BENIGN_TEXT)
+        _, _, _, _, emotion, _ = tech_analysis(BENIGN_TEXT)
         assert emotion == []
 
     @pytest.mark.slow
     def test_earth_polarity_detected(self) -> None:
         text = "The old earth is crumbling. Welcome to the new earth of light."
-        _, _, _, _, emotion = tech_analysis(text)
+        _, _, _, _, emotion, _ = tech_analysis(text)
         assert "old earth" in emotion
         assert "new earth" in emotion
+
+    @pytest.mark.slow
+    def test_contradiction_detected(self) -> None:
+        _, _, _, _, _, contradictions = tech_analysis(CONTRADICTORY_TEXT)
+        assert "empowerment vs. dependency" in contradictions
+        assert "autonomy vs. doubt suppression" in contradictions
+
+    @pytest.mark.slow
+    def test_single_pole_no_contradiction(self) -> None:
+        _, _, _, _, _, contradictions = tech_analysis(SINGLE_POLE_TEXT)
+        assert contradictions == []
+
+    @pytest.mark.slow
+    def test_contradiction_scores_higher(self) -> None:
+        single_score, _, _, _, _, _ = tech_analysis(SINGLE_POLE_TEXT)
+        contra_score, _, _, _, _, _ = tech_analysis(CONTRADICTORY_TEXT)
+        assert contra_score > single_score
+
+    @pytest.mark.slow
+    def test_benign_no_contradictions(self) -> None:
+        _, _, _, _, _, contradictions = tech_analysis(BENIGN_TEXT)
+        assert contradictions == []
 
 
 # --- hybrid_score ---
@@ -143,6 +178,16 @@ class TestHybridScore:
     def test_emotion_hits_empty_for_benign(self) -> None:
         result = hybrid_score(BENIGN_TEXT, seed=42)
         assert result.emotion_hits == []
+
+    @pytest.mark.slow
+    def test_contradiction_hits_populated(self) -> None:
+        result = hybrid_score(CONTRADICTORY_TEXT, seed=42)
+        assert len(result.contradiction_hits) > 0
+
+    @pytest.mark.slow
+    def test_contradiction_hits_empty_for_benign(self) -> None:
+        result = hybrid_score(BENIGN_TEXT, seed=42)
+        assert result.contradiction_hits == []
 
 
 # --- CLI main ---

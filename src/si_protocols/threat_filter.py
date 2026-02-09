@@ -13,6 +13,7 @@ import spacy
 
 from si_protocols.markers import (
     AUTHORITY_PHRASES,
+    CONTRADICTION_PAIRS,
     EUPHORIA_PHRASES,
     EUPHORIA_WORDS,
     FEAR_PHRASES,
@@ -44,18 +45,20 @@ class ThreatResult:
     authority_hits: list[str] = field(default_factory=list)
     urgency_hits: list[str] = field(default_factory=list)
     emotion_hits: list[str] = field(default_factory=list)
+    contradiction_hits: list[str] = field(default_factory=list)
     message: str = "Run on your own texts only — this is a local tool."
 
 
 def tech_analysis(
     text: str,
-) -> tuple[float, list[str], list[str], list[str], list[str]]:
+) -> tuple[float, list[str], list[str], list[str], list[str], list[str]]:
     """Tech layer: NLP-based suspicion signals.
 
-    Returns (score, entities, authority_hits, urgency_hits, emotion_hits).
+    Returns (score, entities, authority_hits, urgency_hits, emotion_hits,
+    contradiction_hits).
     """
     if not text.strip():
-        return 0.0, [], [], [], []
+        return 0.0, [], [], [], [], []
 
     nlp = _get_nlp()
     doc = nlp(text)
@@ -94,12 +97,32 @@ def tech_analysis(
     emotion_score = min(fear_density + euphoria_density + contrast_bonus, 1.0)
     emotion_hits = fear_hits + euphoria_hits
 
+    # --- Logical contradiction detection ---
+    contradiction_hits: list[str] = []
+    for label, pole_a, pole_b in CONTRADICTION_PAIRS:
+        has_a = any(pattern in text_lower for pattern in pole_a)
+        has_b = any(pattern in text_lower for pattern in pole_b)
+        if has_a and has_b:
+            contradiction_hits.append(label)
+    contradiction_score = min(len(contradiction_hits) * 0.3, 1.0)
+
     # Weighted composite -- all sub-scores normalised to 0-1
     tech_score = (
-        vagueness_score * 30 + authority_score * 30 + urgency_score * 20 + emotion_score * 20
+        vagueness_score * 25
+        + authority_score * 25
+        + urgency_score * 15
+        + emotion_score * 15
+        + contradiction_score * 20
     )
 
-    return min(tech_score, 100.0), entities, authority_hits, urgency_hits, emotion_hits
+    return (
+        min(tech_score, 100.0),
+        entities,
+        authority_hits,
+        urgency_hits,
+        emotion_hits,
+        contradiction_hits,
+    )
 
 
 def psychic_heuristic(density_bias: float = 0.75, *, seed: int | None = None) -> float:
@@ -121,7 +144,9 @@ def hybrid_score(
     seed: int | None = None,
 ) -> ThreatResult:
     """Combine layers: 60% tech + 40% heuristic intuition."""
-    tech_score, entities, authority_hits, urgency_hits, emotion_hits = tech_analysis(text)
+    tech_score, entities, authority_hits, urgency_hits, emotion_hits, contradiction_hits = (
+        tech_analysis(text)
+    )
     intuition_score = psychic_heuristic(density_bias, seed=seed)
 
     overall = (tech_score * 0.6) + (intuition_score * 0.4)
@@ -134,6 +159,7 @@ def hybrid_score(
         authority_hits=authority_hits,
         urgency_hits=urgency_hits,
         emotion_hits=emotion_hits,
+        contradiction_hits=contradiction_hits,
     )
 
 
@@ -176,6 +202,8 @@ def main() -> None:
         print(f"Urgency patterns: {', '.join(result.urgency_hits)}")
     if result.emotion_hits:
         print(f"Emotion triggers: {', '.join(result.emotion_hits)}")
+    if result.contradiction_hits:
+        print(f"Logical contradictions: {', '.join(result.contradiction_hits)}")
     print(f"\n{result.message}")
 
 
