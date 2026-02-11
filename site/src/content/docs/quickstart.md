@@ -18,7 +18,7 @@ uv sync --all-extras
 uv pip install en_core_web_sm@https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.8.0/en_core_web_sm-3.8.0-py3-none-any.whl
 ```
 
-## Analyse a text
+## Analyse a Text
 
 Run the threat filter against any local text file:
 
@@ -36,14 +36,14 @@ The filter produces a **0–100 threat score** with a breakdown:
 
 Higher scores indicate more markers of disinformation were detected.
 
-## Running tests
+## Running Tests
 
 ```bash
 uv run pytest                    # All tests
 uv run pytest -m "not slow"     # Skip spaCy-dependent tests
 ```
 
-## What next?
+## What Next?
 
 - Read the [source code](https://github.com/lemur47/si-protocols) to understand the analysis layers
 - Check `markers.py` to see which patterns are detected

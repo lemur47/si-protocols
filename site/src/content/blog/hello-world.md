@@ -5,13 +5,13 @@ date: 2026-02-08
 tags: [announcement, open-source]
 ---
 
-## Cybersecurity for the soul
+## Cybersecurity for the Soul
 
 The spiritual and metaphysical space has a disinformation problem. Vague authority claims, manufactured urgency, emotional manipulation, logical contradictions, and fear-based patterns are common in channelled material, self-help content, and new-age narratives. Yet there are virtually no tools to help people identify these patterns.
 
 **si-protocols** is our attempt to change that.
 
-## What it does
+## What It Does
 
 The threat filter analyses text across two layers:
 
@@ -21,13 +21,13 @@ The threat filter analyses text across two layers:
 
 The final output is a **0–100 hybrid score** — higher values indicate more markers of potential disinformation.
 
-## Design principles
+## Design Principles
 
 - **Local-only** — your texts never leave your machine. We do not host, collect, or analyse third-party content.
 - **Transparent** — all marker definitions are plain word/phrase lists in `markers.py`. No black-box models.
 - **Synthetic testing** — the repository contains only synthetic example texts. No real channelled material is included.
 
-## Getting started
+## Getting Started
 
 ```bash
 git clone https://github.com/lemur47/si-protocols.git
@@ -38,7 +38,7 @@ uv run si-threat-filter examples/synthetic_suspicious.txt
 
 See the [quickstart guide](/docs/quickstart/) for full setup instructions.
 
-## What's next
+## What's Next
 
 This is v0.1 — the foundation. We're exploring:
 
