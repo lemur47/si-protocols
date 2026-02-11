@@ -1,11 +1,11 @@
 ---
-title: "Beyond NLP: detecting deception without LLMs"
+title: "Beyond NLP: Detecting Deception Without LLMs"
 description: Creative approaches to spotting disinformation in spiritual content — no large language models or social media graphs required.
 date: 2026-02-09
 tags: [research, detection, architecture]
 ---
 
-## The obvious tools aren't the only tools
+## The Obvious Tools Aren't the Only Tools
 
 When people think about disinformation detection, they usually reach for two things: large language models or social network analysis. LLMs are powerful but opaque — they trade one black box (the deceptive text) for another (the model's reasoning). Social graph analysis requires access to platform data, user accounts, and sharing patterns, which conflicts with our local-only, privacy-first design.
 
@@ -13,7 +13,7 @@ So we asked a different question: **what structural, psychological, and informat
 
 It turns out there are quite a few — and most of them are underexplored in the spiritual and metaphysical domain.
 
-## Approaches we're investigating
+## Approaches We're Investigating
 
 ### 1. Logical contradiction detection
 
@@ -80,7 +80,7 @@ Honest communicators hedge proportionally to uncertainty: "I believe", "in my ex
 
 The insight is that measuring the **distribution** of hedging matters more than measuring its presence or absence. A text that alternates between absolute claims and strategic disclaimers has a different hedging signature than one that hedges consistently.
 
-## A tool for thinking, not a truth oracle
+## A Tool for Thinking, Not a Truth Oracle
 
 An important caveat runs through all of these approaches: **flagging a pattern is not the same as declaring something false.**
 
@@ -96,7 +96,7 @@ This is the core design principle of si-protocols: **we don't tell you what to b
 
 A disinformation detection tool that makes people reflexively *dismiss* content is just as harmful as one that makes them reflexively *accept* it. Both bypass genuine thinking. We're building a tool that sits between those extremes — one that asks you to slow down, look at the structure, and decide for yourself.
 
-## What these approaches share
+## What These Approaches Share
 
 None of these require:
 - Large language models or cloud APIs
@@ -106,7 +106,7 @@ None of these require:
 
 They all work on **structural properties of text** — patterns that can be detected with transparent, auditable rules. They complement rather than replace NLP-based analysis. And they can all be implemented as additional scoring dimensions in our existing marker-based architecture.
 
-## What's next
+## What's Next
 
 We're planning to implement these as new dimensions in si-protocols' threat filter, starting with **logical contradiction detection** and **source attribution analysis** — the two approaches that offer the highest signal with the least implementation complexity.
 
