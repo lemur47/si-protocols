@@ -15,7 +15,7 @@ The spiritual and metaphysical space has a disinformation problem. Vague authori
 
 The threat filter analyses text across two layers:
 
-1. **Tech layer** — a spaCy NLP pipeline that detects vagueness patterns (adjective density), authority claims (phrase matching), urgency/fear triggers, emotional manipulation (lemma-based fear/euphoria detection with a contrast bonus when both polarities appear), and logical contradictions (detecting when both poles of common contradiction archetypes appear in the same text). Each dimension is scored independently, then combined with configurable weights (25/25/15/15/20).
+1. **Tech layer** — a spaCy NLP pipeline that detects vagueness patterns (adjective density), authority claims (phrase matching), urgency/fear triggers, emotional manipulation (lemma-based fear/euphoria detection with a contrast bonus when both polarities appear), logical contradictions (detecting when both poles of common contradiction archetypes appear in the same text), and source attribution analysis (detecting unfalsifiable sources and unnamed authorities, offset by verifiable citations). Each dimension is scored independently, then combined with configurable weights (20/20/15/15/15/15).
 
 2. **Heuristic layer** — a probabilistic dissonance scanner. Currently a randomised placeholder, this layer is designed to eventually integrate biofeedback signals for a more holistic analysis.
 

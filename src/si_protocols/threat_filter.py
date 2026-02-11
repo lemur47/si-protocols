@@ -18,8 +18,11 @@ from si_protocols.markers import (
     EUPHORIA_WORDS,
     FEAR_PHRASES,
     FEAR_WORDS,
+    UNFALSIFIABLE_SOURCE_PHRASES,
+    UNNAMED_AUTHORITY_PHRASES,
     URGENCY_PATTERNS,
     VAGUE_ADJECTIVES,
+    VERIFIABLE_CITATION_MARKERS,
 )
 
 # Lazy-load to avoid import-time side effects in tests
@@ -46,19 +49,20 @@ class ThreatResult:
     urgency_hits: list[str] = field(default_factory=list)
     emotion_hits: list[str] = field(default_factory=list)
     contradiction_hits: list[str] = field(default_factory=list)
+    source_attribution_hits: list[str] = field(default_factory=list)
     message: str = "Run on your own texts only — this is a local tool."
 
 
 def tech_analysis(
     text: str,
-) -> tuple[float, list[str], list[str], list[str], list[str], list[str]]:
+) -> tuple[float, list[str], list[str], list[str], list[str], list[str], list[str]]:
     """Tech layer: NLP-based suspicion signals.
 
     Returns (score, entities, authority_hits, urgency_hits, emotion_hits,
-    contradiction_hits).
+    contradiction_hits, source_attribution_hits).
     """
     if not text.strip():
-        return 0.0, [], [], [], [], []
+        return 0.0, [], [], [], [], [], []
 
     nlp = _get_nlp()
     doc = nlp(text)
@@ -106,13 +110,26 @@ def tech_analysis(
             contradiction_hits.append(label)
     contradiction_score = min(len(contradiction_hits) * 0.3, 1.0)
 
+    # --- Source attribution analysis ---
+    unfalsifiable_hits = [
+        phrase for phrase in UNFALSIFIABLE_SOURCE_PHRASES if phrase in text_lower
+    ]
+    unnamed_hits = [phrase for phrase in UNNAMED_AUTHORITY_PHRASES if phrase in text_lower]
+    verifiable_hits = [marker for marker in VERIFIABLE_CITATION_MARKERS if marker in text_lower]
+    source_attribution_hits = unfalsifiable_hits + unnamed_hits
+
+    suspicious_density = min((len(unfalsifiable_hits) + len(unnamed_hits)) * 0.12, 1.0)
+    verifiable_offset = min(len(verifiable_hits) * 0.15, 0.4)
+    attribution_score = max(suspicious_density - verifiable_offset, 0.0)
+
     # Weighted composite -- all sub-scores normalised to 0-1
     tech_score = (
-        vagueness_score * 25
-        + authority_score * 25
+        vagueness_score * 20
+        + authority_score * 20
         + urgency_score * 15
         + emotion_score * 15
-        + contradiction_score * 20
+        + contradiction_score * 15
+        + attribution_score * 15
     )
 
     return (
@@ -122,6 +139,7 @@ def tech_analysis(
         urgency_hits,
         emotion_hits,
         contradiction_hits,
+        source_attribution_hits,
     )
 
 
@@ -144,9 +162,15 @@ def hybrid_score(
     seed: int | None = None,
 ) -> ThreatResult:
     """Combine layers: 60% tech + 40% heuristic intuition."""
-    tech_score, entities, authority_hits, urgency_hits, emotion_hits, contradiction_hits = (
-        tech_analysis(text)
-    )
+    (
+        tech_score,
+        entities,
+        authority_hits,
+        urgency_hits,
+        emotion_hits,
+        contradiction_hits,
+        source_attribution_hits,
+    ) = tech_analysis(text)
     intuition_score = psychic_heuristic(density_bias, seed=seed)
 
     overall = (tech_score * 0.6) + (intuition_score * 0.4)
@@ -160,6 +184,7 @@ def hybrid_score(
         urgency_hits=urgency_hits,
         emotion_hits=emotion_hits,
         contradiction_hits=contradiction_hits,
+        source_attribution_hits=source_attribution_hits,
     )
 
 
@@ -204,6 +229,8 @@ def main() -> None:
         print(f"Emotion triggers: {', '.join(result.emotion_hits)}")
     if result.contradiction_hits:
         print(f"Logical contradictions: {', '.join(result.contradiction_hits)}")
+    if result.source_attribution_hits:
+        print(f"Source attribution: {', '.join(result.source_attribution_hits)}")
     print(f"\n{result.message}")
 
 

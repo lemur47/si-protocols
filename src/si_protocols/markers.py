@@ -102,6 +102,59 @@ EUPHORIA_PHRASES: list[str] = [
     "new earth",
 ]
 
+# Source attribution: unfalsifiable/unverifiable source claims
+UNFALSIFIABLE_SOURCE_PHRASES: list[str] = [
+    "ancient wisdom teaches",
+    "the quantum field",
+    "higher dimensions reveal",
+    "the universe tells us",
+    "the cosmos has shown",
+    "spirit has revealed",
+    "the akashic field confirms",
+    "light beings communicate",
+    "the source energy",
+    "the divine matrix",
+    "interdimensional beings say",
+    "star beings confirm",
+    "the great central sun",
+    "the crystalline grid",
+    "the schumann resonance proves",
+]
+
+# Source attribution: unnamed/vague authority claims
+UNNAMED_AUTHORITY_PHRASES: list[str] = [
+    "scientists say",
+    "experts agree",
+    "studies show",
+    "research proves",
+    "it has been scientifically proven",
+    "doctors confirm",
+    "leading researchers",
+    "top scientists",
+    "numerous studies",
+    "science has shown",
+    "data confirms",
+    "evidence proves",
+    "scholars agree",
+    "historians confirm",
+    "according to sources",
+    "insiders reveal",
+]
+
+# Source attribution: verifiable citation markers (counter-signal — reduces score)
+VERIFIABLE_CITATION_MARKERS: list[str] = [
+    "published in",
+    "et al.",
+    "doi:",
+    "https://",
+    "journal of",
+    "university of",
+    "proceedings of",
+    "isbn",
+    "peer-reviewed",
+    "vol.",
+]
+
 # Logical contradiction pairs: (label, pole_a_patterns, pole_b_patterns)
 # When patterns from both poles appear in the same text, a contradiction is flagged.
 CONTRADICTION_PAIRS: list[tuple[str, list[str], list[str]]] = [

@@ -108,9 +108,9 @@ They all work on **structural properties of text** — patterns that can be dete
 
 ## What's Next
 
-We're planning to implement these as new dimensions in si-protocols' threat filter, starting with **logical contradiction detection** and **source attribution analysis** — the two approaches that offer the highest signal with the least implementation complexity.
+We've now implemented both **logical contradiction detection** and **source attribution analysis** as scoring dimensions in the threat filter. Each follows our existing pattern: markers defined in `markers.py`, scored in `threat_filter.py`, tested with synthetic examples. Transparent, local-only, and open-source.
 
-Each will follow our existing pattern: define markers in `markers.py`, score in `threat_filter.py`, test with synthetic examples. Transparent, local-only, and open-source.
+The remaining approaches — influence technique fingerprinting, commitment escalation, cognitive load manipulation, stylometric entropy, and hedging-to-assertion ratio — are candidates for future dimensions.
 
 If you work in cult recovery, undue influence research, or digital literacy education, we'd love to hear which of these signals match what you see in practice. Open an issue on [GitHub](https://github.com/lemur47/si-protocols) or reach out directly.
 
