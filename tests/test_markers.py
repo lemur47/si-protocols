@@ -7,8 +7,11 @@ from si_protocols.markers import (
     EUPHORIA_WORDS,
     FEAR_PHRASES,
     FEAR_WORDS,
+    UNFALSIFIABLE_SOURCE_PHRASES,
+    UNNAMED_AUTHORITY_PHRASES,
     URGENCY_PATTERNS,
     VAGUE_ADJECTIVES,
+    VERIFIABLE_CITATION_MARKERS,
 )
 
 
@@ -131,3 +134,51 @@ class TestContradictionPairs:
         for label, pole_a, pole_b in CONTRADICTION_PAIRS:
             overlap = set(pole_a) & set(pole_b)
             assert overlap == set(), f"Overlap in '{label}': {overlap}"
+
+
+class TestUnfalsifiableSourcePhrases:
+    def test_is_list(self) -> None:
+        assert isinstance(UNFALSIFIABLE_SOURCE_PHRASES, list)
+
+    def test_not_empty(self) -> None:
+        assert len(UNFALSIFIABLE_SOURCE_PHRASES) > 0
+
+    def test_all_lowercase(self) -> None:
+        for phrase in UNFALSIFIABLE_SOURCE_PHRASES:
+            assert phrase == phrase.lower(), f"Phrase '{phrase}' should be lowercase"
+
+    def test_no_overlap_with_authority_phrases(self) -> None:
+        overlap = set(UNFALSIFIABLE_SOURCE_PHRASES) & set(AUTHORITY_PHRASES)
+        assert overlap == set(), f"Overlap with AUTHORITY_PHRASES: {overlap}"
+
+
+class TestUnnamedAuthorityPhrases:
+    def test_is_list(self) -> None:
+        assert isinstance(UNNAMED_AUTHORITY_PHRASES, list)
+
+    def test_not_empty(self) -> None:
+        assert len(UNNAMED_AUTHORITY_PHRASES) > 0
+
+    def test_all_lowercase(self) -> None:
+        for phrase in UNNAMED_AUTHORITY_PHRASES:
+            assert phrase == phrase.lower(), f"Phrase '{phrase}' should be lowercase"
+
+    def test_no_overlap_with_authority_phrases(self) -> None:
+        overlap = set(UNNAMED_AUTHORITY_PHRASES) & set(AUTHORITY_PHRASES)
+        assert overlap == set(), f"Overlap with AUTHORITY_PHRASES: {overlap}"
+
+    def test_no_overlap_with_unfalsifiable(self) -> None:
+        overlap = set(UNNAMED_AUTHORITY_PHRASES) & set(UNFALSIFIABLE_SOURCE_PHRASES)
+        assert overlap == set(), f"Overlap with UNFALSIFIABLE_SOURCE_PHRASES: {overlap}"
+
+
+class TestVerifiableCitationMarkers:
+    def test_is_list(self) -> None:
+        assert isinstance(VERIFIABLE_CITATION_MARKERS, list)
+
+    def test_not_empty(self) -> None:
+        assert len(VERIFIABLE_CITATION_MARKERS) > 0
+
+    def test_all_lowercase(self) -> None:
+        for marker in VERIFIABLE_CITATION_MARKERS:
+            assert marker == marker.lower(), f"Marker '{marker}' should be lowercase"
