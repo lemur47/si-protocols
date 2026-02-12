@@ -24,6 +24,8 @@ pre-commit run --all-files                    # Run all hooks (lint, format, git
 
 CLI entry point: `uv run si-threat-filter examples/synthetic_suspicious.txt`
 
+The CLI supports `--format rich` (default, colour-coded) and `--format json` (machine-readable). Rich output respects the `NO_COLOR` env var automatically.
+
 ### Site (Astro)
 
 ```bash
@@ -42,6 +44,8 @@ The threat filter produces a 0–100 score by combining two analysis layers:
 3. **Hybrid scoring** (`threat_filter.py:hybrid_score`) — combines the two: 60% tech + 40% heuristic. Returns a `ThreatResult` frozen dataclass.
 
 The spaCy model (`_nlp`) is lazy-loaded via `_get_nlp()` to avoid import-time side effects in tests. Tests that exercise the NLP pipeline are marked `@pytest.mark.slow`.
+
+4. **Output formatting** (`output.py`) — `render_rich()` produces colour-coded terminal output (green/yellow/red by threat level) with Rich panels and tables; `render_json()` emits `dataclasses.asdict()` as indented JSON. The `_threat_style()` helper maps score bands: 0-33 green, 34-66 yellow, 67-100 red bold.
 
 Marker definitions in `markers.py` are static word/phrase lists (frozenset for adjectives, lists for phrases/patterns). All markers must be lowercase.
 

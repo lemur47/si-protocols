@@ -190,6 +190,8 @@ def hybrid_score(
 
 def main() -> None:
     """CLI entry point for the basic threat filter."""
+    from si_protocols.output import render_json, render_rich
+
     parser = argparse.ArgumentParser(
         description="si-protocols — Basic Spiritual Intelligence Threat Filter v0.1",
     )
@@ -204,6 +206,13 @@ def main() -> None:
         default=0.75,
         help="Information density bias (0.0-1.0)",
     )
+    parser.add_argument(
+        "--format",
+        choices=["rich", "json"],
+        default="rich",
+        dest="output_format",
+        help="Output format: rich (default) or json",
+    )
     args = parser.parse_args()
 
     path = Path(args.file)
@@ -214,24 +223,10 @@ def main() -> None:
     text = path.read_text(encoding="utf-8")
     result = hybrid_score(text, args.density)
 
-    print("\n=== si-protocols Threat Analysis v0.1 ===")
-    print(f"File: {args.file}")
-    print(f"Overall Threat Score: {result.overall_threat_score}/100")
-    print(f"  └─ Tech layer: {result.tech_contribution}")
-    print(f"  └─ Heuristic intuition: {result.intuition_contribution}")
-    if result.detected_entities:
-        print(f"Detected entities: {', '.join(result.detected_entities)}")
-    if result.authority_hits:
-        print(f"Authority claims: {', '.join(result.authority_hits)}")
-    if result.urgency_hits:
-        print(f"Urgency patterns: {', '.join(result.urgency_hits)}")
-    if result.emotion_hits:
-        print(f"Emotion triggers: {', '.join(result.emotion_hits)}")
-    if result.contradiction_hits:
-        print(f"Logical contradictions: {', '.join(result.contradiction_hits)}")
-    if result.source_attribution_hits:
-        print(f"Source attribution: {', '.join(result.source_attribution_hits)}")
-    print(f"\n{result.message}")
+    if args.output_format == "json":
+        render_json(result)
+    else:
+        render_rich(result, args.file)
 
 
 if __name__ == "__main__":
