@@ -1,5 +1,6 @@
 """Tests for the hybrid threat filter."""
 
+import json
 from pathlib import Path
 
 import pytest
@@ -286,3 +287,19 @@ class TestMain:
         main()
         captured = capsys.readouterr()
         assert "Source attribution" in captured.out
+
+    @pytest.mark.slow
+    def test_json_format_output(
+        self, tmp_path: Path, monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]
+    ) -> None:
+        sample = tmp_path / "sample.txt"
+        sample.write_text(SUSPICIOUS_TEXT)
+        monkeypatch.setattr("sys.argv", ["si-threat-filter", str(sample), "--format", "json"])
+        main()
+        captured = capsys.readouterr()
+        data = json.loads(captured.out)
+        assert "overall_threat_score" in data
+        assert "tech_contribution" in data
+        assert "intuition_contribution" in data
+        assert "authority_hits" in data
+        assert "message" in data

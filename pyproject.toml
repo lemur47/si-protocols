@@ -20,6 +20,7 @@ classifiers = [
 ]
 dependencies = [
     "spacy>=3.8,<4.0",
+    "rich>=13.0",
 ]
 
 [project.optional-dependencies]
