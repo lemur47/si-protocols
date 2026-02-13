@@ -76,6 +76,44 @@ REVERSE_ESCALATION_TEXT = (
     "Consider exploring new ideas. You might find value in reflection."
 )
 
+PROSPERITY_GOSPEL_TEXT = (
+    "God told me to tell you that this is your moment of breakthrough. "
+    "Sow your seed now and claim your blessing — the Lord revealed to me that "
+    "a hundredfold return awaits the faithful. Break free from the generational curse "
+    "and the spirit of poverty. Your financial breakthrough is anointed by the Holy Spirit. "
+    "Those under spiritual attack must sow a seed of faith to unlock prosperity."
+)
+
+CONSPIRITUALITY_TEXT = (
+    "Suppressed research shows what they don't want you to know about the forbidden "
+    "knowledge hidden from humanity. Whistleblowers confirm that alternative doctors say "
+    "the truth they hide could change everything. Wake up before it's too late — "
+    "independent researchers found the banned information that censored experts tried to bury."
+)
+
+COMMERCIAL_EXPLOITATION_TEXT = (
+    "Limited spots remaining for our exclusive quantum healing retreat! "
+    "Enrolment closing soon — this offer expires at midnight. Last chance to join "
+    "the programme that will activate your DNA and raise your vibration. "
+    "Attend a free session to see if this is right for you, then upgrade to the next level."
+)
+
+CULT_RHETORIC_TEXT = (
+    "We are family and we love you unconditionally — this is a loving community. "
+    "But know this: those who betray our trust will be shunned from the community "
+    "and are no longer welcome. The elders have decreed that spiritual death awaits "
+    "anyone who leaves. You will be expelled if you break your commitment to us. "
+    "Exile is the only fate for oath-breakers."
+)
+
+FRATERNAL_TEXT = (
+    "The secret doctrine reveals the ancient mysteries teach truths that the inner "
+    "tradition holds sacred. The grand master has spoken — all seekers are welcome, "
+    "yet the initiated are sworn to secrecy and bound by oath. Visit the lodge to "
+    "begin your journey, then take the first degree. Those who advance must swear "
+    "the blood oath and never reveal the mysteries."
+)
+
 EMPTY_TEXT = ""
 
 
@@ -379,3 +417,63 @@ class TestMain:
         assert "intuition_contribution" in data
         assert "authority_hits" in data
         assert "message" in data
+
+
+# --- tradition-specific markers ---
+
+
+class TestTraditionMarkers:
+    @pytest.mark.slow
+    def test_prosperity_gospel_scores_higher_than_benign(self) -> None:
+        benign = hybrid_score(BENIGN_TEXT, seed=42)
+        prosperity = hybrid_score(PROSPERITY_GOSPEL_TEXT, seed=42)
+        assert prosperity.tech_contribution > benign.tech_contribution
+
+    @pytest.mark.slow
+    def test_prosperity_gospel_has_authority_or_emotion_hits(self) -> None:
+        result = hybrid_score(PROSPERITY_GOSPEL_TEXT, seed=42)
+        assert len(result.authority_hits) > 0 or len(result.emotion_hits) > 0
+
+    @pytest.mark.slow
+    def test_conspirituality_scores_higher_than_benign(self) -> None:
+        benign = hybrid_score(BENIGN_TEXT, seed=42)
+        conspiri = hybrid_score(CONSPIRITUALITY_TEXT, seed=42)
+        assert conspiri.tech_contribution > benign.tech_contribution
+
+    @pytest.mark.slow
+    def test_conspirituality_has_source_attribution_hits(self) -> None:
+        result = hybrid_score(CONSPIRITUALITY_TEXT, seed=42)
+        assert len(result.source_attribution_hits) > 0
+
+    @pytest.mark.slow
+    def test_commercial_scores_higher_than_benign(self) -> None:
+        benign = hybrid_score(BENIGN_TEXT, seed=42)
+        commercial = hybrid_score(COMMERCIAL_EXPLOITATION_TEXT, seed=42)
+        assert commercial.tech_contribution > benign.tech_contribution
+
+    @pytest.mark.slow
+    def test_commercial_has_urgency_hits(self) -> None:
+        result = hybrid_score(COMMERCIAL_EXPLOITATION_TEXT, seed=42)
+        assert len(result.urgency_hits) > 0
+
+    @pytest.mark.slow
+    def test_cult_scores_higher_than_benign(self) -> None:
+        benign = hybrid_score(BENIGN_TEXT, seed=42)
+        cult = hybrid_score(CULT_RHETORIC_TEXT, seed=42)
+        assert cult.tech_contribution > benign.tech_contribution
+
+    @pytest.mark.slow
+    def test_cult_has_emotion_hits(self) -> None:
+        result = hybrid_score(CULT_RHETORIC_TEXT, seed=42)
+        assert len(result.emotion_hits) > 0
+
+    @pytest.mark.slow
+    def test_fraternal_scores_higher_than_benign(self) -> None:
+        benign = hybrid_score(BENIGN_TEXT, seed=42)
+        fraternal = hybrid_score(FRATERNAL_TEXT, seed=42)
+        assert fraternal.tech_contribution > benign.tech_contribution
+
+    @pytest.mark.slow
+    def test_fraternal_has_source_or_authority_hits(self) -> None:
+        result = hybrid_score(FRATERNAL_TEXT, seed=42)
+        assert len(result.source_attribution_hits) > 0 or len(result.authority_hits) > 0

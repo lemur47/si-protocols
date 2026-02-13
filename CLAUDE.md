@@ -49,7 +49,7 @@ The spaCy model (`_nlp`) is lazy-loaded via `_get_nlp()` to avoid import-time si
 
 `ThreatResult` frozen dataclass fields: `overall_threat_score`, `tech_contribution`, `intuition_contribution`, `detected_entities`, `authority_hits`, `urgency_hits`, `emotion_hits`, `contradiction_hits`, `source_attribution_hits`, `escalation_hits`, `message`.
 
-Marker definitions in `markers.py` are static word/phrase lists (frozenset for adjectives, lists for phrases/patterns). All markers must be lowercase.
+Marker definitions in `markers.py` are static word/phrase lists (frozenset for adjectives, lists for phrases/patterns). All markers must be lowercase. Markers span tradition-specific categories: generic New Age, prosperity gospel, conspirituality, New Age commercial exploitation, high-demand group (cult) rhetoric, and fraternal/secret society traditions.
 
 ## Git workflow
 
