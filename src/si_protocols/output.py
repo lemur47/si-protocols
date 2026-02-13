@@ -73,6 +73,7 @@ def render_rich(
         ("Emotion triggers", result.emotion_hits),
         ("Logical contradictions", result.contradiction_hits),
         ("Source attribution", result.source_attribution_hits),
+        ("Commitment escalation", result.escalation_hits),
     ]
     visible_rows = [(label, hits) for label, hits in hit_rows if hits]
 

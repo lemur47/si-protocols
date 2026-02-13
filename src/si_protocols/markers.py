@@ -157,6 +157,70 @@ VERIFIABLE_CITATION_MARKERS: list[str] = [
 
 # Logical contradiction pairs: (label, pole_a_patterns, pole_b_patterns)
 # When patterns from both poles appear in the same text, a contradiction is flagged.
+# Commitment escalation: tiered markers for foot-in-the-door progression detection.
+# Tier 1 = mild/invitational, Tier 2 = moderate/directive, Tier 3 = extreme/coercive.
+COMMITMENT_ESCALATION_MARKERS: list[tuple[int, list[str]]] = [
+    (
+        1,
+        [
+            "consider",
+            "you might",
+            "explore",
+            "some people find",
+            "you could try",
+            "worth exploring",
+            "open your mind to",
+            "open your heart",
+            "take a moment to",
+            "reflect on",
+            "begin to notice",
+            "you may find",
+            "it can help",
+        ],
+    ),
+    (
+        2,
+        [
+            "you should",
+            "you need to",
+            "it is essential",
+            "it's important to",
+            "commit to",
+            "dedicate yourself",
+            "make the investment",
+            "enrol now",
+            "sign up today",
+            "join the programme",
+            "take the next step",
+            "go deeper",
+            "you are ready for",
+        ],
+    ),
+    (
+        3,
+        [
+            "you must",
+            "you have no choice",
+            "abandon your old life",
+            "cut ties with",
+            "leave behind those who",
+            "only through us",
+            "there is no other way",
+            "your old self must die",
+            "total surrender",
+            "complete devotion",
+            "sever all attachments",
+            "give everything",
+            "sell your possessions",
+            "those who refuse will",
+            "full commitment required",
+            "cut negative cords",
+            "cut all negative cords",
+            "cut the negative cords",
+        ],
+    ),
+]
+
 CONTRADICTION_PAIRS: list[tuple[str, list[str], list[str]]] = [
     (
         "empowerment vs. dependency",
