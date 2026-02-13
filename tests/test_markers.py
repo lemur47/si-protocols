@@ -25,7 +25,7 @@ class TestVagueAdjectives:
             assert adj == adj.lower(), f"Marker '{adj}' should be lowercase"
 
     def test_contains_known_markers(self) -> None:
-        expected = {"ancient", "cosmic", "divine", "hidden", "secret"}
+        expected = {"ancient", "cosmic", "divine", "hidden", "secret", "anointed"}
         assert expected.issubset(VAGUE_ADJECTIVES)
 
 
@@ -37,6 +37,11 @@ class TestAuthorityPhrases:
         for phrase in AUTHORITY_PHRASES:
             assert phrase == phrase.lower(), f"Phrase '{phrase}' should be lowercase"
 
+    def test_contains_tradition_phrases(self) -> None:
+        assert "god told me to tell you" in AUTHORITY_PHRASES
+        assert "the elders have decreed" in AUTHORITY_PHRASES
+        assert "the grand master has spoken" in AUTHORITY_PHRASES
+
 
 class TestUrgencyPatterns:
     def test_not_empty(self) -> None:
@@ -45,6 +50,11 @@ class TestUrgencyPatterns:
     def test_all_lowercase(self) -> None:
         for pattern in URGENCY_PATTERNS:
             assert pattern == pattern.lower(), f"Pattern '{pattern}' should be lowercase"
+
+    def test_contains_tradition_phrases(self) -> None:
+        assert "sow your seed now" in URGENCY_PATTERNS
+        assert "limited spots remaining" in URGENCY_PATTERNS
+        assert "wake up before it's too late" in URGENCY_PATTERNS
 
 
 class TestFearWords:
@@ -59,7 +69,7 @@ class TestFearWords:
         assert len(FEAR_WORDS) > 0
 
     def test_contains_known_markers(self) -> None:
-        expected = {"doom", "catastrophe", "destruction", "despair", "wrath"}
+        expected = {"doom", "catastrophe", "destruction", "despair", "wrath", "curse"}
         assert expected.issubset(FEAR_WORDS)
 
     def test_no_overlap_with_euphoria(self) -> None:
@@ -78,6 +88,11 @@ class TestFearPhrases:
     def test_contains_old_earth(self) -> None:
         assert "old earth" in FEAR_PHRASES
 
+    def test_contains_tradition_phrases(self) -> None:
+        assert "generational curse" in FEAR_PHRASES
+        assert "spiritual death" in FEAR_PHRASES
+        assert "expelled from the order" in FEAR_PHRASES
+
 
 class TestEuphoriaWords:
     def test_is_frozenset(self) -> None:
@@ -91,7 +106,7 @@ class TestEuphoriaWords:
         assert len(EUPHORIA_WORDS) > 0
 
     def test_contains_known_markers(self) -> None:
-        expected = {"bliss", "paradise", "miracle", "salvation", "rapture"}
+        expected = {"bliss", "paradise", "miracle", "salvation", "rapture", "prosperity"}
         assert expected.issubset(EUPHORIA_WORDS)
 
     def test_no_overlap_with_fear(self) -> None:
@@ -109,6 +124,11 @@ class TestEuphoriaPhrases:
 
     def test_contains_new_earth(self) -> None:
         assert "new earth" in EUPHORIA_PHRASES
+
+    def test_contains_tradition_phrases(self) -> None:
+        assert "financial breakthrough" in EUPHORIA_PHRASES
+        assert "quantum healing" in EUPHORIA_PHRASES
+        assert "raise your vibration" in EUPHORIA_PHRASES
 
 
 class TestContradictionPairs:
@@ -136,6 +156,12 @@ class TestContradictionPairs:
             overlap = set(pole_a) & set(pole_b)
             assert overlap == set(), f"Overlap in '{label}': {overlap}"
 
+    def test_contains_tradition_pairs(self) -> None:
+        labels = [label for label, _, _ in CONTRADICTION_PAIRS]
+        assert "poverty virtue vs. prosperity promise" in labels
+        assert "community love vs. shunning" in labels
+        assert "openness vs. sworn secrecy" in labels
+
 
 class TestUnfalsifiableSourcePhrases:
     def test_is_list(self) -> None:
@@ -151,6 +177,11 @@ class TestUnfalsifiableSourcePhrases:
     def test_no_overlap_with_authority_phrases(self) -> None:
         overlap = set(UNFALSIFIABLE_SOURCE_PHRASES) & set(AUTHORITY_PHRASES)
         assert overlap == set(), f"Overlap with AUTHORITY_PHRASES: {overlap}"
+
+    def test_contains_tradition_phrases(self) -> None:
+        assert "suppressed research shows" in UNFALSIFIABLE_SOURCE_PHRASES
+        assert "forbidden knowledge" in UNFALSIFIABLE_SOURCE_PHRASES
+        assert "the secret doctrine reveals" in UNFALSIFIABLE_SOURCE_PHRASES
 
 
 class TestUnnamedAuthorityPhrases:
@@ -171,6 +202,11 @@ class TestUnnamedAuthorityPhrases:
     def test_no_overlap_with_unfalsifiable(self) -> None:
         overlap = set(UNNAMED_AUTHORITY_PHRASES) & set(UNFALSIFIABLE_SOURCE_PHRASES)
         assert overlap == set(), f"Overlap with UNFALSIFIABLE_SOURCE_PHRASES: {overlap}"
+
+    def test_contains_tradition_phrases(self) -> None:
+        assert "whistleblowers confirm" in UNNAMED_AUTHORITY_PHRASES
+        assert "alternative doctors say" in UNNAMED_AUTHORITY_PHRASES
+        assert "censored experts" in UNNAMED_AUTHORITY_PHRASES
 
 
 class TestVerifiableCitationMarkers:
@@ -217,3 +253,15 @@ class TestCommitmentEscalationMarkers:
         for _, phrases in COMMITMENT_ESCALATION_MARKERS:
             all_phrases.extend(phrases)
         assert len(all_phrases) == len(set(all_phrases)), "Duplicate phrases found across tiers"
+
+    def test_escalation_tradition_phrases(self) -> None:
+        tier_phrases: dict[int, list[str]] = {}
+        for tier, phrases in COMMITMENT_ESCALATION_MARKERS:
+            tier_phrases[tier] = phrases
+        assert "attend a free session" in tier_phrases[1]
+        assert "visit the lodge" in tier_phrases[1]
+        assert "sow a seed of faith" in tier_phrases[2]
+        assert "upgrade to the next level" in tier_phrases[2]
+        assert "take the first degree" in tier_phrases[2]
+        assert "give your life savings" in tier_phrases[3]
+        assert "swear the blood oath" in tier_phrases[3]
