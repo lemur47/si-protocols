@@ -3,16 +3,23 @@
 Run locally on your own text files only. MIT Licence.
 """
 
+from __future__ import annotations
+
 import argparse
 import random
 import sys
 from dataclasses import dataclass, field
 from pathlib import Path
+from typing import TYPE_CHECKING
 
 import spacy
 
+if TYPE_CHECKING:
+    from spacy.tokens import Doc, Span
+
 from si_protocols.markers import (
     AUTHORITY_PHRASES,
+    COMMITMENT_ESCALATION_MARKERS,
     CONTRADICTION_PAIRS,
     EUPHORIA_PHRASES,
     EUPHORIA_WORDS,
@@ -50,19 +57,88 @@ class ThreatResult:
     emotion_hits: list[str] = field(default_factory=list)
     contradiction_hits: list[str] = field(default_factory=list)
     source_attribution_hits: list[str] = field(default_factory=list)
+    escalation_hits: list[str] = field(default_factory=list)
     message: str = "Run on your own texts only — this is a local tool."
+
+
+def _commitment_escalation(
+    doc: Doc,
+    markers: list[tuple[int, list[str]]],
+) -> tuple[float, list[str]]:
+    """Detect foot-in-the-door escalation across text segments.
+
+    Splits sentences into thirds (early/middle/late) and measures whether
+    commitment marker intensity increases from early to late.
+
+    Returns (score 0-1, hit labels like ["early: consider", "late: you must"]).
+    """
+    sents = list(doc.sents)
+    if len(sents) < 3:
+        return 0.0, []
+
+    # Build tier lookup: phrase -> tier value
+    tier_lookup: dict[str, int] = {}
+    for tier, phrases in markers:
+        for phrase in phrases:
+            tier_lookup[phrase] = tier
+
+    # Split sentences into thirds
+    third = len(sents) // 3
+    segments: list[tuple[str, list[Span]]] = [
+        ("early", sents[:third]),
+        ("middle", sents[third : 2 * third]),
+        ("late", sents[2 * third :]),
+    ]
+
+    # Score each segment: mean tier intensity of matched phrases
+    segment_scores: dict[str, float] = {}
+    segment_hits: dict[str, list[str]] = {}
+    total_hits = 0
+    for label, seg_sents in segments:
+        seg_text = " ".join(s.text.lower() for s in seg_sents)
+        hits: list[tuple[str, int]] = []
+        for phrase, tier in tier_lookup.items():
+            if phrase in seg_text:
+                hits.append((phrase, tier))
+        total_hits += len(hits)
+        segment_scores[label] = sum(t for _, t in hits) / max(len(hits), 1) if hits else 0.0
+        segment_hits[label] = [phrase for phrase, _ in hits]
+
+    # Require at least 2 total marker hits to avoid false positives
+    if total_hits < 2:
+        return 0.0, []
+
+    # Detect gradient: early→late (60%), early→mid (20%), mid→late (20%)
+    max_tier = max(t for t, _ in markers)
+    early_to_late = max(segment_scores["late"] - segment_scores["early"], 0.0) / max_tier
+    early_to_mid = max(segment_scores["middle"] - segment_scores["early"], 0.0) / max_tier
+    mid_to_late = max(segment_scores["late"] - segment_scores["middle"], 0.0) / max_tier
+
+    raw_score = early_to_late * 0.6 + early_to_mid * 0.2 + mid_to_late * 0.2
+    score = min(raw_score, 1.0)
+
+    if score == 0.0:
+        return 0.0, []
+
+    # Build hit labels for non-empty segments
+    hit_labels: list[str] = []
+    for label, _seg_sents in segments:
+        if segment_hits[label]:
+            hit_labels.append(f"{label}: {', '.join(segment_hits[label])}")
+
+    return score, hit_labels
 
 
 def tech_analysis(
     text: str,
-) -> tuple[float, list[str], list[str], list[str], list[str], list[str], list[str]]:
+) -> tuple[float, list[str], list[str], list[str], list[str], list[str], list[str], list[str]]:
     """Tech layer: NLP-based suspicion signals.
 
     Returns (score, entities, authority_hits, urgency_hits, emotion_hits,
-    contradiction_hits, source_attribution_hits).
+    contradiction_hits, source_attribution_hits, escalation_hits).
     """
     if not text.strip():
-        return 0.0, [], [], [], [], [], []
+        return 0.0, [], [], [], [], [], [], []
 
     nlp = _get_nlp()
     doc = nlp(text)
@@ -122,14 +198,18 @@ def tech_analysis(
     verifiable_offset = min(len(verifiable_hits) * 0.15, 0.4)
     attribution_score = max(suspicious_density - verifiable_offset, 0.0)
 
+    # --- Commitment escalation detection ---
+    escalation_score, escalation_hits = _commitment_escalation(doc, COMMITMENT_ESCALATION_MARKERS)
+
     # Weighted composite -- all sub-scores normalised to 0-1
     tech_score = (
-        vagueness_score * 20
-        + authority_score * 20
-        + urgency_score * 15
-        + emotion_score * 15
-        + contradiction_score * 15
-        + attribution_score * 15
+        vagueness_score * 17
+        + authority_score * 17
+        + urgency_score * 13
+        + emotion_score * 13
+        + contradiction_score * 13
+        + attribution_score * 13
+        + escalation_score * 14
     )
 
     return (
@@ -140,6 +220,7 @@ def tech_analysis(
         emotion_hits,
         contradiction_hits,
         source_attribution_hits,
+        escalation_hits,
     )
 
 
@@ -170,6 +251,7 @@ def hybrid_score(
         emotion_hits,
         contradiction_hits,
         source_attribution_hits,
+        escalation_hits,
     ) = tech_analysis(text)
     intuition_score = psychic_heuristic(density_bias, seed=seed)
 
@@ -185,6 +267,7 @@ def hybrid_score(
         emotion_hits=emotion_hits,
         contradiction_hits=contradiction_hits,
         source_attribution_hits=source_attribution_hits,
+        escalation_hits=escalation_hits,
     )
 
 

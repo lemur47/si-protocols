@@ -22,6 +22,7 @@ def _make_result(
     emotion: list[str] | None = None,
     contradictions: list[str] | None = None,
     attribution: list[str] | None = None,
+    escalation: list[str] | None = None,
 ) -> ThreatResult:
     """Build a ThreatResult with overridable defaults."""
     return ThreatResult(
@@ -34,6 +35,7 @@ def _make_result(
         emotion_hits=emotion or [],
         contradiction_hits=contradictions or [],
         source_attribution_hits=attribution or [],
+        escalation_hits=escalation or [],
     )
 
 
@@ -88,6 +90,15 @@ class TestRenderRich:
         assert "Authority claims" not in output
         assert "Urgency patterns" not in output
         assert "Emotion triggers" not in output
+        assert "Commitment escalation" not in output
+
+    def test_escalation_hits_shown(self) -> None:
+        result = _make_result(
+            escalation=["early: consider, explore", "late: you must, total surrender"],
+        )
+        output = self._capture(result)
+        assert "Commitment escalation" in output
+        assert "early: consider, explore" in output
 
     def test_disclaimer_shown(self) -> None:
         output = self._capture(_make_result())
@@ -128,6 +139,7 @@ class TestRenderJson:
             "emotion_hits",
             "contradiction_hits",
             "source_attribution_hits",
+            "escalation_hits",
             "message",
         }
         assert set(data.keys()) == expected_keys

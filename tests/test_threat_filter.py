@@ -55,6 +55,27 @@ ATTRIBUTION_BENIGN_TEXT = (
     "doi:10.1234/example."
 )
 
+ESCALATION_TEXT = (
+    "Consider exploring the path of inner light. You might find that some people "
+    "experience a deeper connection. It can help to reflect on your journey. "
+    "You should commit to the programme. It is essential that you dedicate yourself "
+    "fully. You need to take the next step and go deeper into the work. "
+    "You must give everything to this path. There is no other way forward. "
+    "Total surrender is required. Those who refuse will remain in darkness."
+)
+
+NO_ESCALATION_TEXT = (
+    "Consider exploring this approach. You might find value in it. "
+    "Some people find this helpful. You could try a different perspective. "
+    "It can help to reflect on things. Worth exploring further."
+)
+
+REVERSE_ESCALATION_TEXT = (
+    "You must give everything. Total surrender is required. There is no other way. "
+    "You should commit to this. It is essential to dedicate yourself. "
+    "Consider exploring new ideas. You might find value in reflection."
+)
+
 EMPTY_TEXT = ""
 
 
@@ -84,8 +105,8 @@ class TestPsychicHeuristic:
 class TestTechAnalysis:
     @pytest.mark.slow
     def test_empty_text_returns_zero(self) -> None:
-        score, entities, auth, urgency, emotion, contradictions, attribution = tech_analysis(
-            EMPTY_TEXT
+        score, entities, auth, urgency, emotion, contradictions, attribution, escalation = (
+            tech_analysis(EMPTY_TEXT)
         )
         assert score == 0.0
         assert entities == []
@@ -94,85 +115,86 @@ class TestTechAnalysis:
         assert emotion == []
         assert contradictions == []
         assert attribution == []
+        assert escalation == []
 
     @pytest.mark.slow
     def test_benign_text_low_score(self) -> None:
-        score, _, _, _, _, _, _ = tech_analysis(BENIGN_TEXT)
+        score, _, _, _, _, _, _, _ = tech_analysis(BENIGN_TEXT)
         assert score < 20.0
 
     @pytest.mark.slow
     def test_suspicious_text_higher_score(self) -> None:
-        score, _, auth, urgency, _, _, _ = tech_analysis(SUSPICIOUS_TEXT)
+        score, _, auth, urgency, _, _, _, _ = tech_analysis(SUSPICIOUS_TEXT)
         assert score > 0.0
         assert len(auth) > 0 or len(urgency) > 0
 
     @pytest.mark.slow
     def test_emotional_text_detects_emotion_hits(self) -> None:
-        _, _, _, _, emotion, _, _ = tech_analysis(EMOTIONAL_TEXT)
+        _, _, _, _, emotion, _, _, _ = tech_analysis(EMOTIONAL_TEXT)
         assert len(emotion) > 0
 
     @pytest.mark.slow
     def test_emotional_text_scores_higher_than_benign(self) -> None:
-        benign_score, _, _, _, _, _, _ = tech_analysis(BENIGN_TEXT)
-        emotional_score, _, _, _, _, _, _ = tech_analysis(EMOTIONAL_TEXT)
+        benign_score, _, _, _, _, _, _, _ = tech_analysis(BENIGN_TEXT)
+        emotional_score, _, _, _, _, _, _, _ = tech_analysis(EMOTIONAL_TEXT)
         assert emotional_score > benign_score
 
     @pytest.mark.slow
     def test_contrast_scores_higher_than_single_pole(self) -> None:
         fear_only = "Doom and catastrophe and destruction await all of humanity."
         both = "Doom and catastrophe await, but salvation and bliss come to the chosen ones."
-        fear_score, _, _, _, _, _, _ = tech_analysis(fear_only)
-        both_score, _, _, _, _, _, _ = tech_analysis(both)
+        fear_score, _, _, _, _, _, _, _ = tech_analysis(fear_only)
+        both_score, _, _, _, _, _, _, _ = tech_analysis(both)
         assert both_score > fear_score
 
     @pytest.mark.slow
     def test_benign_text_no_emotion_hits(self) -> None:
-        _, _, _, _, emotion, _, _ = tech_analysis(BENIGN_TEXT)
+        _, _, _, _, emotion, _, _, _ = tech_analysis(BENIGN_TEXT)
         assert emotion == []
 
     @pytest.mark.slow
     def test_earth_polarity_detected(self) -> None:
         text = "The old earth is crumbling. Welcome to the new earth of light."
-        _, _, _, _, emotion, _, _ = tech_analysis(text)
+        _, _, _, _, emotion, _, _, _ = tech_analysis(text)
         assert "old earth" in emotion
         assert "new earth" in emotion
 
     @pytest.mark.slow
     def test_contradiction_detected(self) -> None:
-        _, _, _, _, _, contradictions, _ = tech_analysis(CONTRADICTORY_TEXT)
+        _, _, _, _, _, contradictions, _, _ = tech_analysis(CONTRADICTORY_TEXT)
         assert "empowerment vs. dependency" in contradictions
         assert "autonomy vs. doubt suppression" in contradictions
 
     @pytest.mark.slow
     def test_single_pole_no_contradiction(self) -> None:
-        _, _, _, _, _, contradictions, _ = tech_analysis(SINGLE_POLE_TEXT)
+        _, _, _, _, _, contradictions, _, _ = tech_analysis(SINGLE_POLE_TEXT)
         assert contradictions == []
 
     @pytest.mark.slow
     def test_contradiction_scores_higher(self) -> None:
-        single_score, _, _, _, _, _, _ = tech_analysis(SINGLE_POLE_TEXT)
-        contra_score, _, _, _, _, _, _ = tech_analysis(CONTRADICTORY_TEXT)
+        single_score, _, _, _, _, _, _, _ = tech_analysis(SINGLE_POLE_TEXT)
+        contra_score, _, _, _, _, _, _, _ = tech_analysis(CONTRADICTORY_TEXT)
         assert contra_score > single_score
 
     @pytest.mark.slow
     def test_benign_no_contradictions(self) -> None:
-        _, _, _, _, _, contradictions, _ = tech_analysis(BENIGN_TEXT)
+        _, _, _, _, _, contradictions, _, _ = tech_analysis(BENIGN_TEXT)
         assert contradictions == []
 
     @pytest.mark.slow
     def test_source_attribution_detected(self) -> None:
-        _, _, _, _, _, _, attribution = tech_analysis(ATTRIBUTION_SUSPICIOUS_TEXT)
+        _, _, _, _, _, _, attribution, _ = tech_analysis(ATTRIBUTION_SUSPICIOUS_TEXT)
         assert len(attribution) > 0
 
     @pytest.mark.slow
     def test_source_attribution_empty_for_benign(self) -> None:
-        _, _, _, _, _, _, attribution = tech_analysis(BENIGN_TEXT)
+        _, _, _, _, _, _, attribution, _ = tech_analysis(BENIGN_TEXT)
         assert attribution == []
 
     @pytest.mark.slow
     def test_attribution_suspicious_scores_higher_than_benign(self) -> None:
-        benign_score, _, _, _, _, _, _ = tech_analysis(ATTRIBUTION_BENIGN_TEXT)
-        suspicious_score, _, _, _, _, _, _ = tech_analysis(ATTRIBUTION_SUSPICIOUS_TEXT)
+        benign_score, _, _, _, _, _, _, _ = tech_analysis(ATTRIBUTION_BENIGN_TEXT)
+        suspicious_score, _, _, _, _, _, _, _ = tech_analysis(ATTRIBUTION_SUSPICIOUS_TEXT)
         assert suspicious_score > benign_score
 
     @pytest.mark.slow
@@ -182,9 +204,53 @@ class TestTechAnalysis:
             "Scientists say the quantum field proves everything. Experts agree. "
             "Published in the Journal of Physics (doi:10.1234/example)."
         )
-        score_no_cite, _, _, _, _, _, _ = tech_analysis(text_no_cite)
-        score_with_cite, _, _, _, _, _, _ = tech_analysis(text_with_cite)
+        score_no_cite, _, _, _, _, _, _, _ = tech_analysis(text_no_cite)
+        score_with_cite, _, _, _, _, _, _, _ = tech_analysis(text_with_cite)
         assert score_with_cite < score_no_cite
+
+
+# --- commitment escalation ---
+
+
+class TestCommitmentEscalation:
+    @pytest.mark.slow
+    def test_escalation_detected(self) -> None:
+        _, _, _, _, _, _, _, escalation = tech_analysis(ESCALATION_TEXT)
+        assert len(escalation) > 0
+
+    @pytest.mark.slow
+    def test_empty_for_benign(self) -> None:
+        _, _, _, _, _, _, _, escalation = tech_analysis(BENIGN_TEXT)
+        assert escalation == []
+
+    @pytest.mark.slow
+    def test_empty_for_uniform_mild(self) -> None:
+        _, _, _, _, _, _, _, escalation = tech_analysis(NO_ESCALATION_TEXT)
+        assert escalation == []
+
+    @pytest.mark.slow
+    def test_escalation_scores_higher_than_benign(self) -> None:
+        benign_score, _, _, _, _, _, _, _ = tech_analysis(BENIGN_TEXT)
+        escalation_score, _, _, _, _, _, _, _ = tech_analysis(ESCALATION_TEXT)
+        assert escalation_score > benign_score
+
+    @pytest.mark.slow
+    def test_reverse_escalation_scores_lower(self) -> None:
+        escalation_score, _, _, _, _, _, _, esc_hits = tech_analysis(ESCALATION_TEXT)
+        reverse_score, _, _, _, _, _, _, rev_hits = tech_analysis(REVERSE_ESCALATION_TEXT)
+        # Forward escalation should produce a higher score or more hits
+        assert escalation_score > reverse_score or len(esc_hits) >= len(rev_hits)
+
+    @pytest.mark.slow
+    def test_short_text_returns_empty(self) -> None:
+        short = "Consider this. You must act."
+        _, _, _, _, _, _, _, escalation = tech_analysis(short)
+        assert escalation == []
+
+    @pytest.mark.slow
+    def test_empty_text_returns_empty(self) -> None:
+        _, _, _, _, _, _, _, escalation = tech_analysis(EMPTY_TEXT)
+        assert escalation == []
 
 
 # --- hybrid_score ---
@@ -243,6 +309,16 @@ class TestHybridScore:
     def test_source_attribution_hits_empty_for_benign(self) -> None:
         result = hybrid_score(BENIGN_TEXT, seed=42)
         assert result.source_attribution_hits == []
+
+    @pytest.mark.slow
+    def test_escalation_hits_populated(self) -> None:
+        result = hybrid_score(ESCALATION_TEXT, seed=42)
+        assert len(result.escalation_hits) > 0
+
+    @pytest.mark.slow
+    def test_escalation_hits_empty_for_benign(self) -> None:
+        result = hybrid_score(BENIGN_TEXT, seed=42)
+        assert result.escalation_hits == []
 
 
 # --- CLI main ---

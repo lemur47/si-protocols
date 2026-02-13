@@ -2,6 +2,7 @@
 
 from si_protocols.markers import (
     AUTHORITY_PHRASES,
+    COMMITMENT_ESCALATION_MARKERS,
     CONTRADICTION_PAIRS,
     EUPHORIA_PHRASES,
     EUPHORIA_WORDS,
@@ -182,3 +183,37 @@ class TestVerifiableCitationMarkers:
     def test_all_lowercase(self) -> None:
         for marker in VERIFIABLE_CITATION_MARKERS:
             assert marker == marker.lower(), f"Marker '{marker}' should be lowercase"
+
+
+class TestCommitmentEscalationMarkers:
+    def test_is_list_of_2_tuples(self) -> None:
+        assert isinstance(COMMITMENT_ESCALATION_MARKERS, list)
+        for entry in COMMITMENT_ESCALATION_MARKERS:
+            assert isinstance(entry, tuple)
+            assert len(entry) == 2
+
+    def test_tiers_are_positive_integers(self) -> None:
+        for tier, _ in COMMITMENT_ESCALATION_MARKERS:
+            assert isinstance(tier, int)
+            assert tier > 0
+
+    def test_tiers_in_ascending_order(self) -> None:
+        tiers = [tier for tier, _ in COMMITMENT_ESCALATION_MARKERS]
+        assert tiers == sorted(tiers), "Tiers must be in ascending order"
+
+    def test_all_phrases_lowercase(self) -> None:
+        for tier, phrases in COMMITMENT_ESCALATION_MARKERS:
+            for phrase in phrases:
+                assert phrase == phrase.lower(), (
+                    f"Tier {tier} phrase '{phrase}' should be lowercase"
+                )
+
+    def test_each_tier_non_empty(self) -> None:
+        for tier, phrases in COMMITMENT_ESCALATION_MARKERS:
+            assert len(phrases) > 0, f"Tier {tier} must have at least one phrase"
+
+    def test_no_duplicate_phrases_across_tiers(self) -> None:
+        all_phrases: list[str] = []
+        for _, phrases in COMMITMENT_ESCALATION_MARKERS:
+            all_phrases.extend(phrases)
+        assert len(all_phrases) == len(set(all_phrases)), "Duplicate phrases found across tiers"
