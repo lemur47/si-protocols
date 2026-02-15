@@ -24,7 +24,7 @@ uv run pytest
 
 The threat filter combines two analysis layers:
 
-- **Tech layer** — NLP-based detection of vagueness patterns, authority claims, urgency/fear triggers, emotional manipulation, and logical contradictions commonly found in spiritual disinformation
+- **Tech layer** — NLP-based detection across seven dimensions: vagueness patterns, authority claims, urgency/fear triggers, emotional manipulation, logical contradictions, source attribution analysis, and commitment escalation. Markers span six tradition-specific categories (generic New Age, prosperity gospel, conspirituality, commercial exploitation, cult rhetoric, fraternal/secret society).
 - **Heuristic layer** — probabilistic dissonance scanner (placeholder for future biofeedback integration)
 
 Output is a 0–100 threat score with a breakdown of what triggered it.
@@ -35,9 +35,22 @@ Output is a 0–100 threat score with a breakdown of what triggered it.
 src/si_protocols/
   threat_filter.py    # Hybrid NLP + heuristic threat scorer
   markers.py          # Disinformation marker definitions
+  output.py           # Rich and JSON output formatting
+app/
+  main.py             # FastAPI REST API (POST /analyse, GET /health)
+  schemas.py          # Pydantic request/response models
+site/                 # Astro documentation site
 tests/                # pytest suite
 examples/             # Synthetic sample texts (never real material)
 ```
+
+## REST API
+
+```bash
+uvicorn app.main:app --host 127.0.0.1 --port 8000
+```
+
+Local-only FastAPI server with `POST /analyse` and `GET /health`. Interactive docs at `/docs`.
 
 ## Dev
 

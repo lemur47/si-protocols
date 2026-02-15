@@ -15,7 +15,7 @@ The spiritual and metaphysical space has a disinformation problem. Vague authori
 
 The threat filter analyses text across two layers:
 
-1. **Tech layer** — a spaCy NLP pipeline that detects vagueness patterns (adjective density), authority claims (phrase matching), urgency/fear triggers, emotional manipulation (lemma-based fear/euphoria detection with a contrast bonus when both polarities appear), logical contradictions (detecting when both poles of common contradiction archetypes appear in the same text), and source attribution analysis (detecting unfalsifiable sources and unnamed authorities, offset by verifiable citations). Each dimension is scored independently, then combined with configurable weights (20/20/15/15/15/15).
+1. **Tech layer** — a spaCy NLP pipeline that detects vagueness patterns (adjective density), authority claims (phrase matching), urgency/fear triggers, emotional manipulation (lemma-based fear/euphoria detection with a contrast bonus when both polarities appear), logical contradictions (detecting when both poles of common contradiction archetypes appear in the same text), source attribution analysis (detecting unfalsifiable sources and unnamed authorities, offset by verifiable citations), and commitment escalation (foot-in-the-door progression detection that splits text into thirds and measures whether commitment intensity increases from mild to coercive). Each dimension is scored independently, then combined with weights (17/17/13/13/13/13/14). Markers span six tradition-specific categories: generic New Age, prosperity gospel, conspirituality, New Age commercial exploitation, high-demand group rhetoric, and fraternal/secret society traditions.
 
 2. **Heuristic layer** — a probabilistic dissonance scanner. Currently a randomised placeholder, this layer is designed to eventually integrate biofeedback signals for a more holistic analysis.
 
@@ -40,9 +40,14 @@ See the [quickstart guide](/docs/quickstart/) for full setup instructions.
 
 ## What's Next
 
-This is v0.1 — the foundation. We're exploring:
+Since launch we've shipped several major additions:
 
-- Expanded marker dictionaries for different spiritual traditions
+- **Commitment escalation detection** — a 7th scoring dimension that detects foot-in-the-door progression
+- **Tradition-specific markers** — expanded dictionaries covering prosperity gospel, conspirituality, cult rhetoric, and more
+- **REST API** — a FastAPI-based `POST /analyse` endpoint for HTTP integration ([API Reference](/docs/api/))
+
+Still exploring:
+
 - Biofeedback integration for the heuristic layer
 - Browser extension for real-time analysis
 - Community-contributed marker sets

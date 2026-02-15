@@ -30,7 +30,7 @@ uv run si-threat-filter examples/synthetic_suspicious.txt
 
 The filter produces a **0–100 threat score** with a breakdown:
 
-- **Tech score** — NLP-based detection of vagueness, authority claims, urgency patterns, emotional manipulation, logical contradictions, and source attribution analysis
+- **Tech score** — NLP-based detection of vagueness, authority claims, urgency patterns, emotional manipulation, logical contradictions, source attribution analysis, and commitment escalation
 - **Heuristic score** — probabilistic dissonance scanner
 - **Hybrid score** — weighted composite: 60% tech + 40% heuristic
 
@@ -45,6 +45,7 @@ uv run pytest -m "not slow"     # Skip spaCy-dependent tests
 
 ## What Next?
 
-- Read the [source code](https://github.com/lemur47/si-protocols) to understand the analysis layers
+- [Python Library Reference](/docs/library/) — use `hybrid_score()` and `tech_analysis()` in your own code
+- [REST API Reference](/docs/api/) — analyse text over HTTP with `POST /analyse`
 - Check `markers.py` to see which patterns are detected
 - File issues or contribute on [GitHub](https://github.com/lemur47/si-protocols)
