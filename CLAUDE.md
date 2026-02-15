@@ -15,11 +15,12 @@ uv run pytest                                 # Run all tests
 uv run pytest tests/test_markers.py           # Run a single test file
 uv run pytest -k "test_deterministic"         # Run tests matching a name
 uv run pytest -m "not slow"                   # Skip slow tests (spaCy-dependent)
-uv run ruff check src/ tests/                 # Lint (CI also lints tests/)
-uv run ruff format src/ tests/                # Format
+uv run ruff check src/ tests/ app/             # Lint (CI also lints tests/)
+uv run ruff format src/ tests/ app/           # Format
 uv run pyright                                # Type check
 uv run bandit -r src/                         # Security scan
 pre-commit run --all-files                    # Run all hooks (lint, format, gitleaks, bandit, pytest)
+uvicorn app.main:app --host 127.0.0.1 --port 8000  # Run API server (local-only)
 ```
 
 CLI entry point: `uv run si-threat-filter examples/synthetic_suspicious.txt`
@@ -48,6 +49,8 @@ The spaCy model (`_nlp`) is lazy-loaded via `_get_nlp()` to avoid import-time si
 4. **Output formatting** (`output.py`) — `render_rich()` produces colour-coded terminal output (green/yellow/red by threat level) with Rich panels and tables; `render_json()` emits `dataclasses.asdict()` as indented JSON. The `_threat_style()` helper maps score bands: 0-33 green, 34-66 yellow, 67-100 red bold.
 
 `ThreatResult` frozen dataclass fields: `overall_threat_score`, `tech_contribution`, `intuition_contribution`, `detected_entities`, `authority_hits`, `urgency_hits`, `emotion_hits`, `contradiction_hits`, `source_attribution_hits`, `escalation_hits`, `message`.
+
+5. **REST API** (`app/main.py`) — FastAPI application providing `POST /analyse` (wraps `hybrid_score()`) and `GET /health`. The `app/` package is a dev/deployment artifact separate from the core library — it is not included in the wheel. Pydantic request/response schemas live in `app/schemas.py`. The `/analyse` endpoint is a sync `def` so FastAPI runs CPU-bound spaCy work in a thread pool. Run with `uvicorn app.main:app` on `127.0.0.1:8000` (local-only).
 
 Marker definitions in `markers.py` are static word/phrase lists (frozenset for adjectives, lists for phrases/patterns). All markers must be lowercase. Markers span tradition-specific categories: generic New Age, prosperity gospel, conspirituality, New Age commercial exploitation, high-demand group (cult) rhetoric, and fraternal/secret society traditions.
 
