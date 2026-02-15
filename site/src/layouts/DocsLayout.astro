@@ -70,6 +70,11 @@ const sortedDocs = allDocs.sort((a, b) => (a.data.order ?? 99) - (b.data.order ?
     color: var(--colour-primary);
   }
 
+  .doc-content {
+    min-width: 0;
+    overflow-wrap: break-word;
+  }
+
   @media (max-width: 640px) {
     .docs-grid {
       grid-template-columns: 1fr;
