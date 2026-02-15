@@ -99,6 +99,31 @@ pre code {
   font-size: 0.85em;
 }
 
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1.5rem;
+  display: block;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+th, td {
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--colour-border);
+  text-align: left;
+}
+
+th {
+  background: var(--colour-surface-alt);
+  font-weight: 700;
+  font-size: 0.85em;
+}
+
+td {
+  font-size: 0.85em;
+}
+
 blockquote {
   border-left: 3px solid var(--colour-primary);
   padding-left: 1rem;
