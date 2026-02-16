@@ -103,7 +103,7 @@ def analyse(request: AnalyseRequest) -> AnalyseResponse:
 
     Sync endpoint — FastAPI runs CPU-bound spaCy work in a thread pool.
     """
-    result = hybrid_score(request.text, request.density_bias, seed=request.seed)
+    result = hybrid_score(request.text, request.density_bias, seed=request.seed, lang=request.lang)
     return AnalyseResponse(**dataclasses.asdict(result))
 
 

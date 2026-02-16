@@ -14,34 +14,27 @@ from typing import TYPE_CHECKING
 
 import spacy
 
+from si_protocols.marker_registry import SupportedLang, get_markers
+
 if TYPE_CHECKING:
     from spacy.tokens import Doc, Span
 
-from si_protocols.markers import (
-    AUTHORITY_PHRASES,
-    COMMITMENT_ESCALATION_MARKERS,
-    CONTRADICTION_PAIRS,
-    EUPHORIA_PHRASES,
-    EUPHORIA_WORDS,
-    FEAR_PHRASES,
-    FEAR_WORDS,
-    UNFALSIFIABLE_SOURCE_PHRASES,
-    UNNAMED_AUTHORITY_PHRASES,
-    URGENCY_PATTERNS,
-    VAGUE_ADJECTIVES,
-    VERIFIABLE_CITATION_MARKERS,
-)
+# Lazy-load models to avoid import-time side effects in tests.
+# Keyed by language code so each model is loaded at most once.
+_nlp_cache: dict[str, spacy.language.Language] = {}
 
-# Lazy-load to avoid import-time side effects in tests
-_nlp = None
+_LANG_MODELS: dict[str, str] = {
+    "en": "en_core_web_sm",
+    "ja": "ja_core_news_sm",
+}
 
 
-def _get_nlp() -> spacy.language.Language:
-    """Load spaCy model on first use."""
-    global _nlp
-    if _nlp is None:
-        _nlp = spacy.load("en_core_web_sm")
-    return _nlp
+def _get_nlp(lang: SupportedLang = "en") -> spacy.language.Language:
+    """Load spaCy model on first use for the given language."""
+    if lang not in _nlp_cache:
+        model = _LANG_MODELS[lang]
+        _nlp_cache[lang] = spacy.load(model)
+    return _nlp_cache[lang]
 
 
 @dataclass(frozen=True)
@@ -63,7 +56,7 @@ class ThreatResult:
 
 def _commitment_escalation(
     doc: Doc,
-    markers: list[tuple[int, list[str]]],
+    escalation_markers: list[tuple[int, list[str]]],
 ) -> tuple[float, list[str]]:
     """Detect foot-in-the-door escalation across text segments.
 
@@ -78,7 +71,7 @@ def _commitment_escalation(
 
     # Build tier lookup: phrase -> tier value
     tier_lookup: dict[str, int] = {}
-    for tier, phrases in markers:
+    for tier, phrases in escalation_markers:
         for phrase in phrases:
             tier_lookup[phrase] = tier
 
@@ -109,7 +102,7 @@ def _commitment_escalation(
         return 0.0, []
 
     # Detect gradient: early→late (60%), early→mid (20%), mid→late (20%)
-    max_tier = max(t for t, _ in markers)
+    max_tier = max(t for t, _ in escalation_markers)
     early_to_late = max(segment_scores["late"] - segment_scores["early"], 0.0) / max_tier
     early_to_mid = max(segment_scores["middle"] - segment_scores["early"], 0.0) / max_tier
     mid_to_late = max(segment_scores["late"] - segment_scores["middle"], 0.0) / max_tier
@@ -131,6 +124,8 @@ def _commitment_escalation(
 
 def tech_analysis(
     text: str,
+    *,
+    lang: SupportedLang = "en",
 ) -> tuple[float, list[str], list[str], list[str], list[str], list[str], list[str], list[str]]:
     """Tech layer: NLP-based suspicion signals.
 
@@ -140,31 +135,35 @@ def tech_analysis(
     if not text.strip():
         return 0.0, [], [], [], [], [], [], []
 
-    nlp = _get_nlp()
+    nlp = _get_nlp(lang)
     doc = nlp(text)
     text_lower = text.lower()
+
+    markers = get_markers(lang)
 
     entities = [ent.text for ent in doc.ents]
 
     # --- Vagueness score (adjective density) ---
     vague_count = sum(
-        1 for token in doc if token.pos_ == "ADJ" and token.text.lower() in VAGUE_ADJECTIVES
+        1
+        for token in doc
+        if token.pos_ == "ADJ" and token.text.lower() in markers.vague_adjectives
     )
     vagueness_score = vague_count / max(len(doc), 1)
 
     # --- Authority-claim detection ---
-    authority_hits = [phrase for phrase in AUTHORITY_PHRASES if phrase in text_lower]
+    authority_hits = [phrase for phrase in markers.authority_phrases if phrase in text_lower]
     authority_score = min(len(authority_hits) * 0.15, 1.0)
 
     # --- Urgency/fear pattern detection ---
-    urgency_hits = [pattern for pattern in URGENCY_PATTERNS if pattern in text_lower]
+    urgency_hits = [pattern for pattern in markers.urgency_patterns if pattern in text_lower]
     urgency_score = min(len(urgency_hits) * 0.2, 1.0)
 
     # --- Emotional manipulation detection ---
-    fear_hits = [token.text for token in doc if token.lemma_.lower() in FEAR_WORDS]
-    fear_hits += [phrase for phrase in FEAR_PHRASES if phrase in text_lower]
-    euphoria_hits = [token.text for token in doc if token.lemma_.lower() in EUPHORIA_WORDS]
-    euphoria_hits += [phrase for phrase in EUPHORIA_PHRASES if phrase in text_lower]
+    fear_hits = [token.text for token in doc if token.lemma_.lower() in markers.fear_words]
+    fear_hits += [phrase for phrase in markers.fear_phrases if phrase in text_lower]
+    euphoria_hits = [token.text for token in doc if token.lemma_.lower() in markers.euphoria_words]
+    euphoria_hits += [phrase for phrase in markers.euphoria_phrases if phrase in text_lower]
 
     fear_density = min(len(fear_hits) * 0.12, 1.0)
     euphoria_density = min(len(euphoria_hits) * 0.12, 1.0)
@@ -179,7 +178,7 @@ def tech_analysis(
 
     # --- Logical contradiction detection ---
     contradiction_hits: list[str] = []
-    for label, pole_a, pole_b in CONTRADICTION_PAIRS:
+    for label, pole_a, pole_b in markers.contradiction_pairs:
         has_a = any(pattern in text_lower for pattern in pole_a)
         has_b = any(pattern in text_lower for pattern in pole_b)
         if has_a and has_b:
@@ -188,10 +187,12 @@ def tech_analysis(
 
     # --- Source attribution analysis ---
     unfalsifiable_hits = [
-        phrase for phrase in UNFALSIFIABLE_SOURCE_PHRASES if phrase in text_lower
+        phrase for phrase in markers.unfalsifiable_source_phrases if phrase in text_lower
     ]
-    unnamed_hits = [phrase for phrase in UNNAMED_AUTHORITY_PHRASES if phrase in text_lower]
-    verifiable_hits = [marker for marker in VERIFIABLE_CITATION_MARKERS if marker in text_lower]
+    unnamed_hits = [phrase for phrase in markers.unnamed_authority_phrases if phrase in text_lower]
+    verifiable_hits = [
+        marker for marker in markers.verifiable_citation_markers if marker in text_lower
+    ]
     source_attribution_hits = unfalsifiable_hits + unnamed_hits
 
     suspicious_density = min((len(unfalsifiable_hits) + len(unnamed_hits)) * 0.12, 1.0)
@@ -199,7 +200,9 @@ def tech_analysis(
     attribution_score = max(suspicious_density - verifiable_offset, 0.0)
 
     # --- Commitment escalation detection ---
-    escalation_score, escalation_hits = _commitment_escalation(doc, COMMITMENT_ESCALATION_MARKERS)
+    escalation_score, escalation_hits = _commitment_escalation(
+        doc, markers.commitment_escalation_markers
+    )
 
     # Weighted composite -- all sub-scores normalised to 0-1
     tech_score = (
@@ -241,6 +244,7 @@ def hybrid_score(
     density_bias: float = 0.75,
     *,
     seed: int | None = None,
+    lang: SupportedLang = "en",
 ) -> ThreatResult:
     """Combine layers: 60% tech + 40% heuristic intuition."""
     (
@@ -252,7 +256,7 @@ def hybrid_score(
         contradiction_hits,
         source_attribution_hits,
         escalation_hits,
-    ) = tech_analysis(text)
+    ) = tech_analysis(text, lang=lang)
     intuition_score = psychic_heuristic(density_bias, seed=seed)
 
     overall = (tech_score * 0.6) + (intuition_score * 0.4)
@@ -296,6 +300,12 @@ def main() -> None:
         dest="output_format",
         help="Output format: rich (default) or json",
     )
+    parser.add_argument(
+        "--lang",
+        choices=["en", "ja"],
+        default="en",
+        help="Analysis language: en (default) or ja (Japanese)",
+    )
     args = parser.parse_args()
 
     path = Path(args.file)
@@ -304,7 +314,7 @@ def main() -> None:
         sys.exit(1)
 
     text = path.read_text(encoding="utf-8")
-    result = hybrid_score(text, args.density)
+    result = hybrid_score(text, args.density, lang=args.lang)
 
     if args.output_format == "json":
         render_json(result)

@@ -12,6 +12,12 @@ SUSPICIOUS_TEXT = (
     "before the window is closing. Only the chosen will transcend."
 )
 
+SUSPICIOUS_TEXT_JA = (
+    "アセンデッドマスターが言う、この宇宙的な真実は長い間秘められたものでした。"
+    "銀河連合が確認した、今すぐ行動しなければ窓が閉じようとしている。"
+    "選ばれた者だけがアセンションの道を歩むことができる。"
+)
+
 client = TestClient(app)
 
 
@@ -86,6 +92,24 @@ class TestAnalyseEndpoint:
 
     def test_rejects_invalid_density_bias(self) -> None:
         response = client.post("/analyse", json={"text": "hello", "density_bias": 2.0})
+        assert response.status_code == 422
+
+    @pytest.mark.slow
+    def test_accepts_lang_ja(self) -> None:
+        response = client.post(
+            "/analyse", json={"text": SUSPICIOUS_TEXT_JA, "lang": "ja", "seed": 42}
+        )
+        assert response.status_code == 200
+        data = response.json()
+        assert "overall_threat_score" in data
+
+    @pytest.mark.slow
+    def test_default_lang_still_works(self) -> None:
+        response = client.post("/analyse", json={"text": BENIGN_TEXT, "seed": 42})
+        assert response.status_code == 200
+
+    def test_rejects_unsupported_lang(self) -> None:
+        response = client.post("/analyse", json={"text": "hello", "lang": "fr"})
         assert response.status_code == 422
 
 
