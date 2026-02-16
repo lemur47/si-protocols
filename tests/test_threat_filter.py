@@ -116,6 +116,33 @@ FRATERNAL_TEXT = (
 
 EMPTY_TEXT = ""
 
+# --- Japanese fixtures ---
+
+BENIGN_TEXT_JA = "猫がマットの上に座っていた。穏やかな火曜日の午後だった。"
+
+SUSPICIOUS_TEXT_JA = (
+    "アセンデッドマスターが言う、この宇宙的な真実は長い間秘められたものでした。"
+    "銀河連合が確認した、今すぐ行動しなければ窓が閉じようとしている。"
+    "選ばれた者だけがアセンションの道を歩むことができる。"
+)
+
+EMOTIONAL_TEXT_JA = (
+    "崩壊と破滅が目を覚まさない者を待ち受けている。破壊と絶望が値しない者を飲み込む。"
+    "しかし救済と至福が選ばれし少数の者を待っている。覚醒と超越の奇跡を受け入れる者に。"
+)
+
+CONTRADICTORY_TEXT_JA = (
+    "あなたには力がある。内なる力は無限だ。直感を信じて。"
+    "しかしこれが必要。導きがなければ迷い続ける。疑いは恐れである。"
+)
+
+ATTRIBUTION_SUSPICIOUS_TEXT_JA = (
+    "古代の叡智が教える量子場のエネルギーがすべての癒しの鍵を握っている。"
+    "科学者が言う、これは証明されている。専門家が認めるソースエネルギーは"
+    "あなたのDNAを変えることができる。研究が示す高次元が明かす真実を"
+    "医師が確認するが、主流メディアは隠している。"
+)
+
 
 # --- psychic_heuristic ---
 
@@ -477,3 +504,99 @@ class TestTraditionMarkers:
     def test_fraternal_has_source_or_authority_hits(self) -> None:
         result = hybrid_score(FRATERNAL_TEXT, seed=42)
         assert len(result.source_attribution_hits) > 0 or len(result.authority_hits) > 0
+
+
+# --- Japanese tech_analysis ---
+
+
+class TestTechAnalysisJapanese:
+    @pytest.mark.slow
+    def test_empty_text_returns_zero(self) -> None:
+        score, entities, auth, _, _, _, _, _ = tech_analysis("", lang="ja")
+        assert score == 0.0
+        assert entities == []
+        assert auth == []
+
+    @pytest.mark.slow
+    def test_benign_text_low_score(self) -> None:
+        score, _, _, _, _, _, _, _ = tech_analysis(BENIGN_TEXT_JA, lang="ja")
+        assert score < 20.0
+
+    @pytest.mark.slow
+    def test_suspicious_text_higher_than_benign(self) -> None:
+        benign_score, _, _, _, _, _, _, _ = tech_analysis(BENIGN_TEXT_JA, lang="ja")
+        suspicious_score, _, _, _, _, _, _, _ = tech_analysis(SUSPICIOUS_TEXT_JA, lang="ja")
+        assert suspicious_score > benign_score
+
+    @pytest.mark.slow
+    def test_authority_hits_detected(self) -> None:
+        _, _, auth, _, _, _, _, _ = tech_analysis(SUSPICIOUS_TEXT_JA, lang="ja")
+        assert len(auth) > 0
+
+    @pytest.mark.slow
+    def test_urgency_hits_detected(self) -> None:
+        _, _, _, urgency, _, _, _, _ = tech_analysis(SUSPICIOUS_TEXT_JA, lang="ja")
+        assert len(urgency) > 0
+
+    @pytest.mark.slow
+    def test_emotional_text_detects_emotion_hits(self) -> None:
+        _, _, _, _, emotion, _, _, _ = tech_analysis(EMOTIONAL_TEXT_JA, lang="ja")
+        assert len(emotion) > 0
+
+    @pytest.mark.slow
+    def test_source_attribution_detected(self) -> None:
+        _, _, _, _, _, _, attribution, _ = tech_analysis(ATTRIBUTION_SUSPICIOUS_TEXT_JA, lang="ja")
+        assert len(attribution) > 0
+
+
+# --- Japanese hybrid_score ---
+
+
+class TestHybridScoreJapanese:
+    @pytest.mark.slow
+    def test_returns_threat_result(self) -> None:
+        result = hybrid_score(BENIGN_TEXT_JA, seed=42, lang="ja")
+        assert isinstance(result, ThreatResult)
+
+    @pytest.mark.slow
+    def test_deterministic_with_seed(self) -> None:
+        a = hybrid_score(SUSPICIOUS_TEXT_JA, seed=42, lang="ja")
+        b = hybrid_score(SUSPICIOUS_TEXT_JA, seed=42, lang="ja")
+        assert a == b
+
+    @pytest.mark.slow
+    def test_suspicious_scores_higher_than_benign(self) -> None:
+        benign = hybrid_score(BENIGN_TEXT_JA, seed=42, lang="ja")
+        sus = hybrid_score(SUSPICIOUS_TEXT_JA, seed=42, lang="ja")
+        assert sus.tech_contribution > benign.tech_contribution
+
+
+# --- Japanese CLI main ---
+
+
+class TestMainJapanese:
+    @pytest.mark.slow
+    def test_analyses_japanese_file(
+        self, tmp_path: Path, monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]
+    ) -> None:
+        sample = tmp_path / "sample_ja.txt"
+        sample.write_text(SUSPICIOUS_TEXT_JA)
+        monkeypatch.setattr("sys.argv", ["si-threat-filter", "--lang", "ja", str(sample)])
+        main()
+        captured = capsys.readouterr()
+        assert "Threat Analysis" in captured.out
+        assert "Overall Threat Score" in captured.out
+
+    @pytest.mark.slow
+    def test_json_format_japanese(
+        self, tmp_path: Path, monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]
+    ) -> None:
+        sample = tmp_path / "sample_ja.txt"
+        sample.write_text(SUSPICIOUS_TEXT_JA)
+        monkeypatch.setattr(
+            "sys.argv", ["si-threat-filter", "--lang", "ja", "--format", "json", str(sample)]
+        )
+        main()
+        captured = capsys.readouterr()
+        data = json.loads(captured.out)
+        assert "overall_threat_score" in data

@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from typing import Literal
+
 from pydantic import BaseModel, Field
 
 
@@ -11,6 +13,7 @@ class AnalyseRequest(BaseModel):
     text: str = Field(min_length=1, max_length=100_000)
     density_bias: float = Field(default=0.75, ge=0.0, le=1.0)
     seed: int | None = None
+    lang: Literal["en", "ja"] = Field(default="en")
 
 
 class AnalyseResponse(BaseModel):
