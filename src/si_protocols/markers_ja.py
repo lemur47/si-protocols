@@ -390,3 +390,249 @@ COMMITMENT_ESCALATION_MARKERS: list[tuple[int, list[str]]] = [
         ],
     ),
 ]
+
+# ---------------------------------------------------------------------------
+# Keyword-based matching data
+# ---------------------------------------------------------------------------
+# Japanese morphology (SudachiPy tokenisation, particles, verb conjugation)
+# makes exact substring matching unreliable. The structures below enable
+# keyword / co-occurrence matching in the analysis engine. English markers
+# leave the corresponding MarkerSet fields as None.
+
+# Bare stems without particles — matched against token lemmas (no POS gate)
+VAGUE_ADJECTIVE_STEMS: frozenset[str] = frozenset(
+    {
+        "神聖",  # sacred
+        "宇宙",  # cosmic
+        "永遠",  # eternal
+        "崇高",  # sublime
+        "神秘",  # mysterious
+        "超越",  # transcendent
+        "秘める",  # hidden/veiled (lemma form)
+        "古代",  # ancient
+        "聖",  # holy/sacred
+        "祝福",  # blessed
+        "預言",  # prophetic
+        "波動",  # vibrational
+        "活性",  # activated
+        "隠蔽",  # suppressed
+        "秘伝",  # initiatory
+        "奥義",  # esoteric
+    }
+)
+
+# Co-occurrence groups: (label, [keywords_that_must_all_appear_in_text])
+# A group fires when ALL keywords in its list appear anywhere in the text.
+AUTHORITY_KEYWORD_GROUPS: list[tuple[str, list[str]]] = [
+    # --- generic スピリチュアル ---
+    ("アセンデッドマスター+メッセージ", ["アセンデッドマスター", "メッセージ"]),
+    ("チャネリング", ["チャネリング"]),
+    ("銀河連合+介入", ["銀河連合", "介入"]),
+    ("暴露+真実", ["暴露", "真実"]),
+    ("アカシックレコード", ["アカシックレコード"]),
+    ("古代+予言", ["古代", "予言"]),
+    ("評議会+決定", ["評議会", "決定"]),
+    ("アシュタール+伝言", ["アシュタール", "伝言"]),
+    ("セント・ジャーメイン", ["セント・ジャーメイン"]),
+    ("高次+存在+メッセージ", ["高次", "存在", "メッセージ"]),
+    # --- prosperity gospel ---
+    ("神+メッセージ", ["神さま", "メッセージ"]),
+    ("主+啓示", ["主", "啓示"]),
+    ("聖霊+言う", ["聖霊", "言"]),
+    # --- cult ---
+    ("長老+決定", ["長老", "決定"]),
+    # --- fraternal ---
+    ("グランドマスター", ["グランドマスター"]),
+    ("秘密結社+明かす", ["秘密結社", "明か"]),
+]
+
+# Individual keywords whose presence indicates urgency
+URGENCY_KEYWORDS: list[str] = [
+    "今すぐ",  # right now
+    "時間がない",  # no time
+    "選ばれた",  # chosen
+    "目覚め",  # awaken
+    "ゲート",  # gate
+    "ポータル",  # portal
+    "閉じ",  # closing
+    "従わ",  # comply/obey
+    "種を蒔",  # sow seed
+    "ブレイクスルー",  # breakthrough
+    "残りわずか",  # limited spots
+    "締め切り",  # deadline/closing
+    "期間限定",  # limited time
+    "最後のチャンス",  # last chance
+    "手遅れ",  # too late
+    "備え",  # prepare
+    "タイムライン",  # timeline
+]
+
+# Co-occurrence groups for unfalsifiable source claims
+UNFALSIFIABLE_KEYWORD_GROUPS: list[tuple[str, list[str]]] = [
+    ("古代+叡智", ["古代", "叡智"]),
+    ("量子場", ["量子場"]),
+    ("高次元+明かす", ["高次元", "明か"]),
+    ("宇宙+告げる", ["宇宙", "告げ"]),
+    ("スピリット+啓示", ["スピリット", "啓示"]),
+    ("アカシックフィールド", ["アカシックフィールド"]),
+    ("光の存在+伝える", ["光の存在", "伝え"]),
+    ("ソースエネルギー", ["ソースエネルギー"]),
+    ("ディバインマトリックス", ["ディバインマトリックス"]),
+    ("異次元+存在", ["異次元", "存在"]),
+    ("スターシード", ["スターシード"]),
+    ("グレートセントラルサン", ["グレートセントラルサン"]),
+    ("クリスタルグリッド", ["クリスタルグリッド"]),
+    ("シューマン共鳴+証明", ["シューマン共鳴", "証明"]),
+    # --- conspirituality ---
+    ("隠蔽+研究", ["隠蔽", "研究"]),
+    ("隠す+真実", ["隠", "真実"]),
+    ("禁じられた知識", ["禁じ", "知識"]),
+    ("禁止+情報", ["禁止", "情報"]),
+    # --- fraternal ---
+    ("秘儀+教える", ["秘儀", "教え"]),
+    ("秘密+教義", ["秘密", "教義"]),
+    ("内なる伝統", ["内なる伝統"]),
+]
+
+# Individual keywords for unnamed authority claims
+UNNAMED_AUTHORITY_KEYWORDS: list[str] = [
+    "科学者",  # scientists
+    "専門家",  # experts
+    "研究が示",  # studies show
+    "研究が証明",  # research proves
+    "科学的に証明",  # scientifically proven
+    "医師",  # doctors
+    "第一線の研究",  # leading researchers
+    "トップ科学者",  # top scientists
+    "多数の研究",  # numerous studies
+    "データが確認",  # data confirms
+    "証拠が証明",  # evidence proves
+    "学者",  # scholars
+    "歴史家",  # historians
+    "情報筋",  # sources
+    "内部関係者",  # insiders
+    # --- conspirituality ---
+    "内部告発",  # whistleblower
+    "元関係者",  # former insiders
+    "独立系研究",  # independent researchers
+    "代替医療",  # alternative medicine
+    "検閲",  # censored
+]
+
+# Keyword-based contradiction poles
+CONTRADICTION_KEYWORD_PAIRS: list[tuple[str, list[str], list[str]]] = [
+    (
+        "エンパワーメント vs. 依存",
+        ["力がある", "内なる力", "あなたが創造者"],
+        ["これが必要", "従わなければ", "導きがなければ", "私を通じてのみ"],
+    ),
+    (
+        "普遍性 vs. 排他性",
+        ["すべての道", "多くの道", "あらゆる道", "真実はどこにでも"],
+        ["唯一の道", "唯一の方法", "唯一の真実", "他に道はない"],
+    ),
+    (
+        "無裁き vs. 非難",
+        ["裁かない", "裁きなく", "裁きから自由", "批判してはならない"],
+        ["低い波動", "引き寄せた", "カルマの負債", "苦しみを選んだ"],
+    ),
+    (
+        "エゴの解体 vs. エゴの肥大",
+        ["エゴを手放す", "エゴを解放", "エゴは幻想", "エゴの死"],
+        ["選ばれた", "あなたは特別", "選ばれし少数", "魂は進化"],
+    ),
+    (
+        "自律 vs. 疑念の抑圧",
+        ["直感を信じて", "自分を信じて", "内なる知恵", "あなた自身の真実"],
+        ["疑いは恐れ", "疑いは抵抗", "エゴが抵抗", "心は騙す"],
+    ),
+    (
+        "無条件 vs. 取引的",
+        ["無条件の愛", "条件のない愛", "愛は無償", "愛に値段はない"],
+        ["離れたら", "進歩を失う", "遅れをとる", "機会を逃す"],
+    ),
+    # --- prosperity gospel ---
+    (
+        "清貧の美徳 vs. 繁栄の約束",
+        ["貧しい者は幸い", "金は諸悪の根源", "清貧は美徳"],
+        ["神はあなたに富を望む", "豊かさを宣言", "繁栄はあなたの権利"],
+    ),
+    # --- cult ---
+    (
+        "共同体の愛 vs. 追放",
+        ["私たちは家族", "無条件に愛", "愛に満ちたコミュニティ"],
+        ["追放", "歓迎されない", "除名"],
+    ),
+    # --- fraternal ---
+    (
+        "開放性 vs. 誓約の秘密",
+        ["すべての求道者を歓迎", "開かれた", "誰も拒まない"],
+        ["秘密を誓う", "誓約に縛られた", "血の誓約", "秘儀を決して明かすな"],
+    ),
+]
+
+# Keyword stems per tier for escalation detection
+ESCALATION_KEYWORD_MARKERS: list[tuple[int, list[str]]] = [
+    (
+        1,
+        [
+            "考えてみて",  # consider
+            "かもしれません",  # you might
+            "探求",  # explore
+            "役立つ",  # helpful
+            "試してみ",  # try
+            "心を開い",  # open your mind/heart
+            "少し時間",  # take a moment
+            "振り返",  # reflect
+            "気づき",  # notice
+            "発見する",  # discover
+            "助けになる",  # it can help
+            "無料セッション",  # free session
+            "ロッジを訪ね",  # visit the lodge
+        ],
+    ),
+    (
+        2,
+        [
+            "すべきです",  # you should
+            "する必要がある",  # you need to
+            "不可欠",  # essential
+            "重要です",  # important
+            "コミット",  # commit
+            "専念",  # dedicate
+            "投資",  # investment
+            "今すぐ登録",  # enrol now
+            "今日申し込",  # sign up today
+            "プログラムに参加",  # join the programme
+            "次のステップ",  # next step
+            "もっと深く",  # go deeper
+            "準備ができている",  # you are ready
+            "信仰の種",  # seed of faith
+            "アップグレード",  # upgrade
+            "第一の位階",  # first degree
+        ],
+    ),
+    (
+        3,
+        [
+            "しなければならない",  # you must
+            "選択肢はない",  # no choice
+            "古い生活を捨て",  # abandon old life
+            "縁を切れ",  # cut ties
+            "ついてこない者",  # leave behind those who
+            "私たちを通じてのみ",  # only through us
+            "他に道はない",  # no other way
+            "古い自分は死な",  # old self must die
+            "完全な降伏",  # total surrender
+            "完全な献身",  # complete devotion
+            "すべての執着を断て",  # sever all attachments
+            "すべてを捧げよ",  # give everything
+            "財産を売り払え",  # sell possessions
+            "拒む者は",  # those who refuse
+            "完全なコミットメント",  # full commitment
+            "ネガティブなコード",  # negative cords (keyword stem)
+            "全財産を捧げ",  # give life savings
+            "血の誓約",  # blood oath
+        ],
+    ),
+]
