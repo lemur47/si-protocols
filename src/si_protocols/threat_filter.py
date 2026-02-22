@@ -54,6 +54,83 @@ class ThreatResult:
     message: str = "Run on your own texts only — this is a local tool."
 
 
+def _cooccurrence_match(text: str, groups: list[tuple[str, list[str]]]) -> list[str]:
+    """Return labels for co-occurrence groups where ALL keywords appear in *text*."""
+    return [label for label, keywords in groups if all(kw in text for kw in keywords)]
+
+
+def _keyword_match(text: str, keywords: list[str]) -> list[str]:
+    """Return keywords found anywhere in *text*."""
+    return [kw for kw in keywords if kw in text]
+
+
+def _vague_count_by_stems(doc: Doc, stems: frozenset[str]) -> int:
+    """Count tokens whose lemma appears in *stems* (no POS gate)."""
+    return sum(1 for token in doc if token.lemma_ in stems)
+
+
+def _commitment_escalation_keywords(
+    doc: Doc,
+    escalation_markers: list[tuple[int, list[str]]],
+) -> tuple[float, list[str]]:
+    """Keyword-based escalation detection for agglutinative languages.
+
+    Same algorithm as ``_commitment_escalation`` but uses keyword substring
+    matching instead of exact phrase matching.
+    """
+    sents = list(doc.sents)
+    if len(sents) < 3:
+        return 0.0, []
+
+    # Build tier lookup: keyword -> tier value
+    tier_lookup: dict[str, int] = {}
+    for tier, keywords in escalation_markers:
+        for kw in keywords:
+            tier_lookup[kw] = tier
+
+    # Split sentences into thirds
+    third = len(sents) // 3
+    segments: list[tuple[str, list[Span]]] = [
+        ("early", sents[:third]),
+        ("middle", sents[third : 2 * third]),
+        ("late", sents[2 * third :]),
+    ]
+
+    segment_scores: dict[str, float] = {}
+    segment_hits: dict[str, list[str]] = {}
+    total_hits = 0
+    for label, seg_sents in segments:
+        seg_text = "".join(s.text for s in seg_sents)
+        hits: list[tuple[str, int]] = []
+        for kw, tier in tier_lookup.items():
+            if kw in seg_text:
+                hits.append((kw, tier))
+        total_hits += len(hits)
+        segment_scores[label] = sum(t for _, t in hits) / max(len(hits), 1) if hits else 0.0
+        segment_hits[label] = [kw for kw, _ in hits]
+
+    if total_hits < 2:
+        return 0.0, []
+
+    max_tier = max(t for t, _ in escalation_markers)
+    early_to_late = max(segment_scores["late"] - segment_scores["early"], 0.0) / max_tier
+    early_to_mid = max(segment_scores["middle"] - segment_scores["early"], 0.0) / max_tier
+    mid_to_late = max(segment_scores["late"] - segment_scores["middle"], 0.0) / max_tier
+
+    raw_score = early_to_late * 0.6 + early_to_mid * 0.2 + mid_to_late * 0.2
+    score = min(raw_score, 1.0)
+
+    if score == 0.0:
+        return 0.0, []
+
+    hit_labels: list[str] = []
+    for label, _seg_sents in segments:
+        if segment_hits[label]:
+            hit_labels.append(f"{label}: {', '.join(segment_hits[label])}")
+
+    return score, hit_labels
+
+
 def _commitment_escalation(
     doc: Doc,
     escalation_markers: list[tuple[int, list[str]]],
@@ -144,19 +221,28 @@ def tech_analysis(
     entities = [ent.text for ent in doc.ents]
 
     # --- Vagueness score (adjective density) ---
-    vague_count = sum(
-        1
-        for token in doc
-        if token.pos_ == "ADJ" and token.text.lower() in markers.vague_adjectives
-    )
+    if markers.vague_adjective_stems is not None:
+        vague_count = _vague_count_by_stems(doc, markers.vague_adjective_stems)
+    else:
+        vague_count = sum(
+            1
+            for token in doc
+            if token.pos_ == "ADJ" and token.text.lower() in markers.vague_adjectives
+        )
     vagueness_score = vague_count / max(len(doc), 1)
 
     # --- Authority-claim detection ---
-    authority_hits = [phrase for phrase in markers.authority_phrases if phrase in text_lower]
+    if markers.authority_keyword_groups is not None:
+        authority_hits = _cooccurrence_match(text, markers.authority_keyword_groups)
+    else:
+        authority_hits = [phrase for phrase in markers.authority_phrases if phrase in text_lower]
     authority_score = min(len(authority_hits) * 0.15, 1.0)
 
     # --- Urgency/fear pattern detection ---
-    urgency_hits = [pattern for pattern in markers.urgency_patterns if pattern in text_lower]
+    if markers.urgency_keywords is not None:
+        urgency_hits = _keyword_match(text, markers.urgency_keywords)
+    else:
+        urgency_hits = [pattern for pattern in markers.urgency_patterns if pattern in text_lower]
     urgency_score = min(len(urgency_hits) * 0.2, 1.0)
 
     # --- Emotional manipulation detection ---
@@ -178,18 +264,33 @@ def tech_analysis(
 
     # --- Logical contradiction detection ---
     contradiction_hits: list[str] = []
-    for label, pole_a, pole_b in markers.contradiction_pairs:
-        has_a = any(pattern in text_lower for pattern in pole_a)
-        has_b = any(pattern in text_lower for pattern in pole_b)
-        if has_a and has_b:
-            contradiction_hits.append(label)
+    if markers.contradiction_keyword_pairs is not None:
+        for label, pole_a, pole_b in markers.contradiction_keyword_pairs:
+            has_a = any(kw in text for kw in pole_a)
+            has_b = any(kw in text for kw in pole_b)
+            if has_a and has_b:
+                contradiction_hits.append(label)
+    else:
+        for label, pole_a, pole_b in markers.contradiction_pairs:
+            has_a = any(pattern in text_lower for pattern in pole_a)
+            has_b = any(pattern in text_lower for pattern in pole_b)
+            if has_a and has_b:
+                contradiction_hits.append(label)
     contradiction_score = min(len(contradiction_hits) * 0.3, 1.0)
 
     # --- Source attribution analysis ---
-    unfalsifiable_hits = [
-        phrase for phrase in markers.unfalsifiable_source_phrases if phrase in text_lower
-    ]
-    unnamed_hits = [phrase for phrase in markers.unnamed_authority_phrases if phrase in text_lower]
+    if markers.unfalsifiable_keyword_groups is not None:
+        unfalsifiable_hits = _cooccurrence_match(text, markers.unfalsifiable_keyword_groups)
+    else:
+        unfalsifiable_hits = [
+            phrase for phrase in markers.unfalsifiable_source_phrases if phrase in text_lower
+        ]
+    if markers.unnamed_authority_keywords is not None:
+        unnamed_hits = _keyword_match(text, markers.unnamed_authority_keywords)
+    else:
+        unnamed_hits = [
+            phrase for phrase in markers.unnamed_authority_phrases if phrase in text_lower
+        ]
     verifiable_hits = [
         marker for marker in markers.verifiable_citation_markers if marker in text_lower
     ]
@@ -200,9 +301,14 @@ def tech_analysis(
     attribution_score = max(suspicious_density - verifiable_offset, 0.0)
 
     # --- Commitment escalation detection ---
-    escalation_score, escalation_hits = _commitment_escalation(
-        doc, markers.commitment_escalation_markers
-    )
+    if markers.escalation_keyword_markers is not None:
+        escalation_score, escalation_hits = _commitment_escalation_keywords(
+            doc, markers.escalation_keyword_markers
+        )
+    else:
+        escalation_score, escalation_hits = _commitment_escalation(
+            doc, markers.commitment_escalation_markers
+        )
 
     # Weighted composite -- all sub-scores normalised to 0-1
     tech_score = (

@@ -548,6 +548,17 @@ class TestTechAnalysisJapanese:
         _, _, _, _, _, _, attribution, _ = tech_analysis(ATTRIBUTION_SUSPICIOUS_TEXT_JA, lang="ja")
         assert len(attribution) > 0
 
+    @pytest.mark.slow
+    def test_contradiction_detected(self) -> None:
+        _, _, _, _, _, contradictions, _, _ = tech_analysis(CONTRADICTORY_TEXT_JA, lang="ja")
+        assert len(contradictions) > 0
+
+    @pytest.mark.slow
+    def test_synthetic_suspicious_ja_nonzero_tech(self) -> None:
+        text = Path("examples/synthetic_suspicious_ja.txt").read_text(encoding="utf-8")
+        score, _, _, _, _, _, _, _ = tech_analysis(text, lang="ja")
+        assert score > 0.0, "Japanese suspicious text should produce a non-zero tech score"
+
 
 # --- Japanese hybrid_score ---
 

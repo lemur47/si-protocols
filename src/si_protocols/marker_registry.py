@@ -32,6 +32,16 @@ class MarkerSet:
     commitment_escalation_markers: list[tuple[int, list[str]]] = field(default_factory=list)
     contradiction_pairs: list[tuple[str, list[str], list[str]]] = field(default_factory=list)
 
+    # Optional keyword-based fields for languages where exact substring matching fails
+    # (e.g. Japanese). English leaves these None; Japanese populates them.
+    vague_adjective_stems: frozenset[str] | None = None
+    authority_keyword_groups: list[tuple[str, list[str]]] | None = None
+    urgency_keywords: list[str] | None = None
+    unfalsifiable_keyword_groups: list[tuple[str, list[str]]] | None = None
+    unnamed_authority_keywords: list[str] | None = None
+    contradiction_keyword_pairs: list[tuple[str, list[str], list[str]]] | None = None
+    escalation_keyword_markers: list[tuple[int, list[str]]] | None = None
+
 
 # Cache loaded marker sets to avoid repeated imports
 _cache: dict[str, MarkerSet] = {}
@@ -74,6 +84,13 @@ def _load_ja() -> MarkerSet:
         verifiable_citation_markers=markers_ja.VERIFIABLE_CITATION_MARKERS,
         commitment_escalation_markers=markers_ja.COMMITMENT_ESCALATION_MARKERS,
         contradiction_pairs=markers_ja.CONTRADICTION_PAIRS,
+        vague_adjective_stems=markers_ja.VAGUE_ADJECTIVE_STEMS,
+        authority_keyword_groups=markers_ja.AUTHORITY_KEYWORD_GROUPS,
+        urgency_keywords=markers_ja.URGENCY_KEYWORDS,
+        unfalsifiable_keyword_groups=markers_ja.UNFALSIFIABLE_KEYWORD_GROUPS,
+        unnamed_authority_keywords=markers_ja.UNNAMED_AUTHORITY_KEYWORDS,
+        contradiction_keyword_pairs=markers_ja.CONTRADICTION_KEYWORD_PAIRS,
+        escalation_keyword_markers=markers_ja.ESCALATION_KEYWORD_MARKERS,
     )
 
 

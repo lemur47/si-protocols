@@ -1,16 +1,23 @@
 """Tests for Japanese disinformation marker definitions."""
 
 from si_protocols.markers_ja import (
+    AUTHORITY_KEYWORD_GROUPS,
     AUTHORITY_PHRASES,
     COMMITMENT_ESCALATION_MARKERS,
+    CONTRADICTION_KEYWORD_PAIRS,
     CONTRADICTION_PAIRS,
+    ESCALATION_KEYWORD_MARKERS,
     EUPHORIA_PHRASES,
     EUPHORIA_WORDS,
     FEAR_PHRASES,
     FEAR_WORDS,
+    UNFALSIFIABLE_KEYWORD_GROUPS,
     UNFALSIFIABLE_SOURCE_PHRASES,
+    UNNAMED_AUTHORITY_KEYWORDS,
     UNNAMED_AUTHORITY_PHRASES,
+    URGENCY_KEYWORDS,
     URGENCY_PATTERNS,
+    VAGUE_ADJECTIVE_STEMS,
     VAGUE_ADJECTIVES,
     VERIFIABLE_CITATION_MARKERS,
 )
@@ -176,3 +183,127 @@ class TestCommitmentEscalationMarkers:
         for _, phrases in COMMITMENT_ESCALATION_MARKERS:
             all_phrases.extend(phrases)
         assert len(all_phrases) == len(set(all_phrases)), "Duplicate phrases found across tiers"
+
+
+# --- Keyword-based matching data ---
+
+
+class TestVagueAdjectiveStems:
+    def test_is_frozenset(self) -> None:
+        assert isinstance(VAGUE_ADJECTIVE_STEMS, frozenset)
+
+    def test_not_empty(self) -> None:
+        assert len(VAGUE_ADJECTIVE_STEMS) > 0
+
+    def test_contains_known_stems(self) -> None:
+        expected = {"神聖", "宇宙", "永遠", "神秘"}
+        assert expected.issubset(VAGUE_ADJECTIVE_STEMS)
+
+
+class TestAuthorityKeywordGroups:
+    def test_is_list(self) -> None:
+        assert isinstance(AUTHORITY_KEYWORD_GROUPS, list)
+
+    def test_not_empty(self) -> None:
+        assert len(AUTHORITY_KEYWORD_GROUPS) > 0
+
+    def test_entries_are_label_keywords_tuples(self) -> None:
+        for entry in AUTHORITY_KEYWORD_GROUPS:
+            assert isinstance(entry, tuple)
+            assert len(entry) == 2
+            label, keywords = entry
+            assert isinstance(label, str) and label
+            assert isinstance(keywords, list) and len(keywords) > 0
+
+    def test_no_duplicate_labels(self) -> None:
+        labels = [label for label, _ in AUTHORITY_KEYWORD_GROUPS]
+        assert len(labels) == len(set(labels)), "Duplicate labels"
+
+
+class TestUrgencyKeywords:
+    def test_is_list(self) -> None:
+        assert isinstance(URGENCY_KEYWORDS, list)
+
+    def test_not_empty(self) -> None:
+        assert len(URGENCY_KEYWORDS) > 0
+
+    def test_no_duplicates(self) -> None:
+        assert len(URGENCY_KEYWORDS) == len(set(URGENCY_KEYWORDS))
+
+
+class TestUnfalsifiableKeywordGroups:
+    def test_is_list(self) -> None:
+        assert isinstance(UNFALSIFIABLE_KEYWORD_GROUPS, list)
+
+    def test_not_empty(self) -> None:
+        assert len(UNFALSIFIABLE_KEYWORD_GROUPS) > 0
+
+    def test_entries_are_label_keywords_tuples(self) -> None:
+        for entry in UNFALSIFIABLE_KEYWORD_GROUPS:
+            assert isinstance(entry, tuple)
+            assert len(entry) == 2
+            label, keywords = entry
+            assert isinstance(label, str) and label
+            assert isinstance(keywords, list) and len(keywords) > 0
+
+
+class TestUnnamedAuthorityKeywords:
+    def test_is_list(self) -> None:
+        assert isinstance(UNNAMED_AUTHORITY_KEYWORDS, list)
+
+    def test_not_empty(self) -> None:
+        assert len(UNNAMED_AUTHORITY_KEYWORDS) > 0
+
+    def test_no_duplicates(self) -> None:
+        assert len(UNNAMED_AUTHORITY_KEYWORDS) == len(set(UNNAMED_AUTHORITY_KEYWORDS))
+
+
+class TestContradictionKeywordPairs:
+    def test_is_list(self) -> None:
+        assert isinstance(CONTRADICTION_KEYWORD_PAIRS, list)
+
+    def test_not_empty(self) -> None:
+        assert len(CONTRADICTION_KEYWORD_PAIRS) > 0
+
+    def test_entries_are_3_tuples(self) -> None:
+        for entry in CONTRADICTION_KEYWORD_PAIRS:
+            assert isinstance(entry, tuple)
+            assert len(entry) == 3
+
+    def test_labels_and_poles_non_empty(self) -> None:
+        for label, pole_a, pole_b in CONTRADICTION_KEYWORD_PAIRS:
+            assert label, "Label must not be empty"
+            assert len(pole_a) > 0, f"Pole A empty for '{label}'"
+            assert len(pole_b) > 0, f"Pole B empty for '{label}'"
+
+    def test_no_keyword_in_both_poles(self) -> None:
+        for label, pole_a, pole_b in CONTRADICTION_KEYWORD_PAIRS:
+            overlap = set(pole_a) & set(pole_b)
+            assert overlap == set(), f"Overlap in '{label}': {overlap}"
+
+
+class TestEscalationKeywordMarkers:
+    def test_is_list(self) -> None:
+        assert isinstance(ESCALATION_KEYWORD_MARKERS, list)
+
+    def test_not_empty(self) -> None:
+        assert len(ESCALATION_KEYWORD_MARKERS) > 0
+
+    def test_tiers_are_positive_integers(self) -> None:
+        for tier, _ in ESCALATION_KEYWORD_MARKERS:
+            assert isinstance(tier, int)
+            assert tier > 0
+
+    def test_tiers_in_ascending_order(self) -> None:
+        tiers = [tier for tier, _ in ESCALATION_KEYWORD_MARKERS]
+        assert tiers == sorted(tiers)
+
+    def test_each_tier_non_empty(self) -> None:
+        for tier, keywords in ESCALATION_KEYWORD_MARKERS:
+            assert len(keywords) > 0, f"Tier {tier} must have at least one keyword"
+
+    def test_no_duplicate_keywords_across_tiers(self) -> None:
+        all_kws: list[str] = []
+        for _, keywords in ESCALATION_KEYWORD_MARKERS:
+            all_kws.extend(keywords)
+        assert len(all_kws) == len(set(all_kws)), "Duplicate keywords across tiers"
