@@ -24,7 +24,7 @@ class TestVagueAdjectives:
         assert len(VAGUE_ADJECTIVES) > 0
 
     def test_contains_known_markers(self) -> None:
-        expected = {"神聖", "宇宙的", "永遠", "神秘的"}
+        expected = {"神聖", "宇宙の", "永遠", "神秘の"}
         assert expected.issubset(VAGUE_ADJECTIVES)
 
 
@@ -33,8 +33,8 @@ class TestAuthorityPhrases:
         assert len(AUTHORITY_PHRASES) > 0
 
     def test_contains_key_phrases(self) -> None:
-        assert "アセンデッドマスターが言う" in AUTHORITY_PHRASES
-        assert "アカシックレコードが示す" in AUTHORITY_PHRASES
+        assert "アセンデッドマスターからのメッセージによると" in AUTHORITY_PHRASES
+        assert "アカシックレコードからダウンロードした情報によると" in AUTHORITY_PHRASES
 
 
 class TestUrgencyPatterns:
