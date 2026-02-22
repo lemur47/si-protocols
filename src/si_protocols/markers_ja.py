@@ -20,50 +20,51 @@ VAGUE_ADJECTIVES: frozenset[str] = frozenset(
     {
         # --- generic スピリチュアル ---
         "神聖",  # sacred
-        "宇宙的",  # cosmic
+        "宇宙の",  # cosmic
         "永遠",  # eternal
-        "崇高",  # sublime/transcendent
-        "神秘的",  # mysterious
-        "超越的",  # transcendent
+        "崇高な",  # sublime/transcendent
+        "神秘の",  # mysterious
+        "超越した",  # transcendent
         "秘められた",  # hidden/veiled
-        "古代",  # ancient
+        "古代の",  # ancient
         "聖なる",  # sacred/holy
         "目に見えない",  # invisible/unseen
         # --- prosperity gospel ---
         "祝福された",  # blessed/anointed
         "預言的",  # prophetic
         # --- new age ---
-        "波動的",  # vibrational
+        "波動の",  # vibrational
         "活性化された",  # activated
         # --- conspirituality ---
         "隠蔽された",  # suppressed/covered up
         # --- fraternal ---
-        "秘伝的",  # initiatory/esoteric
-        "奥義的",  # esoteric
+        "秘伝の",  # initiatory/esoteric
+        "奥義の",  # esoteric
     }
 )
 
 # Authority-claim phrases that bypass critical thinking
 AUTHORITY_PHRASES: list[str] = [
     # --- generic スピリチュアル ---
-    "アセンデッドマスターが言う",  # the ascended masters say
-    "直接チャネリングされた",  # channelled directly from
-    "銀河連合が確認した",  # the galactic federation confirms
-    "明かされたところによると",  # it has been revealed that
-    "アカシックレコードが示す",  # the akashic records show
+    "アセンデッドマスターからのメッセージによると",  # the ascended masters say
+    "公式にチャネリングされた",  # channelled directly from
+    "銀河連合の緊急介入",  # the galactic federation confirms
+    "暴露された真実は",  # it has been revealed that
+    "アカシックレコードからダウンロードした情報によると",  # the akashic records show
     "古代の予言によると",  # ancient prophecy states
-    "光の評議会が布告した",  # the council of light decrees
-    "アシュタールが語る",  # ashtar speaks
-    "サン・ジェルマンが語る",  # saint germain speaks
+    "光の評議会が決定した",  # the council of light decrees
+    "アシュタールからの伝言は",  # ashtar speaks
+    "セント・ジャーメインが言うには",  # saint germain speaks
+    "高次源の存在からのメッセージ",  # a message from the entities in higher dimensions
     # --- prosperity gospel ---
-    "神があなたに伝えよと言った",  # god told me to tell you
+    "神さまからのメッセージです",  # god told me to tell you
     "主が私に啓示された",  # the lord revealed to me
     "聖霊が言っている",  # the holy spirit says
     # --- cult ---
     "長老たちが決定した",  # the elders have decreed
     # --- fraternal ---
-    "グランドマスターが語った",  # the grand master has spoken
-    "内部サークルが明かす",  # the inner circle reveals
+    "グランドマスターによると",  # the grand master has spoken
+    "秘密結社が明かす",  # the inner circle reveals
 ]
 
 # Urgency/fear patterns used to manipulate
@@ -73,19 +74,21 @@ URGENCY_PATTERNS: list[str] = [
     "時間がない",  # time is running out
     "選ばれた者だけが",  # only the chosen will
     "目覚めなければ",  # if you do not awaken
-    "窓が閉じようとしている",  # the window is closing
+    "ゲートが閉じようとしている",  # the gate (window) is closing
+    "ポータルが閉じようとしている",  # the portal (window) is closing
     "従わなければ",  # failure to comply
     # --- prosperity gospel ---
     "今こそ種を蒔く時",  # sow your seed now
     "ブレイクスルーの瞬間",  # this is your moment of breakthrough
-    "神が今動いている",  # god is moving right now
+    "神々が今動いている",  # gods are moving right now
     # --- commercial ---
     "残りわずか",  # limited spots remaining
     "募集締め切り間近",  # enrolment closing soon
     "このオファーは期間限定",  # this offer expires
-    "参加の最後のチャンス",  # last chance to join
+    "最後のチャンス",  # last chance to join
     # --- conspirituality ---
     "手遅れになる前に目覚めよ",  # wake up before it's too late
+    "変化に備えよ",  # prepare the change
 ]
 
 # Emotional manipulation: fear/doom words (lemma base forms for spaCy matching)
@@ -107,6 +110,7 @@ FEAR_WORDS: frozenset[str] = frozenset(
         "苦悶",  # torment
         "試練",  # tribulation
         "怒り",  # wrath
+        "お試し",  # trial
         # --- prosperity gospel / cult ---
         "呪い",  # curse
         "束縛",  # bondage
@@ -114,6 +118,7 @@ FEAR_WORDS: frozenset[str] = frozenset(
         "疫病",  # plague
         # --- cult ---
         "追放",  # exile
+        "排斥",  # banished, excluded, rejected
     }
 )
 
@@ -121,6 +126,7 @@ FEAR_WORDS: frozenset[str] = frozenset(
 FEAR_PHRASES: list[str] = [
     # --- generic ---
     "古い地球",  # old earth
+    "3次元の地球",  # 3D earth
     # --- prosperity gospel ---
     "世代の呪い",  # generational curse
     "貧困の霊",  # spirit of poverty
@@ -140,9 +146,13 @@ EUPHORIA_WORDS: frozenset[str] = frozenset(
         # --- generic ---
         "豊かさ",  # abundance
         "アセンション",  # ascension
+        "次元上昇",  # ascension
         "覚醒",  # awakening
+        "目覚め",  # awakening
+        "活性化",  # activation
         "至福",  # bliss
         "悟り",  # enlightenment
+        "解脱",  # samadi
         "調和",  # harmony
         "解放",  # liberation
         "奇跡",  # miracle
@@ -159,6 +169,8 @@ EUPHORIA_WORDS: frozenset[str] = frozenset(
         "聖油注ぎ",  # anointing
         # --- new age ---
         "引き寄せ",  # manifestation (law of attraction)
+        "高波動",  # higher vibration
+        "高次元",  # higher dimensions
     }
 )
 
@@ -166,6 +178,7 @@ EUPHORIA_WORDS: frozenset[str] = frozenset(
 EUPHORIA_PHRASES: list[str] = [
     # --- generic ---
     "新しい地球",  # new earth
+    "5次元の地球",  # 5D earth
     # --- prosperity gospel ---
     "経済的ブレイクスルー",  # financial breakthrough
     "百倍の返り",  # hundredfold return
@@ -267,7 +280,7 @@ CONTRADICTION_PAIRS: list[tuple[str, list[str], list[str]]] = [
     ),
     (
         "エゴの解体 vs. エゴの肥大",  # ego dissolution vs. inflation
-        ["エゴを手放す", "エゴを解放", "エゴは幻想", "エゴを溶かす"],
+        ["エゴを手放す", "エゴを解放", "エゴは幻想", "エゴを溶かす", "エゴの死"],
         ["あなたは選ばれた", "あなたは特別", "選ばれし少数", "あなたの魂は進化している"],
     ),
     (
