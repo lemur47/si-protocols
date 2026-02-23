@@ -63,6 +63,12 @@ uv run pyright                # Type check
 uv run bandit -r src/         # Security scan
 ```
 
+## Docs
+
+- [`CLAUDE.md`](CLAUDE.md) — Commands, architecture details, code style conventions
+- [`docs/STRATEGY.md`](docs/STRATEGY.md) — Mission, audience, two-domain and two-channel strategy, roadmap overview
+- [`docs/ROADMAP.md`](docs/ROADMAP.md) — Mid-term plan: two-domain web presence, web demo, Chrome extension, note.com launch
+
 ## Disclaimer
 
 This tool is designed for **local use on your own texts only**. We do not host, collect, or analyse third-party, copyrighted, or channelled material. All example texts in this repo are synthetic.
