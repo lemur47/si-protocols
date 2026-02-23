@@ -55,15 +55,36 @@ No mainstream content moderation tool addresses these patterns. si-protocols fil
 
 ## Roadmap
 
+### Completed
+
 1. **Multi-language analysis** — Japanese language support (markers, NLP pipeline, CLI, API) ✓
-2. **Web demo** — Svelte-based interactive interface for browser-based analysis
-3. **note.com launch** — Japanese-language articles and community engagement
-4. **Community building** — contributor programme, marker refinement, tradition-specific modules
-5. **Consulting and SaaS** — professional services for organisations dealing with spiritual disinformation
+
+### Mid-term (6–12 months)
+
+2. **Two-domain web presence** — educational content on spiritualintelligence.cc, technical docs and tools on spiritualintelligence.dev
+3. **Web demo** — Svelte + Astro interactive interface for browser-based analysis, embeddable across both domains
+4. **Chrome extension** — in-situ text analysis on any webpage, local-only processing
+5. **note.com launch** — Japanese-language narrative articles and community engagement
+
+### Longer-term
+
+6. **Community building** — contributor programme, marker refinement, tradition-specific modules, language contributions
+7. **Consulting and SaaS** — professional services for organisations dealing with spiritual disinformation
+
+See [ROADMAP.md](ROADMAP.md) for detailed phasing and milestones.
+
+## Two-Domain Strategy
+
+The project maintains two complementary websites with distinct audiences:
+
+- **spiritualintelligence.dev** — technical documentation, API reference, quickstart guides, architecture deep-dives, and the interactive web demo. Audience: developers, engineers, contributors, security researchers.
+- **spiritualintelligence.cc** — educational content explaining why spiritual intelligence matters, threat modelling, common manipulation patterns, misconceptions, and cybersecurity/privacy principles. Audience: practitioners, thought leaders, researchers, and the curious public.
+
+Each site links clearly to the other. They share visual identity but differ in depth and assumed knowledge.
 
 ## Two-Channel Strategy
 
-- **English channel** — neutral, professional tone. Focused on the technology, research applications, and open-source community. Primary platform: GitHub, project website.
+- **English channel** — neutral, professional tone. Focused on the technology, research applications, and open-source community. Primary platforms: GitHub, spiritualintelligence.dev, spiritualintelligence.cc.
 - **Japanese channel** — nerdy, techie tone. Emphasises the engineering craft and Japanese spiritual context (スピリチュアル, 霊感商法, カルト対策). Primary platform: note.com.
 
 Both channels share the same codebase and core technology. The difference is editorial voice, not capability.
