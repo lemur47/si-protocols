@@ -50,21 +50,6 @@ jobs:
       - run: uv pip install ja_core_news_sm@https://github.com/explosion/spacy-models/releases/download/ja_core_news_sm-3.8.0/ja_core_news_sm-3.8.0-py3-none-any.whl
       - run: uv run pytest --cov=si_protocols --cov-report=term-missing
 
-  site:
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: site
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '22'
-          cache: 'npm'
-          cache-dependency-path: site/package-lock.json
-      - run: npm ci
-      - run: npm run build
-
   gitleaks:
     runs-on: ubuntu-latest
     steps:
@@ -74,3 +59,33 @@ jobs:
       - uses: gitleaks/gitleaks-action@v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITLEAKS_CONFIG: .gitleaks.toml
+
+  # Frontend checks (Astro + Svelte + TypeScript)
+  frontend:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        site: [site, site-cc]
+    defaults:
+      run:
+        working-directory: ${{ matrix.site }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          cache: "npm"
+          cache-dependency-path: ${{ matrix.site }}/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Type check
+        run: npx astro check
+
+      - name: Build
+        run: npm run build
+
+      - name: Audit dependencies
+        run: npm audit --audit-level=moderate --omit=dev
