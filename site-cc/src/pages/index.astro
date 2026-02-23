@@ -1,0 +1,213 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const allPages = (await getCollection('pages')).sort((a, b) => a.data.order - b.data.order);
+---
+
+<BaseLayout title="Home">
+  <section class="hero">
+    <p class="tagline">$ spiritual-intelligence</p>
+    <h1 class="glow">Why This Matters</h1>
+    <p class="subtitle">
+      Critical thinking for metaphysical spaces. Learn to recognise manipulation
+      patterns in spiritual content — and protect your autonomy.
+    </p>
+    <div class="cta-row">
+      <a href="/why-spiritual-intelligence-matters/" class="cta primary">Start reading</a>
+      <a href="https://spiritualintelligence.dev" class="cta secondary" target="_blank" rel="noopener noreferrer">
+        Developer tools &#8599;
+      </a>
+    </div>
+  </section>
+
+  <section class="features">
+    <div class="card">
+      <h3>The Problem</h3>
+      <p>
+        Spiritual seekers are often in vulnerable states. Manipulation techniques &mdash;
+        urgency, false authority, emotional cycling &mdash; exploit this openness.
+        The same patterns appear across traditions and languages.
+      </p>
+    </div>
+    <div class="card">
+      <h3>The Approach</h3>
+      <p>
+        Borrow from cybersecurity: threat modelling, pattern recognition, and
+        structured analysis. Not to debunk beliefs, but to make manipulation
+        techniques visible and measurable.
+      </p>
+    </div>
+    <div class="card">
+      <h3>Open Source</h3>
+      <p>
+        Every marker, every scoring weight, every algorithm is public and auditable.
+        The tool runs locally &mdash; your content never leaves your machine.
+        No data collection. No cloud processing.
+      </p>
+    </div>
+  </section>
+
+  <section class="explore">
+    <h2>Explore</h2>
+    <div class="explore-grid">
+      {allPages.map(page => (
+        <a href={`/${page.id}/`} class="explore-card">
+          <span class="explore-order">{String(page.data.order).padStart(2, '0')}</span>
+          <span class="explore-title">{page.data.title}</span>
+          {page.data.description && (
+            <span class="explore-desc">{page.data.description}</span>
+          )}
+        </a>
+      ))}
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .hero {
+    text-align: center;
+    padding: 3rem 0 2rem;
+  }
+
+  .tagline {
+    font-size: 0.85rem;
+    color: var(--colour-primary);
+    margin-bottom: 0.75rem;
+  }
+
+  .hero h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .subtitle {
+    color: var(--colour-text-muted);
+    max-width: 540px;
+    margin: 0 auto 2rem;
+    font-size: 0.95rem;
+  }
+
+  .cta-row {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+  }
+
+  .cta {
+    display: inline-block;
+    padding: 0.6em 1.5em;
+    border-radius: var(--radius);
+    font-size: 0.85rem;
+    font-weight: 500;
+  }
+
+  .cta.primary {
+    background: var(--colour-primary);
+    color: var(--colour-bg);
+  }
+
+  .cta.primary:hover {
+    background: var(--colour-secondary);
+    color: var(--colour-bg);
+  }
+
+  .cta.secondary {
+    border: 1px solid var(--colour-border);
+    color: var(--colour-text-muted);
+  }
+
+  .cta.secondary:hover {
+    border-color: var(--colour-primary);
+    color: var(--colour-primary);
+  }
+
+  .features {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+    margin: 3rem 0;
+  }
+
+  .card {
+    background: var(--colour-surface);
+    border: 1px solid var(--colour-border);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+  }
+
+  .card h3 {
+    color: var(--colour-primary);
+    font-size: 0.95rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .card p {
+    font-size: 0.85rem;
+    color: var(--colour-text-muted);
+    margin: 0;
+  }
+
+  .explore {
+    margin: 2rem 0;
+  }
+
+  .explore h2 {
+    margin-bottom: 1rem;
+  }
+
+  .explore-grid {
+    display: grid;
+    gap: 0.75rem;
+  }
+
+  .explore-card {
+    display: grid;
+    grid-template-columns: 2.5rem 1fr;
+    grid-template-rows: auto auto;
+    gap: 0 1rem;
+    background: var(--colour-surface);
+    border: 1px solid var(--colour-border);
+    border-radius: var(--radius);
+    padding: 1rem 1.25rem;
+    color: var(--colour-text);
+    transition: border-color 0.2s;
+  }
+
+  .explore-card:hover {
+    border-color: var(--colour-primary);
+    color: var(--colour-text);
+  }
+
+  .explore-order {
+    grid-row: 1 / -1;
+    font-size: 0.8rem;
+    color: var(--colour-text-muted);
+    align-self: center;
+  }
+
+  .explore-title {
+    font-weight: 700;
+    font-size: 0.9rem;
+  }
+
+  .explore-desc {
+    font-size: 0.8rem;
+    color: var(--colour-text-muted);
+  }
+
+  @media (max-width: 640px) {
+    .hero h1 {
+      font-size: 1.75rem;
+    }
+
+    .features {
+      grid-template-columns: 1fr;
+    }
+
+    .cta-row {
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+</style>

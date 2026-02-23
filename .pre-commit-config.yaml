@@ -46,6 +46,38 @@ repos:
         always_run: true
         stages: [pre-commit]
 
+  # Type checking - Astro (site/ only)
+  - repo: local
+    hooks:
+      - id: astro-check-site
+        name: astro check (site)
+        entry: bash -c 'cd site && npx astro check'
+        language: system
+        pass_filenames: false
+        files: ^site/
+      - id: astro-check-site-cc
+        name: astro check (site-cc)
+        entry: bash -c 'cd site-cc && npx astro check'
+        language: system
+        pass_filenames: false
+        files: ^site-cc/
+
+  # Security check - npm (ommiting dev)
+  - repo: local
+    hooks:
+      - id: npm-audit-site
+        name: npm audit (site)
+        entry: bash -c 'cd site && npm audit --audit-level=moderate --omit=dev'
+        language: system
+        pass_filenames: false
+        files: ^site/
+      - id: npm-audit-site-cc
+        name: npm audit (site-cc)
+        entry: bash -c 'cd site-cc && npm audit --audit-level=moderate --omit=dev'
+        language: system
+        pass_filenames: false
+        files: ^site-cc/
+
   # --- General hygiene ---
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v6.0.0

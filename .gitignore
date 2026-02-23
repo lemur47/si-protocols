@@ -154,10 +154,13 @@ venv.bak/
 # mkdocs documentation
 #/site
 
-# Astro site
+# Astro sites
 site/node_modules/
 site/dist/
 site/.astro/
+site-cc/node_modules/
+site-cc/dist/
+site-cc/.astro/
 
 # mypy
 .mypy_cache/

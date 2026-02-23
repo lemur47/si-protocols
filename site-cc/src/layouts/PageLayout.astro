@@ -1,0 +1,70 @@
+---
+import BaseLayout from './BaseLayout.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+  prev?: { href: string; label: string };
+  next?: { href: string; label: string };
+}
+
+const { title, description, prev, next } = Astro.props;
+---
+
+<BaseLayout title={title} description={description}>
+  <article class="page">
+    <header class="page-header">
+      <h1>{title}</h1>
+    </header>
+    <div class="page-content">
+      <slot />
+    </div>
+    {(prev || next) && (
+      <nav class="page-nav">
+        {prev ? (
+          <a href={prev.href} class="nav-link prev">&larr; {prev.label}</a>
+        ) : (
+          <span />
+        )}
+        {next ? (
+          <a href={next.href} class="nav-link next">{next.label} &rarr;</a>
+        ) : (
+          <span />
+        )}
+      </nav>
+    )}
+  </article>
+</BaseLayout>
+
+<style>
+  .page-header {
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--colour-border);
+  }
+
+  .page-content {
+    margin-bottom: 3rem;
+  }
+
+  .page-nav {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--colour-border);
+  }
+
+  .nav-link {
+    font-size: 0.85rem;
+    color: var(--colour-text-muted);
+  }
+
+  .nav-link:hover {
+    color: var(--colour-primary);
+  }
+
+  .nav-link.next {
+    margin-left: auto;
+    text-align: right;
+  }
+</style>
