@@ -33,8 +33,10 @@ The CLI supports:
 ### Site (Astro)
 
 ```bash
-cd site && npm run dev           # Local dev server
-cd site && npm run build         # Production build
+cd site && npm run dev           # Local dev server (.dev domain)
+cd site && npm run build         # Production build (.dev domain)
+cd site-cc && npm run dev        # Local dev server (.cc domain, port 3001)
+cd site-cc && npm run build      # Production build (.cc domain)
 ```
 
 ## Architecture

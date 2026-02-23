@@ -1,0 +1,29 @@
+---
+const year = new Date().getFullYear();
+---
+
+<footer>
+  <p>
+    &copy; {year} lemur47 &middot; MIT Licence &middot;
+    <a href="https://spiritualintelligence.dev" target="_blank" rel="noopener noreferrer">Developer Site</a> &middot;
+    <a href="https://github.com/lemur47/si-protocols" target="_blank" rel="noopener noreferrer">Source</a>
+  </p>
+</footer>
+
+<style>
+  footer {
+    border-top: 1px solid var(--colour-border);
+    padding: 1.5rem;
+    text-align: center;
+    font-size: 0.8rem;
+    color: var(--colour-text-muted);
+  }
+
+  a {
+    color: var(--colour-text-muted);
+  }
+
+  a:hover {
+    color: var(--colour-primary);
+  }
+</style>
