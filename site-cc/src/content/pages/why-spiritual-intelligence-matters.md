@@ -4,7 +4,7 @@ description: Understanding the need for critical thinking in metaphysical and sp
 order: 1
 ---
 
-## The landscape has changed
+## The Landscape Has Changed
 
 The internet has transformed how people encounter spiritual and metaphysical content. What was once passed through personal relationships and local communities now arrives through algorithms, social media feeds, and anonymous channels. This shift has created new opportunities — but also new risks.
 
@@ -12,7 +12,7 @@ Spiritual seekers are often in vulnerable states. They may be processing grief, 
 
 > "The same openness that allows genuine insight also creates exposure to manipulation. Discernment is not scepticism — it is a form of self-care."
 
-## Why traditional fact-checking falls short
+## Why Traditional Fact-Checking Falls Short
 
 Conventional fact-checking works well for empirical claims: dates, statistics, scientific consensus. But spiritual and metaphysical content operates in a different register. Claims about energy, consciousness, past lives, or spiritual realms cannot be verified through standard methods.
 
@@ -25,13 +25,13 @@ This does not mean such claims are inherently false — it means the usual safeg
 
 These patterns are observable, measurable, and consistent across traditions and languages.
 
-## What spiritual intelligence means
+## What Spiritual Intelligence Means
 
 Spiritual intelligence, as we use the term, is the capacity to engage with metaphysical and spiritual content whilst maintaining healthy discernment. It is not about debunking beliefs or dismissing experiences. It is about recognising when the *delivery mechanism* of spiritual content uses techniques associated with manipulation, coercion, or exploitation.
 
 Think of it as a parallel to media literacy. Media literacy does not tell you what to believe — it helps you understand how information is framed, who benefits, and what techniques are being used to influence you. Spiritual intelligence applies the same principle to metaphysical spaces.
 
-## An open-source approach
+## An Open-Source Approach
 
 We believe these tools should be transparent, auditable, and free. If a tool claims to detect manipulation, you should be able to inspect exactly how it works. Every marker, every scoring weight, every pattern match is open for review.
 

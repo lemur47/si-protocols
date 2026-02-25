@@ -4,11 +4,11 @@ description: Recognising manipulation patterns across spiritual and metaphysical
 order: 3
 ---
 
-## Patterns, not traditions
+## Patterns, Not Traditions
 
 It is important to emphasise: the threats described here are *patterns of behaviour*, not characteristics of any particular tradition. Manipulation techniques appear across all spiritual contexts — from New Age workshops to established religious institutions, from online channelling communities to wellness influencer spaces. The pattern is the problem, not the tradition.
 
-## Commercial exploitation
+## Commercial Exploitation
 
 Perhaps the most straightforward threat is the use of spiritual language to sell products, services, or access at inflated prices. Warning signs include:
 
@@ -18,7 +18,7 @@ Perhaps the most straightforward threat is the use of spiritual language to sell
 
 > "If universal spiritual truth has a price tag and a deadline, at least one of those three things is not what it claims to be."
 
-## Authority without accountability
+## Authority Without Accountability
 
 Healthy spiritual teaching invites questioning. Manipulative teaching discourages it. Key patterns include:
 
@@ -26,7 +26,7 @@ Healthy spiritual teaching invites questioning. Manipulative teaching discourage
 - **Dissent as spiritual failure** — When questioning a teaching is reframed as ego, low vibration, or spiritual immaturity, critical thinking itself becomes the enemy.
 - **Moving goalposts** — When predictions fail or promises go unfulfilled, the explanation shifts rather than the teacher taking responsibility. "The timeline shifted" or "You were not ready."
 
-## Emotional manipulation
+## Emotional Manipulation
 
 Sophisticated manipulation often works both sides of the emotional spectrum simultaneously:
 
@@ -44,7 +44,7 @@ A growing threat is the fusion of conspiracy theories with spiritual language �
 
 This blending makes the content harder to evaluate because it appeals to spiritual identity rather than evidence.
 
-## What to do
+## What to Do
 
 Recognising these patterns is the first step. The SI Protocols tool can help by making these patterns visible in text — but no tool replaces your own judgement. If something feels wrong, that feeling deserves investigation, not dismissal.
 

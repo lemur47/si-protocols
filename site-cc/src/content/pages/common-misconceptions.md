@@ -4,7 +4,7 @@ description: Addressing misunderstandings about spiritual discernment and critic
 order: 4
 ---
 
-## "Critical thinking kills spirituality"
+## "Critical Thinking Kills Spirituality"
 
 This is perhaps the most persistent misconception — and the most useful one for manipulators. The idea that analysis and spirituality are fundamentally opposed serves those who benefit from unquestioning acceptance.
 
@@ -14,13 +14,13 @@ Critical thinking does not kill spirituality. It kills exploitation.
 
 > "A teaching that cannot survive scrutiny was never worth following. A teaching that deepens under scrutiny reveals its true value."
 
-## "High vibration people do not question"
+## "High Vibration People Do Not Question"
 
 This framing weaponises spiritual language to silence dissent. It implies a hierarchy where the "spiritually advanced" simply accept, whilst those who question are spiritually deficient. This inversion — where healthy scepticism becomes a character flaw — is itself a manipulation technique.
 
 Genuine spiritual development typically increases nuance and discernment, not decreases it. If a teaching requires you to abandon critical faculties as a prerequisite, consider who benefits from that arrangement.
 
-## "It is all about energy — you just have to feel it"
+## "It Is All About Energy — You Just Have to Feel It"
 
 Subjective experience is valuable and real. But "just feel it" as the sole criterion for truth creates significant vulnerability. People can genuinely *feel* that something is true, beneficial, or divinely inspired whilst being manipulated. Emotional and somatic responses can be deliberately triggered through:
 
@@ -31,7 +31,7 @@ Subjective experience is valuable and real. But "just feel it" as the sole crite
 
 Feelings are data, not conclusions. They deserve attention *and* context.
 
-## "This tool is trying to debunk my beliefs"
+## "This Tool Is Trying to Debunk My Beliefs"
 
 The SI Protocols tool does not evaluate the truth of spiritual claims. It cannot tell you whether chakras are real, whether consciousness survives death, or whether anyone has genuinely channelled an ascended being. These questions are beyond its scope — and beyond the scope of any automated tool.
 
@@ -44,13 +44,13 @@ What it *does* analyse are communication patterns. A genuine spiritual teaching 
 
 The tool flags patterns. You decide what they mean in context.
 
-## "If it resonates, it must be true"
+## "If It Resonates, It Must Be True"
 
 Resonance is a useful signal, but it is not infallible. Content designed to manipulate is specifically crafted to *resonate* — to feel true, important, and personally relevant. Cold reading techniques, Barnum statements, and confirmation bias all produce a feeling of resonance without any genuine insight.
 
 The question is not whether something resonates, but *why* it resonates. Is it speaking to a genuine insight, or is it activating a vulnerability? This distinction requires the very discernment that some teachings ask you to abandon.
 
-## Building genuine discernment
+## Building Genuine Discernment
 
 None of this means you should approach spiritual content with hostility or closed-mindedness. The goal is *informed openness* — engaging with curiosity whilst maintaining awareness of manipulation patterns. The best spiritual experiences often come from a place of both openness and discernment working together.
 

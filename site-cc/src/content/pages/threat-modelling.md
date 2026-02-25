@@ -4,7 +4,7 @@ description: Applying security thinking to understand risks in metaphysical and 
 order: 2
 ---
 
-## Borrowing from cybersecurity
+## Borrowing From Cybersecurity
 
 In cybersecurity, threat modelling is the practice of systematically identifying what could go wrong, who might cause harm, and what defences are appropriate. The same structured thinking applies to spiritual and metaphysical spaces — not because spirituality is dangerous, but because any space involving trust, vulnerability, and authority can be exploited.
 
@@ -15,7 +15,7 @@ A threat model asks four questions:
 3. **Who might cause harm?** — Bad actors range from individual grifters to organised high-demand groups, from well-meaning but harmful teachers to sophisticated commercial operations.
 4. **What can we do about it?** — Pattern recognition, community awareness, and tools that make manipulation techniques visible.
 
-## The attack surface
+## The Attack Surface
 
 Spiritual contexts have a unique attack surface because they involve:
 
@@ -26,7 +26,7 @@ Spiritual contexts have a unique attack surface because they involve:
 
 > "You would not give your banking password to someone who claimed spiritual authority. Your psychological boundaries deserve the same protection."
 
-## Threat categories
+## Threat Categories
 
 The SI Protocols tool analyses text across several dimensions that map to common manipulation techniques:
 
@@ -42,7 +42,7 @@ The SI Protocols tool analyses text across several dimensions that map to common
 
 These categories are not exhaustive, but they cover the most common and measurable patterns observed across spiritual traditions worldwide.
 
-## Proportionate response
+## Proportionate Response
 
 Threat modelling is about proportionate response, not paranoia. Not every vague statement is manipulation. Not every authority claim is false. The tool produces a score on a spectrum — it highlights patterns for your consideration, not verdicts.
 
