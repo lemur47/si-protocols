@@ -4,7 +4,7 @@ description: Why privacy-first design matters for tools that analyse personal sp
 order: 5
 ---
 
-## Why privacy matters here
+## Why Privacy Matters Here
 
 Spiritual content is deeply personal. The texts you might want to analyse — messages from a teacher, group communications, personal journal entries, content from online communities — reveal intimate details about your beliefs, vulnerabilities, and social connections.
 
@@ -12,7 +12,7 @@ Any tool that analyses this content must treat it with the same care as medical 
 
 > "A tool that claims to protect you whilst sending your spiritual journal to a cloud server has missed the point entirely."
 
-## Our privacy principles
+## Our Privacy Principles
 
 The SI Protocols tool is designed around three core principles:
 
@@ -32,7 +32,7 @@ Every line of code is available for inspection. The marker lists — the words a
 
 If you disagree with a marker or a scoring weight, you can see exactly what it is, understand why it is there, and modify it for your own use. This level of transparency is only possible with open-source software.
 
-## Digital threats in spiritual spaces
+## Digital Threats in Spiritual Spaces
 
 Beyond the content analysis tool itself, spiritual seekers face specific digital threats:
 
@@ -57,7 +57,7 @@ Spiritual communities, especially online ones, can be vectors for social enginee
 
 When spiritual communities exist solely on commercial platforms (social media, proprietary apps), they are subject to algorithm changes, data policies, and platform shutdowns beyond their control. Decentralised and self-hosted alternatives provide more resilience.
 
-## Practical recommendations
+## Practical Recommendations
 
 - **Run tools locally** whenever possible. If a spiritual tool requires cloud processing, understand exactly what data it sends and to whom.
 - **Review permissions** on spiritual and wellness apps. Do they really need access to your contacts, location, or health data?
