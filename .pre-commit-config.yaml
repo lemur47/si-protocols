@@ -62,7 +62,7 @@ repos:
         pass_filenames: false
         files: ^site-cc/
 
-  # Security check - npm (ommiting dev)
+  # Security check - npm (omitting dev)
   - repo: local
     hooks:
       - id: npm-audit-site
