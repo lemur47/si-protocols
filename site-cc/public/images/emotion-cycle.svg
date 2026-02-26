@@ -1,0 +1,128 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 420" font-family="'Courier New','Lucida Console',monospace">
+  <defs>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="glow-strong">
+      <feGaussianBlur stdDeviation="5" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <pattern id="scan" width="4" height="4" patternUnits="userSpaceOnUse">
+      <rect width="4" height="2" fill="#fff" opacity="0.015"/>
+    </pattern>
+    <linearGradient id="wave-fill" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#00ffa3" stop-opacity="0.05"/>
+      <stop offset="50%" stop-color="#00ffa3" stop-opacity="0.12"/>
+      <stop offset="100%" stop-color="#ff4444" stop-opacity="0.08"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="420" fill="#0a0a0f"/>
+  <rect width="800" height="420" fill="url(#scan)"/>
+
+  <!-- HUD Frame -->
+  <path d="M 24 8 L 8 8 L 8 36" stroke="#00ffa3" stroke-width="1.5" fill="none" opacity="0.5"/>
+  <path d="M 776 8 L 792 8 L 792 36" stroke="#00ffa3" stroke-width="1.5" fill="none" opacity="0.5"/>
+  <path d="M 8 388 L 8 412 L 24 412" stroke="#00ffa3" stroke-width="1.5" fill="none" opacity="0.5"/>
+  <path d="M 792 388 L 792 412 L 776 412" stroke="#00ffa3" stroke-width="1.5" fill="none" opacity="0.5"/>
+  <rect x="4" y="4" width="792" height="412" rx="2" fill="none" stroke="#2a2a3a" stroke-width="0.5"/>
+
+  <!-- Title bar -->
+  <line x1="20" y1="44" x2="780" y2="44" stroke="#2a2a3a" stroke-width="0.5"/>
+  <text x="28" y="30" fill="#00ffa3" font-size="11" font-weight="bold" letter-spacing="2">SI-PROTOCOLS // EMOTIONAL SIGNAL ANALYSIS</text>
+  <text x="772" y="30" fill="#8888a0" font-size="9" text-anchor="end" letter-spacing="1">WAVEFORM INTERCEPT</text>
+
+  <!-- Oscilloscope grid -->
+  <g stroke="#1a1a28" stroke-width="0.4">
+    <!-- Vertical grid lines -->
+    <line x1="120" y1="60" x2="120" y2="380"/>
+    <line x1="200" y1="60" x2="200" y2="380"/>
+    <line x1="280" y1="60" x2="280" y2="380"/>
+    <line x1="360" y1="60" x2="360" y2="380"/>
+    <line x1="440" y1="60" x2="440" y2="380"/>
+    <line x1="520" y1="60" x2="520" y2="380"/>
+    <line x1="600" y1="60" x2="600" y2="380"/>
+    <line x1="680" y1="60" x2="680" y2="380"/>
+    <line x1="760" y1="60" x2="760" y2="380"/>
+    <!-- Horizontal grid lines -->
+    <line x1="80" y1="100" x2="770" y2="100"/>
+    <line x1="80" y1="140" x2="770" y2="140"/>
+    <line x1="80" y1="180" x2="770" y2="180"/>
+    <line x1="80" y1="260" x2="770" y2="260"/>
+    <line x1="80" y1="300" x2="770" y2="300"/>
+    <line x1="80" y1="340" x2="770" y2="340"/>
+  </g>
+
+  <!-- Centre line (zero/neutral) -->
+  <line x1="80" y1="220" x2="770" y2="220" stroke="#2a2a3a" stroke-width="1" stroke-dasharray="6,4"/>
+
+  <!-- Y-axis labels -->
+  <text x="72" y="84" fill="#00ffa3" font-size="8" text-anchor="end" letter-spacing="1" opacity="0.7">EUPHORIA</text>
+  <text x="72" y="224" fill="#8888a0" font-size="8" text-anchor="end" letter-spacing="1" opacity="0.5">NEUTRAL</text>
+  <text x="72" y="368" fill="#ff6b6b" font-size="8" text-anchor="end" letter-spacing="1" opacity="0.7">FEAR</text>
+
+  <!-- Y-axis -->
+  <line x1="80" y1="60" x2="80" y2="380" stroke="#2a2a3a" stroke-width="1"/>
+  <!-- X-axis labels (time) -->
+  <text x="120" y="395" fill="#8888a0" font-size="7" text-anchor="middle" letter-spacing="1">T0</text>
+  <text x="280" y="395" fill="#8888a0" font-size="7" text-anchor="middle" letter-spacing="1">T1</text>
+  <text x="440" y="395" fill="#8888a0" font-size="7" text-anchor="middle" letter-spacing="1">T2</text>
+  <text x="600" y="395" fill="#8888a0" font-size="7" text-anchor="middle" letter-spacing="1">T3</text>
+  <text x="760" y="395" fill="#8888a0" font-size="7" text-anchor="middle" letter-spacing="1">T4</text>
+
+  <!-- Waveform path (fear-euphoria cycling with diminishing highs, deepening lows) -->
+  <path d="M 100,220 C 130,220 150,90 200,100 C 250,110 260,340 310,330 C 360,320 370,100 420,115 C 470,130 480,355 530,345 C 580,335 580,130 630,150 C 680,170 690,360 740,340"
+    fill="none" stroke="#00ffa3" stroke-width="2" filter="url(#glow-strong)"/>
+
+  <!-- Filled area under/over the wave (subtle) -->
+  <path d="M 100,220 C 130,220 150,90 200,100 C 250,110 260,340 310,330 C 360,320 370,100 420,115 C 470,130 480,355 530,345 C 580,335 580,130 630,150 C 680,170 690,360 740,340 L 740,220 L 100,220 Z"
+    fill="url(#wave-fill)" opacity="0.5"/>
+
+  <!-- Peak annotations -->
+  <g font-size="8" font-weight="bold" letter-spacing="1">
+    <!-- First euphoria peak -->
+    <line x1="200" y1="95" x2="200" y2="72" stroke="#00d4ff" stroke-width="0.5" opacity="0.6"/>
+    <text x="200" y="68" fill="#00d4ff" text-anchor="middle" opacity="0.8">HOOK</text>
+
+    <!-- First fear trough -->
+    <line x1="310" y1="335" x2="310" y2="358" stroke="#ff6b6b" stroke-width="0.5" opacity="0.6"/>
+    <text x="310" y="370" fill="#ff6b6b" text-anchor="middle" opacity="0.8">DROP</text>
+
+    <!-- Second euphoria (diminished) -->
+    <line x1="420" y1="110" x2="420" y2="72" stroke="#00d4ff" stroke-width="0.5" opacity="0.6"/>
+    <text x="420" y="68" fill="#00d4ff" text-anchor="middle" opacity="0.6">DIMINISHED</text>
+
+    <!-- Second fear (deeper) -->
+    <line x1="530" y1="350" x2="530" y2="370" stroke="#ff6b6b" stroke-width="0.5" opacity="0.6"/>
+    <text x="530" y="382" fill="#ff6b6b" text-anchor="middle" opacity="0.8">DEEPER</text>
+
+    <!-- Third peak (much lower) -->
+    <line x1="630" y1="145" x2="630" y2="72" stroke="#00d4ff" stroke-width="0.5" opacity="0.6"/>
+    <text x="630" y="68" fill="#00d4ff" text-anchor="middle" opacity="0.5">FADING</text>
+
+    <!-- Third trough -->
+    <line x1="740" y1="345" x2="740" y2="370" stroke="#ff6b6b" stroke-width="0.5" opacity="0.6"/>
+    <text x="740" y="382" fill="#ff6b6b" text-anchor="middle" opacity="0.8">TRAPPED</text>
+  </g>
+
+  <!-- Dependency zone indicator (growing band around the center) -->
+  <rect x="100" y="200" width="640" height="40" fill="none" stroke="#a855f7" stroke-width="0.5" stroke-dasharray="4,4" opacity="0.3" rx="2"/>
+  <text x="755" y="224" fill="#a855f7" font-size="7" text-anchor="start" letter-spacing="1" opacity="0.6">DEPENDENCY</text>
+  <text x="755" y="234" fill="#a855f7" font-size="7" text-anchor="start" letter-spacing="1" opacity="0.6">ZONE</text>
+
+  <!-- Warning indicator -->
+  <g transform="translate(600,50)">
+    <rect x="0" y="0" width="160" height="28" rx="2" fill="#12121a" stroke="#ff6b6b" stroke-width="0.8" opacity="0.7"/>
+    <circle cx="14" cy="14" r="4" fill="#ff6b6b" opacity="0.8"/>
+    <text x="26" y="18" fill="#ff6b6b" font-size="8" font-weight="bold" letter-spacing="1" opacity="0.9">PATTERN DETECTED</text>
+  </g>
+
+  <!-- Time axis label -->
+  <text x="425" y="405" fill="#8888a0" font-size="8" text-anchor="middle" letter-spacing="2">EXPOSURE TIMELINE ──▶</text>
+
+  <!-- Status -->
+  <circle cx="658" cy="30" r="3" fill="#ff6b6b" opacity="0.8"/>
+  <text x="645" y="34" fill="#8888a0" font-size="8" text-anchor="end" letter-spacing="1">ALERT</text>
+</svg>

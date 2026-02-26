@@ -1,0 +1,118 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 480" font-family="'Courier New','Lucida Console',monospace">
+  <defs>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <pattern id="scan" width="4" height="4" patternUnits="userSpaceOnUse">
+      <rect width="4" height="2" fill="#fff" opacity="0.015"/>
+    </pattern>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#1a1a28" stroke-width="0.3"/>
+    </pattern>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="480" fill="#0a0a0f"/>
+  <rect width="800" height="480" fill="url(#grid)"/>
+  <rect width="800" height="480" fill="url(#scan)"/>
+
+  <!-- HUD Frame -->
+  <path d="M 24 8 L 8 8 L 8 36" stroke="#00ffa3" stroke-width="1.5" fill="none" opacity="0.5"/>
+  <path d="M 776 8 L 792 8 L 792 36" stroke="#00ffa3" stroke-width="1.5" fill="none" opacity="0.5"/>
+  <path d="M 8 448 L 8 472 L 24 472" stroke="#00ffa3" stroke-width="1.5" fill="none" opacity="0.5"/>
+  <path d="M 792 448 L 792 472 L 776 472" stroke="#00ffa3" stroke-width="1.5" fill="none" opacity="0.5"/>
+  <rect x="4" y="4" width="792" height="472" rx="2" fill="none" stroke="#2a2a3a" stroke-width="0.5"/>
+
+  <!-- Title bar -->
+  <line x1="20" y1="44" x2="780" y2="44" stroke="#2a2a3a" stroke-width="0.5"/>
+  <text x="28" y="30" fill="#00ffa3" font-size="11" font-weight="bold" letter-spacing="2">SI-PROTOCOLS // OPERATIONAL FRAMEWORK</text>
+  <text x="772" y="30" fill="#8888a0" font-size="9" text-anchor="end" letter-spacing="1">THREAT MODEL v1.0</text>
+
+  <!-- Central crosshair / hub -->
+  <circle cx="400" cy="252" r="32" fill="none" stroke="#00ffa3" stroke-width="1" opacity="0.3"/>
+  <circle cx="400" cy="252" r="24" fill="none" stroke="#00ffa3" stroke-width="0.5" opacity="0.2"/>
+  <circle cx="400" cy="252" r="4" fill="#00ffa3" opacity="0.6"/>
+  <line x1="370" y1="252" x2="430" y2="252" stroke="#00ffa3" stroke-width="0.5" opacity="0.3"/>
+  <line x1="400" y1="222" x2="400" y2="282" stroke="#00ffa3" stroke-width="0.5" opacity="0.3"/>
+
+  <!-- Connecting lines (circuit-board style) -->
+  <g stroke="#00ffa3" stroke-width="1" opacity="0.25" fill="none">
+    <!-- Top box to center -->
+    <path d="M 400 164 L 400 220"/>
+    <!-- Bottom box to center -->
+    <path d="M 400 284 L 400 340"/>
+    <!-- Left box to center -->
+    <path d="M 312 252 L 368 252"/>
+    <!-- Right box to center -->
+    <path d="M 432 252 L 488 252"/>
+  </g>
+
+  <!-- Flow arrows (small triangles on the lines) -->
+  <g fill="#00ffa3" opacity="0.4">
+    <polygon points="400,224 396,216 404,216"/>
+    <polygon points="400,280 396,288 404,288"/>
+    <polygon points="372,252 364,248 364,256"/>
+    <polygon points="428,252 436,248 436,256"/>
+  </g>
+
+  <!-- Q1: PROTECT (top) -->
+  <g transform="translate(280,70)">
+    <rect x="0" y="0" width="240" height="94" rx="3" fill="#12121a" stroke="#00ffa3" stroke-width="1" opacity="0.8"/>
+    <rect x="0" y="0" width="240" height="22" rx="3" fill="#00ffa3" opacity="0.1"/>
+    <line x1="0" y1="22" x2="240" y2="22" stroke="#00ffa3" stroke-width="0.5" opacity="0.3"/>
+    <text x="10" y="15" fill="#00ffa3" font-size="9" font-weight="bold" letter-spacing="2">01 // PROTECT</text>
+    <text x="230" y="15" fill="#8888a0" font-size="8" text-anchor="end">▶ ASSETS</text>
+    <text x="12" y="40" fill="#e0e0e8" font-size="9">Autonomy</text>
+    <text x="12" y="54" fill="#e0e0e8" font-size="9">Financial wellbeing</text>
+    <text x="12" y="68" fill="#e0e0e8" font-size="9">Psychological health</text>
+    <text x="12" y="82" fill="#8888a0" font-size="9">Genuine spiritual connection</text>
+  </g>
+
+  <!-- Q2: RISK (left) -->
+  <g transform="translate(60,205)">
+    <rect x="0" y="0" width="252" height="94" rx="3" fill="#12121a" stroke="#00d4ff" stroke-width="1" opacity="0.8"/>
+    <rect x="0" y="0" width="252" height="22" rx="3" fill="#00d4ff" opacity="0.08"/>
+    <line x1="0" y1="22" x2="252" y2="22" stroke="#00d4ff" stroke-width="0.5" opacity="0.3"/>
+    <text x="10" y="15" fill="#00d4ff" font-size="9" font-weight="bold" letter-spacing="2">02 // IDENTIFY RISK</text>
+    <text x="242" y="15" fill="#8888a0" font-size="8" text-anchor="end">▶ THREATS</text>
+    <text x="12" y="40" fill="#e0e0e8" font-size="9">Manipulation</text>
+    <text x="12" y="54" fill="#e0e0e8" font-size="9">Financial exploitation</text>
+    <text x="12" y="68" fill="#e0e0e8" font-size="9">Emotional coercion</text>
+    <text x="12" y="82" fill="#8888a0" font-size="9">Identity erosion</text>
+  </g>
+
+  <!-- Q3: ADVERSARY (right) -->
+  <g transform="translate(488,205)">
+    <rect x="0" y="0" width="252" height="94" rx="3" fill="#12121a" stroke="#a855f7" stroke-width="1" opacity="0.8"/>
+    <rect x="0" y="0" width="252" height="22" rx="3" fill="#a855f7" opacity="0.08"/>
+    <line x1="0" y1="22" x2="252" y2="22" stroke="#a855f7" stroke-width="0.5" opacity="0.3"/>
+    <text x="10" y="15" fill="#a855f7" font-size="9" font-weight="bold" letter-spacing="2">03 // KNOW ADVERSARY</text>
+    <text x="242" y="15" fill="#8888a0" font-size="8" text-anchor="end">▶ ACTORS</text>
+    <text x="12" y="40" fill="#e0e0e8" font-size="9">Individual grifters</text>
+    <text x="12" y="54" fill="#e0e0e8" font-size="9">High-demand groups</text>
+    <text x="12" y="68" fill="#e0e0e8" font-size="9">Commercial operations</text>
+    <text x="12" y="82" fill="#8888a0" font-size="9">Well-meaning but harmful</text>
+  </g>
+
+  <!-- Q4: RESPOND (bottom) -->
+  <g transform="translate(280,340)">
+    <rect x="0" y="0" width="240" height="94" rx="3" fill="#12121a" stroke="#00ffa3" stroke-width="1" opacity="0.8"/>
+    <rect x="0" y="0" width="240" height="22" rx="3" fill="#00ffa3" opacity="0.1"/>
+    <line x1="0" y1="22" x2="240" y2="22" stroke="#00ffa3" stroke-width="0.5" opacity="0.3"/>
+    <text x="10" y="15" fill="#00ffa3" font-size="9" font-weight="bold" letter-spacing="2">04 // RESPOND</text>
+    <text x="230" y="15" fill="#8888a0" font-size="8" text-anchor="end">▶ DEFENCE</text>
+    <text x="12" y="40" fill="#e0e0e8" font-size="9">Pattern recognition</text>
+    <text x="12" y="54" fill="#e0e0e8" font-size="9">Community awareness</text>
+    <text x="12" y="68" fill="#e0e0e8" font-size="9">Automated detection tools</text>
+    <text x="12" y="82" fill="#8888a0" font-size="9">Informed decision-making</text>
+  </g>
+
+  <!-- Status bar -->
+  <circle cx="658" cy="462" r="3" fill="#00ffa3" opacity="0.8"/>
+  <text x="668" y="466" fill="#8888a0" font-size="9" letter-spacing="1">PROTOCOL ACTIVE</text>
+
+  <!-- Classification -->
+  <rect x="28" y="448" width="130" height="22" rx="2" fill="none" stroke="#a855f7" stroke-width="1" opacity="0.7"/>
+  <text x="93" y="463" fill="#a855f7" font-size="9" text-anchor="middle" font-weight="bold" letter-spacing="2" opacity="0.8">OPERATIONAL</text>
+</svg>

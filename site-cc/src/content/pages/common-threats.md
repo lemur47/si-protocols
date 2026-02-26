@@ -16,6 +16,8 @@ Perhaps the most straightforward threat is the use of spiritual language to sell
 - **Urgency pricing** — "This energy portal closes on Friday" or "Only 3 spots left in the ascension programme." Artificial scarcity applied to supposedly universal spiritual truths.
 - **Proprietary terminology** — Invented vocabulary that makes it difficult to find equivalent teachings elsewhere, creating dependency on a single source.
 
+![Commitment escalation pattern showing five levels from free content to total dependency](/images/escalation-staircase.svg)
+
 > "If universal spiritual truth has a price tag and a deadline, at least one of those three things is not what it claims to be."
 
 ## Authority Without Accountability
@@ -33,6 +35,8 @@ Sophisticated manipulation often works both sides of the emotional spectrum simu
 - **Fear and euphoria cycling** — Alternating between warnings of catastrophe (dimensional shifts, karmic debt, planetary destruction) and promises of transcendence (ascension, awakening, chosen-one narratives). This emotional whiplash creates dependency on the source for emotional regulation.
 - **Love bombing followed by withdrawal** — Initial warmth and belonging, followed by conditional approval that keeps members striving.
 - **Isolation framing** — Suggesting that friends, family, or mainstream society "cannot understand" your journey, gradually narrowing your support network to the group or teacher.
+
+![Emotional signal analysis showing fear-euphoria cycling waveform with diminishing highs and deepening lows](/images/emotion-cycle.svg)
 
 ## Conspirituality
 
