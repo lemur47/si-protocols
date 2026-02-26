@@ -1,0 +1,147 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 540" font-family="'Courier New','Lucida Console',monospace">
+  <defs>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="glow-strong">
+      <feGaussianBlur stdDeviation="5" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <pattern id="scan" width="4" height="4" patternUnits="userSpaceOnUse">
+      <rect width="4" height="2" fill="#fff" opacity="0.015"/>
+    </pattern>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="540" fill="#0a0a0f"/>
+  <rect width="800" height="540" fill="url(#scan)"/>
+
+  <!-- HUD Frame corners -->
+  <path d="M 24 8 L 8 8 L 8 36" stroke="#00ffa3" stroke-width="1.5" fill="none" opacity="0.5"/>
+  <path d="M 776 8 L 792 8 L 792 36" stroke="#00ffa3" stroke-width="1.5" fill="none" opacity="0.5"/>
+  <path d="M 8 504 L 8 532 L 24 532" stroke="#00ffa3" stroke-width="1.5" fill="none" opacity="0.5"/>
+  <path d="M 792 504 L 792 532 L 776 532" stroke="#00ffa3" stroke-width="1.5" fill="none" opacity="0.5"/>
+
+  <!-- Border line -->
+  <rect x="4" y="4" width="792" height="532" rx="2" fill="none" stroke="#2a2a3a" stroke-width="0.5"/>
+
+  <!-- Title bar -->
+  <line x1="20" y1="44" x2="780" y2="44" stroke="#2a2a3a" stroke-width="0.5"/>
+  <text x="28" y="30" fill="#00ffa3" font-size="11" font-weight="bold" letter-spacing="2">SI-PROTOCOLS // THREAT ANALYSIS MATRIX</text>
+  <text x="772" y="30" fill="#8888a0" font-size="9" text-anchor="end" letter-spacing="1">MULTI-DIMENSIONAL SCAN</text>
+
+  <!-- Classification badge -->
+  <rect x="28" y="498" width="110" height="22" rx="2" fill="none" stroke="#a855f7" stroke-width="1" opacity="0.7"/>
+  <text x="83" y="513" fill="#a855f7" font-size="9" text-anchor="middle" font-weight="bold" letter-spacing="2" opacity="0.8">CLASSIFIED</text>
+
+  <!-- Status indicators -->
+  <circle cx="658" cy="522" r="3" fill="#00ffa3" opacity="0.8"/>
+  <text x="668" y="526" fill="#8888a0" font-size="9" letter-spacing="1">SCAN COMPLETE</text>
+
+  <!-- Axis lines from center to vertices -->
+  <g stroke="#1a1a28" stroke-width="0.8">
+    <line x1="400" y1="290" x2="400" y2="120"/>
+    <line x1="400" y1="290" x2="533" y2="184"/>
+    <line x1="400" y1="290" x2="566" y2="328"/>
+    <line x1="400" y1="290" x2="474" y2="443"/>
+    <line x1="400" y1="290" x2="326" y2="443"/>
+    <line x1="400" y1="290" x2="234" y2="328"/>
+    <line x1="400" y1="290" x2="267" y2="184"/>
+  </g>
+
+  <!-- Grid rings -->
+  <!-- 25% -->
+  <polygon points="400,248 433,264 441,300 418,328 382,328 359,300 367,264" fill="none" stroke="#1a1a28" stroke-width="0.6"/>
+  <!-- 50% -->
+  <polygon points="400,205 466,237 483,309 437,367 363,367 317,309 334,237" fill="none" stroke="#2a2a3a" stroke-width="0.6"/>
+  <!-- 75% -->
+  <polygon points="400,162 500,210 525,318 455,405 345,405 276,318 300,210" fill="none" stroke="#2a2a3a" stroke-width="0.6"/>
+  <!-- 100% -->
+  <polygon points="400,120 533,184 566,328 474,443 326,443 234,328 267,184" fill="none" stroke="#2a2a3a" stroke-width="0.8"/>
+
+  <!-- Vertex markers on outer ring -->
+  <g fill="none" stroke="#00ffa3" stroke-width="0.8" opacity="0.4">
+    <circle cx="400" cy="120" r="3"/>
+    <circle cx="533" cy="184" r="3"/>
+    <circle cx="566" cy="328" r="3"/>
+    <circle cx="474" cy="443" r="3"/>
+    <circle cx="326" cy="443" r="3"/>
+    <circle cx="234" cy="328" r="3"/>
+    <circle cx="267" cy="184" r="3"/>
+  </g>
+
+  <!-- Data polygon (sample threat profile) -->
+  <polygon points="400,168 513,200 491,311 465,425 371,351 287,316 334,237"
+    fill="rgba(0,255,163,0.08)" stroke="#00ffa3" stroke-width="1.5" filter="url(#glow)"/>
+
+  <!-- Data points -->
+  <g filter="url(#glow-strong)">
+    <circle cx="400" cy="168" r="4" fill="#00ffa3"/>
+    <circle cx="513" cy="200" r="4" fill="#00ffa3"/>
+    <circle cx="491" cy="311" r="4" fill="#00ffa3"/>
+    <circle cx="465" cy="425" r="4" fill="#00ffa3"/>
+    <circle cx="371" cy="351" r="4" fill="#00ffa3"/>
+    <circle cx="287" cy="316" r="4" fill="#00ffa3"/>
+    <circle cx="334" cy="237" r="4" fill="#00ffa3"/>
+  </g>
+
+  <!-- Percentage readouts near data points -->
+  <g fill="#00d4ff" font-size="9" font-weight="bold" letter-spacing="1">
+    <text x="412" y="164">72%</text>
+    <text x="524" y="196">85%</text>
+    <text x="500" y="306">55%</text>
+    <text x="474" y="420">88%</text>
+    <text x="343" y="355" text-anchor="end">40%</text>
+    <text x="278" y="312" text-anchor="end">68%</text>
+    <text x="318" y="233" text-anchor="end">50%</text>
+  </g>
+
+  <!-- Category labels -->
+  <g font-size="10" font-weight="bold" letter-spacing="1.5">
+    <text x="400" y="103" fill="#e0e0e8" text-anchor="middle">VAGUENESS</text>
+    <text x="548" y="178" fill="#e0e0e8" text-anchor="start">AUTHORITY</text>
+    <text x="580" y="335" fill="#e0e0e8" text-anchor="start">URGENCY</text>
+    <text x="486" y="462" fill="#e0e0e8" text-anchor="start">EMOTION</text>
+    <text x="314" y="462" fill="#e0e0e8" text-anchor="end">CONTRADICTION</text>
+    <text x="220" y="335" fill="#e0e0e8" text-anchor="end">SOURCE</text>
+    <text x="252" y="178" fill="#e0e0e8" text-anchor="end">ESCALATION</text>
+  </g>
+
+  <!-- Center crosshair -->
+  <g stroke="#00ffa3" stroke-width="0.5" opacity="0.3">
+    <line x1="392" y1="290" x2="408" y2="290"/>
+    <line x1="400" y1="282" x2="400" y2="298"/>
+    <circle cx="400" cy="290" r="6" fill="none"/>
+  </g>
+
+  <!-- Side panel: threat level -->
+  <g transform="translate(620,60)">
+    <rect x="0" y="0" width="150" height="56" rx="2" fill="#12121a" stroke="#2a2a3a" stroke-width="0.5"/>
+    <text x="10" y="16" fill="#8888a0" font-size="8" letter-spacing="1">THREAT LEVEL</text>
+    <rect x="10" y="24" width="130" height="8" rx="1" fill="#1a1a28"/>
+    <rect x="10" y="24" width="91" height="8" rx="1" fill="#00ffa3" opacity="0.7"/>
+    <text x="10" y="46" fill="#00ffa3" font-size="11" font-weight="bold" letter-spacing="1">ELEVATED — 70</text>
+  </g>
+
+  <!-- Side panel: dimension count -->
+  <g transform="translate(620,128)">
+    <rect x="0" y="0" width="150" height="36" rx="2" fill="#12121a" stroke="#2a2a3a" stroke-width="0.5"/>
+    <text x="10" y="16" fill="#8888a0" font-size="8" letter-spacing="1">DIMENSIONS</text>
+    <text x="10" y="30" fill="#00d4ff" font-size="10" font-weight="bold" letter-spacing="1">7 ACTIVE</text>
+  </g>
+
+  <!-- Grid level labels -->
+  <g fill="#8888a0" font-size="7" opacity="0.6">
+    <text x="404" y="246">25</text>
+    <text x="404" y="203">50</text>
+    <text x="404" y="160">75</text>
+    <text x="404" y="117">100</text>
+  </g>
+
+  <!-- Decorative corner dots -->
+  <circle cx="20" cy="520" r="1.5" fill="#00ffa3" opacity="0.3"/>
+  <circle cx="780" cy="520" r="1.5" fill="#00ffa3" opacity="0.3"/>
+  <circle cx="20" cy="56" r="1.5" fill="#00ffa3" opacity="0.3"/>
+  <circle cx="780" cy="56" r="1.5" fill="#00ffa3" opacity="0.3"/>
+</svg>

@@ -15,6 +15,8 @@ A threat model asks four questions:
 3. **Who might cause harm?** — Bad actors range from individual grifters to organised high-demand groups, from well-meaning but harmful teachers to sophisticated commercial operations.
 4. **What can we do about it?** — Pattern recognition, community awareness, and tools that make manipulation techniques visible.
 
+![Threat model operational framework showing four key questions: protect, identify risk, know adversary, and respond](/images/threat-model-framework.svg)
+
 ## The Attack Surface
 
 Spiritual contexts have a unique attack surface because they involve:
@@ -41,6 +43,8 @@ The SI Protocols tool analyses text across several dimensions that map to common
 | **Commitment escalation** | Gradual increase in demands, classic foot-in-the-door technique |
 
 These categories are not exhaustive, but they cover the most common and measurable patterns observed across spiritual traditions worldwide.
+
+![Threat analysis radar showing seven detection dimensions: vagueness, authority, urgency, emotion, contradiction, source, and escalation](/images/threat-radar.svg)
 
 ## Proportionate Response
 

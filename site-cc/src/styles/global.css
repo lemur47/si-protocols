@@ -131,6 +131,14 @@ blockquote {
   color: var(--colour-text-muted);
 }
 
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 1.5rem auto;
+  border-radius: var(--radius);
+}
+
 hr {
   border: none;
   border-top: 1px solid var(--colour-border);

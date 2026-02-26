@@ -48,6 +48,10 @@ const allPages = (await getCollection('pages')).sort((a, b) => a.data.order - b.
     </div>
   </section>
 
+  <section class="pipeline">
+    <img src="/images/analysis-pipeline.svg" alt="Analysis pipeline schematic showing text input flowing through seven threat detection channels to produce a composite threat score" />
+  </section>
+
   <section class="explore">
     <h2>Explore</h2>
     <div class="explore-grid">
@@ -146,6 +150,15 @@ const allPages = (await getCollection('pages')).sort((a, b) => a.data.order - b.
     font-size: 0.85rem;
     color: var(--colour-text-muted);
     margin: 0;
+  }
+
+  .pipeline {
+    margin: 1rem 0 2.5rem;
+  }
+
+  .pipeline img {
+    width: 100%;
+    border-radius: var(--radius);
   }
 
   .explore {
