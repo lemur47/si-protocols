@@ -36,16 +36,33 @@ The filter produces a **0–100 threat score** with a breakdown:
 
 Higher scores indicate more markers of disinformation were detected.
 
+## Topology Analysis
+
+Run the topology analyser to extract claims, classify them, and produce a structural graph:
+
+```bash
+uv run si-topology examples/synthetic_topology_suspicious.txt
+```
+
+This generates an SVG file (`<input>.topology.svg`) visualising the claim graph. Options:
+
+- `--format json` — output JSON instead of SVG
+- `--engine anthropic` — use the Claude API engine (requires `anthropic` extra and `ANTHROPIC_API_KEY`)
+- `--lang ja` — analyse Japanese text
+- `-o OUTPUT` — specify output file path
+
 ## Running Tests
 
 ```bash
 uv run pytest                    # All tests
 uv run pytest -m "not slow"     # Skip spaCy-dependent tests
+uv run pytest tests/test_topology_types.py     # Topology types only
+uv run pytest -k "topology"     # All topology tests
 ```
 
 ## What Next?
 
-- [Python Library Reference](/docs/library/) — use `hybrid_score()` and `tech_analysis()` in your own code
+- [Python Library Reference](/docs/library/) — use `hybrid_score()`, `tech_analysis()`, and the topology functions in your own code
 - [REST API Reference](/docs/api/) — analyse text over HTTP with `POST /analyse`
 - Check `markers.py` to see which patterns are detected
 - File issues or contribute on [GitHub](https://github.com/lemur47/si-protocols)

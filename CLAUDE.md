@@ -30,6 +30,14 @@ The CLI supports:
 - `--format rich` (default, colour-coded) and `--format json` (machine-readable). Rich output respects the `NO_COLOR` env var automatically.
 - `--lang en` (default) or `--lang ja` for Japanese language analysis.
 
+Topology CLI entry point: `uv run si-topology examples/synthetic_topology_suspicious.txt`
+
+The topology CLI supports:
+- `--engine rule` (default, local spaCy) or `--engine anthropic` (Claude API, requires `anthropic` extra and `ANTHROPIC_API_KEY`)
+- `--format svg` (default) or `--format json`
+- `--lang en` (default) or `--lang ja`
+- `-o OUTPUT` to specify output file path (default: `<input>.topology.svg` for SVG, stdout for JSON)
+
 ### Site (Astro)
 
 ```bash
@@ -68,6 +76,12 @@ The spaCy models are lazy-loaded via `_get_nlp(lang)` to avoid import-time side 
 
 Marker definitions are static word/phrase lists (frozenset for adjectives, lists for phrases/patterns). English markers must be lowercase; Japanese markers use standard full-width forms. Markers span tradition-specific categories: generic New Age / スピリチュアル, prosperity gospel / 繁栄の福音, conspirituality / 陰謀論スピ, commercial exploitation / 霊感商法, high-demand group (cult) / カルト, and fraternal/secret society / 秘密結社 traditions.
 
+6. **Topology module** (`topology/`) — fractal-topology analysis that extracts claims from text, classifies them along four axes, and builds a layered graph. Variables (claims) are classified by `VariableClassification`: `falsifiability` (0.0 testable → 1.0 unfalsifiable), `verifiability` (0.0 has sources → 1.0 no checkable sources), `domain_coherence` (0.0 stays in domain → 1.0 crosses domains), and `logical_dependency` (0.0 load-bearing → 1.0 decorative/emotive). Each variable is then assigned a `VariableKind`: `PSEUDO` (mean ≥ 0.4 or single axis ≥ 0.5), `TRUE` (mean ≤ 0.15), or `INDETERMINATE`. Variables are placed at three `TopologyLevel`s: `MACRO` (whole-text summary), `MESO` (kind-group summaries), and `MICRO` (individual claims).
+
+   Three engine tiers implement the `AnalysisEngine` protocol: **Tier 0 `RuleEngine`** — local, deterministic, uses spaCy + marker heuristics; **Tier 1 `AnthropicEngine`** — Claude API-based extraction (requires `anthropic` optional extra and `ANTHROPIC_API_KEY`); **Tier 2 `OllamaEngine`** — stub for future local-LLM integration. Key functions: `engine.extract_variables(text, lang=...)` extracts and classifies variables; `build_topology(variables, lang=..., engine_name=...)` constructs the layered graph with nodes, edges, and layout coordinates; `render_svg(result)` / `save_svg(result, path)` produce intelligence-themed SVG visualisations; `render_topology_json(result)` serialises to JSON.
+
+   `TopologyResult` frozen dataclass fields: `nodes`, `edges`, `variables` (all `tuple`), `pseudo_count`, `true_count`, `indeterminate_count`, `lang`, `engine_name`, `message`.
+
 ## Git workflow
 
 - **GitHub Flow** — always create a `feature/*` branch, push, and open a PR. Never commit directly to `main`.
@@ -83,3 +97,6 @@ Marker definitions are static word/phrase lists (frozenset for adjectives, lists
 - Pre-commit hooks run ruff, gitleaks, bandit, and pytest on every commit
 - Coverage threshold: 70% (`fail_under` in pyproject.toml)
 - Adding a new language requires: a `markers_<lang>.py` file, a loader in `marker_registry.py`, a model entry in `_LANG_MODELS`, and the `SupportedLang` Literal updated
+- Topology module lives in `src/si_protocols/topology/` with its own NLP cache (independent from `threat_filter.py`)
+- Topology types are frozen dataclasses with `tuple` (not `list`) for full immutability and hashability
+- `AnthropicEngine` requires the `anthropic` optional extra (`uv sync --extra anthropic`) and an `ANTHROPIC_API_KEY` environment variable
