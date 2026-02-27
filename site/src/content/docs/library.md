@@ -18,6 +18,20 @@ from si_protocols.markers import (
     UNFALSIFIABLE_SOURCE_PHRASES,
     COMMITMENT_ESCALATION_MARKERS,
 )
+
+# Topology module
+from si_protocols.topology import (
+    RuleEngine,
+    build_topology,
+    render_svg,
+    save_svg,
+    render_topology_json,
+    TopologyResult,
+    Variable,
+    VariableClassification,
+    VariableKind,
+    TopologyLevel,
+)
 ```
 
 ## `hybrid_score()`
@@ -146,3 +160,150 @@ for label, pole_a, pole_b in CONTRADICTION_PAIRS:
 ```
 
 All markers are lowercase. Matching is case-insensitive (the analyser lowercases input text before comparison).
+
+## Topology Module
+
+The topology module extracts claims (variables) from text, classifies them along four axes, and builds a layered graph with nodes, edges, and layout coordinates.
+
+### `RuleEngine`
+
+The default, local engine. Uses spaCy NLP and marker heuristics to extract and classify variables.
+
+```python
+def extract_variables(
+    self,
+    text: str,
+    *,
+    lang: SupportedLang = "en",
+) -> list[Variable]
+```
+
+**Parameters:**
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `text` | `str` | (required) | The text to analyse |
+| `lang` | `SupportedLang` | `"en"` | Language of the input text (`"en"` or `"ja"`) |
+
+**Example:**
+
+```python
+from si_protocols.topology import RuleEngine
+
+engine = RuleEngine()
+text = open("examples/synthetic_topology_suspicious.txt").read()
+variables = engine.extract_variables(text, lang="en")
+
+for var in variables:
+    print(f"[{var.kind.value}] {var.text[:60]}")
+    print(f"  falsifiability={var.classification.falsifiability}")
+```
+
+### `build_topology()`
+
+Constructs a complete topology graph from extracted variables.
+
+```python
+def build_topology(
+    variables: list[Variable],
+    *,
+    lang: SupportedLang = "en",
+    engine_name: str = "",
+    canvas_width: float = 900.0,
+) -> TopologyResult
+```
+
+**Parameters:**
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `variables` | `list[Variable]` | (required) | Variables extracted by an engine |
+| `lang` | `SupportedLang` | `"en"` | Language of the source text |
+| `engine_name` | `str` | `""` | Name of the engine that produced the variables |
+| `canvas_width` | `float` | `900.0` | Width of the SVG coordinate space |
+
+**Example:**
+
+```python
+from si_protocols.topology import RuleEngine, build_topology
+
+engine = RuleEngine()
+variables = engine.extract_variables(text)
+result = build_topology(variables, lang="en", engine_name=engine.name)
+
+print(f"Nodes: {len(result.nodes)}")
+print(f"Edges: {len(result.edges)}")
+print(f"Pseudo: {result.pseudo_count}, True: {result.true_count}")
+```
+
+### `render_svg()` / `save_svg()`
+
+Render a `TopologyResult` as an intelligence-themed SVG.
+
+```python
+from si_protocols.topology import render_svg, save_svg
+
+svg_string = render_svg(result)           # Returns SVG as a string
+save_svg(result, "output.topology.svg")   # Writes to file
+```
+
+### `render_topology_json()`
+
+Serialise a `TopologyResult` to indented JSON.
+
+```python
+from si_protocols.topology import render_topology_json
+
+json_string = render_topology_json(result)  # Prints to stdout, returns string
+
+# Write to file instead:
+with open("output.json", "w") as f:
+    render_topology_json(result, file=f)
+```
+
+### `TopologyResult` fields
+
+`TopologyResult` is a frozen dataclass returned by `build_topology()`.
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `nodes` | `tuple[TopologyNode, ...]` | Nodes in the topology graph |
+| `edges` | `tuple[TopologyEdge, ...]` | Directed edges between nodes |
+| `variables` | `tuple[Variable, ...]` | All extracted variables |
+| `pseudo_count` | `int` | Number of pseudo-variables |
+| `true_count` | `int` | Number of true-variables |
+| `indeterminate_count` | `int` | Number of indeterminate variables |
+| `lang` | `SupportedLang` | Language used for analysis |
+| `engine_name` | `str` | Name of the engine that produced the result |
+| `message` | `str` | Summary message |
+
+### `VariableClassification` axes
+
+Each variable is classified along four independent axes (0.0–1.0, higher = more suspicious):
+
+| Axis | Scale | What it measures |
+|------|-------|-----------------|
+| `falsifiability` | 0.0 testable → 1.0 unfalsifiable | Can the claim be tested or disproved? |
+| `verifiability` | 0.0 has sources → 1.0 no checkable sources | Can the claim's sources be independently checked? |
+| `domain_coherence` | 0.0 stays in domain → 1.0 crosses domains | Does the claim improperly mix domains (e.g. quantum physics + chakras)? |
+| `logical_dependency` | 0.0 load-bearing → 1.0 decorative | Does the claim carry logical weight, or is it emotive filler? |
+
+### `VariableKind`
+
+Derived from the mean of the four classification axes:
+
+| Kind | Derivation rule |
+|------|----------------|
+| `PSEUDO` | Mean ≥ 0.4, or mean ≥ 0.25 with any single axis ≥ 0.5 |
+| `TRUE` | Mean ≤ 0.15 |
+| `INDETERMINATE` | Everything else |
+
+### Engine tiers
+
+| Tier | Engine | Description |
+|------|--------|-------------|
+| 0 | `RuleEngine` | Local, deterministic. Uses spaCy + marker heuristics. No API keys needed. |
+| 1 | `AnthropicEngine` | Claude API-based extraction. Requires `anthropic` extra and `ANTHROPIC_API_KEY`. |
+| 2 | `OllamaEngine` | Stub for future local-LLM integration. Not yet functional. |
+
+All engines implement the `AnalysisEngine` protocol and expose `name` (property) and `extract_variables(text, *, lang)` (method).

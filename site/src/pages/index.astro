@@ -24,9 +24,10 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       <p>
         spaCy NLP pipeline detecting vagueness patterns, authority claims, urgency/fear triggers,
         emotional manipulation (fear/euphoria polarity with contrast bonus), logical
-        contradictions (opposing claims in the same text), and source attribution analysis
-        (unfalsifiable sources and unnamed authorities, offset by verifiable citations).
-        Weighted composite scoring across six dimensions.
+        contradictions (opposing claims in the same text), source attribution analysis
+        (unfalsifiable sources and unnamed authorities, offset by verifiable citations),
+        and commitment escalation (foot-in-the-door progression).
+        Weighted composite scoring across seven dimensions.
       </p>
     </div>
     <div class="card">
@@ -41,6 +42,19 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       <p>
         60% tech + 40% heuristic. Produces a 0&ndash;100 threat score with full breakdown
         of what triggered it.
+      </p>
+    </div>
+  </section>
+
+  <section class="features topology">
+    <div class="card wide">
+      <h3>Topology analysis</h3>
+      <p>
+        Extracts claims from text, classifies each along four axes (falsifiability, verifiability,
+        domain coherence, logical dependency), and builds a layered graph of pseudo-variables,
+        true-variables, and indeterminate claims. Produces intelligence-themed SVG visualisations
+        or structured JSON. Three engine tiers: local rule-based (default), Claude API, and
+        local-LLM (stub).
       </p>
     </div>
   </section>
@@ -140,6 +154,15 @@ uv run si-threat-filter examples/synthetic_suspicious.txt</code></pre>
     font-size: 0.85rem;
     color: var(--colour-text-muted);
     margin: 0;
+  }
+
+  .features.topology {
+    display: block;
+    margin: 0 0 3rem;
+  }
+
+  .card.wide {
+    max-width: 100%;
   }
 
   .quickstart {
