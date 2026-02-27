@@ -37,9 +37,13 @@ api = [
     "fastapi>=0.115",
     "uvicorn[standard]>=0.34",
 ]
+anthropic = [
+    "anthropic>=0.40",
+]
 
 [project.scripts]
 si-threat-filter = "si_protocols.threat_filter:main"
+si-topology = "si_protocols.topology.cli:main"
 
 [project.urls]
 Homepage = "https://spiritualintelligence.dev"
@@ -78,7 +82,7 @@ ignore = [
 ]
 
 [tool.ruff.lint.per-file-ignores]
-"tests/**/*.py" = ["S101"]  # assert is expected in tests
+"tests/**/*.py" = ["S101", "S314"]  # assert + xml.etree on our own SVG output
 
 [tool.ruff.lint.isort]
 known-first-party = ["si_protocols"]
