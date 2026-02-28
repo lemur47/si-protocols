@@ -22,6 +22,20 @@ Each site links clearly to the other. The .cc site has a "For Developers" call-t
 
 ---
 
+## Completed
+
+### Topology module v1
+
+Fractal-topology analysis that extracts claims from text, classifies them along four axes, and builds a layered graph. Delivered infrastructure:
+
+- **Rule engine** (Tier 0) — local, deterministic analysis using spaCy + marker heuristics
+- **Anthropic engine** (Tier 1) — Claude API-based claim extraction and classification
+- **Output formats** — SVG visualisation (intelligence-themed dark HUD) and JSON
+- **CLI** — `si-topology` command with `--engine`, `--format`, `--lang`, and `-o` options
+- **Multi-language support** — English and Japanese
+
+---
+
 ## Phase 1: Foundation (Months 1–3)
 
 ### spiritualintelligence.cc — launch
