@@ -13,8 +13,11 @@ cd si-protocols
 uv sync --all-extras
 uv pip install en_core_web_sm@https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.8.0/en_core_web_sm-3.8.0-py3-none-any.whl
 
-# Analyse a text file
+# Analyse a text file for manipulation patterns
 uv run si-threat-filter examples/synthetic_suspicious.txt
+
+# Map claims and structure in a text
+uv run si-topology examples/synthetic_topology_suspicious.txt
 
 # Run tests
 uv run pytest
@@ -29,6 +32,10 @@ The threat filter combines two analysis layers:
 
 Output is a 0–100 threat score with a breakdown of what triggered it.
 
+### Topology analysis
+
+The topology module extracts individual claims from a text, classifies each along four axes (testability, source verifiability, domain coherence, rhetorical role), and builds a layered graph showing how pseudo-scientific, true, and indeterminate claims relate to each other. Output is an SVG visualisation or JSON structure.
+
 ## Project layout
 
 ```
@@ -36,6 +43,7 @@ src/si_protocols/
   threat_filter.py    # Hybrid NLP + heuristic threat scorer
   markers.py          # Disinformation marker definitions
   output.py           # Rich and JSON output formatting
+  topology/           # Fractal-topology claim analysis and graph building
 app/
   main.py             # FastAPI REST API (POST /analyse, GET /health)
   schemas.py          # Pydantic request/response models
@@ -67,7 +75,7 @@ uv run bandit -r src/         # Security scan
 
 - [`CLAUDE.md`](CLAUDE.md) — Commands, architecture details, code style conventions
 - [`docs/STRATEGY.md`](docs/STRATEGY.md) — Mission, audience, two-domain and two-channel strategy, roadmap overview
-- [`docs/ROADMAP.md`](docs/ROADMAP.md) — Mid-term plan: two-domain web presence, web demo, Chrome extension, note.com launch
+- [`docs/ROADMAP.md`](docs/ROADMAP.md) — Mid-term plan: topology roadmap, two-domain web presence, web demo, Chrome extension, note.com launch
 
 ## Disclaimer
 
