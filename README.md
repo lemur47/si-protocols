@@ -12,6 +12,8 @@ git clone https://github.com/lemur47/si-protocols.git
 cd si-protocols
 uv sync --all-extras
 uv pip install en_core_web_sm@https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.8.0/en_core_web_sm-3.8.0-py3-none-any.whl
+uv pip install ja_core_news_sm@https://github.com/explosion/spacy-models/releases/download/ja_core_news_sm-3.8.0/ja_core_news_sm-3.8.0-py3-none-any.whl
+pre-commit install
 
 # Analyse a text file for manipulation patterns
 uv run si-threat-filter examples/synthetic_suspicious.txt
