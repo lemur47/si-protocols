@@ -44,8 +44,8 @@
     <text x="195" y="50" fill="#8888a0" font-size="8">"Common Sense") — standardises I/O across instances</text>
     <text x="195" y="66" fill="#8888a0" font-size="8">Failure mode: rigid orchestration locks VM from SAN</text>
     <!-- Left label -->
-    <text x="-10" y="42" fill="#8888a0" font-size="8" text-anchor="end">Kubernetes</text>
-    <text x="-10" y="54" fill="#8888a0" font-size="8" text-anchor="end">Docker images</text>
+    <text x="170" y="42" fill="#8888a0" font-size="8" text-anchor="end">Kubernetes</text>
+    <text x="170" y="54" fill="#8888a0" font-size="8" text-anchor="end">Docker images</text>
     <!-- Right label -->
     <text x="740" y="42" fill="#8888a0" font-size="8">Social dogma</text>
     <text x="740" y="54" fill="#8888a0" font-size="8">Cultural norms</text>
@@ -65,8 +65,8 @@
     <text x="195" y="50" fill="#8888a0" font-size="8">environmental input against genetic patterns</text>
     <text x="195" y="66" fill="#8888a0" font-size="8">Produces behavioural output via weighted logic</text>
     <!-- Left label -->
-    <text x="-10" y="42" fill="#8888a0" font-size="8" text-anchor="end">Virtual machine</text>
-    <text x="-10" y="54" fill="#8888a0" font-size="8" text-anchor="end">CPU scheduler</text>
+    <text x="170" y="42" fill="#8888a0" font-size="8" text-anchor="end">Virtual machine</text>
+    <text x="170" y="54" fill="#8888a0" font-size="8" text-anchor="end">CPU scheduler</text>
     <!-- Right label -->
     <text x="740" y="42" fill="#8888a0" font-size="8">Ego processing</text>
     <text x="740" y="54" fill="#8888a0" font-size="8">Conscious mind</text>
@@ -86,8 +86,8 @@
     <text x="195" y="50" fill="#8888a0" font-size="8">signals to the VM — electromagnetic, circadian,</text>
     <text x="195" y="66" fill="#8888a0" font-size="8">seasonal, and sensory signal modulation</text>
     <!-- Left label -->
-    <text x="-10" y="42" fill="#8888a0" font-size="8" text-anchor="end">Fibre Channel</text>
-    <text x="-10" y="54" fill="#8888a0" font-size="8" text-anchor="end">Signal router</text>
+    <text x="170" y="42" fill="#8888a0" font-size="8" text-anchor="end">Fibre Channel</text>
+    <text x="170" y="54" fill="#8888a0" font-size="8" text-anchor="end">Signal router</text>
     <!-- Right label -->
     <text x="740" y="42" fill="#8888a0" font-size="8">Environmental</text>
     <text x="740" y="54" fill="#8888a0" font-size="8">signal modulation</text>
@@ -103,8 +103,8 @@
     <text x="195" y="50" fill="#8888a0" font-size="8">"Life" is a git checkout of a specific branch.</text>
     <text x="195" y="66" fill="#8888a0" font-size="8">Stores executable patterns and behavioural subroutines</text>
     <!-- Left label -->
-    <text x="-10" y="42" fill="#8888a0" font-size="8" text-anchor="end">Git on SAN</text>
-    <text x="-10" y="54" fill="#8888a0" font-size="8" text-anchor="end">Version control</text>
+    <text x="170" y="42" fill="#8888a0" font-size="8" text-anchor="end">Git on SAN</text>
+    <text x="170" y="54" fill="#8888a0" font-size="8" text-anchor="end">Version control</text>
     <!-- Right label -->
     <text x="740" y="42" fill="#8888a0" font-size="8">Inherited patterns</text>
     <text x="740" y="54" fill="#8888a0" font-size="8">Deep memory</text>
@@ -120,8 +120,8 @@
     <text x="195" y="50" fill="#8888a0" font-size="8">data resides — a living distributed repository.</text>
     <text x="195" y="66" fill="#8888a0" font-size="8">Every human instance is a contributor</text>
     <!-- Left label -->
-    <text x="-10" y="42" fill="#8888a0" font-size="8" text-anchor="end">Storage Area</text>
-    <text x="-10" y="54" fill="#8888a0" font-size="8" text-anchor="end">Network (SAN)</text>
+    <text x="170" y="42" fill="#8888a0" font-size="8" text-anchor="end">Storage Area</text>
+    <text x="170" y="54" fill="#8888a0" font-size="8" text-anchor="end">Network (SAN)</text>
     <!-- Right label -->
     <text x="740" y="42" fill="#8888a0" font-size="8">Collective</text>
     <text x="740" y="54" fill="#8888a0" font-size="8">unconscious</text>
@@ -141,8 +141,8 @@
     <text x="195" y="50" fill="#8888a0" font-size="8">electromagnetic clock signals. The substrate upon</text>
     <text x="195" y="66" fill="#8888a0" font-size="8">which all higher layers depend</text>
     <!-- Left label -->
-    <text x="-10" y="42" fill="#8888a0" font-size="8" text-anchor="end">Physical server</text>
-    <text x="-10" y="54" fill="#8888a0" font-size="8" text-anchor="end">Hardware</text>
+    <text x="170" y="42" fill="#8888a0" font-size="8" text-anchor="end">Physical server</text>
+    <text x="170" y="54" fill="#8888a0" font-size="8" text-anchor="end">Hardware</text>
     <!-- Right label -->
     <text x="740" y="42" fill="#8888a0" font-size="8">The planet</text>
     <text x="740" y="54" fill="#8888a0" font-size="8">Physical body</text>
