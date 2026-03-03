@@ -66,6 +66,6 @@ When spiritual communities exist solely on commercial platforms (social media, p
 
 The SI Protocols tool is one small part of this larger picture — a local, transparent, open-source tool that respects your privacy whilst helping you navigate complex spiritual content.
 
-Beyond the threat score, the tool can also [map the claims and patterns](/mapping-claims-and-patterns/) within a text — showing you not just *how much* manipulation is present, but *where* it lives and how the pieces connect.
+Beyond the threat score, the tool can also [map the claims and patterns](/mapping-claims-and-patterns/) within a text — showing you not just *how much* manipulation is present, but *where* it lives and how the pieces connect. From there, [the virtualisation model](/the-virtualisation-model/) explains the conceptual framework behind these classifications — a layered architecture for understanding where claims originate.
 
 Visit the [developer site](https://spiritualintelligence.dev) to explore the technical documentation and contribute.

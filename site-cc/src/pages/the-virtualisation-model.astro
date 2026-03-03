@@ -1,0 +1,23 @@
+---
+import { getCollection, render } from 'astro:content';
+import PageLayout from '../layouts/PageLayout.astro';
+
+const allPages = (await getCollection('pages')).sort((a, b) => a.data.order - b.data.order);
+const current = allPages.find(p => p.id === 'the-virtualisation-model');
+if (!current) throw new Error('Page not found');
+
+const idx = allPages.indexOf(current);
+const prev = idx > 0 ? allPages[idx - 1] : undefined;
+const next = idx < allPages.length - 1 ? allPages[idx + 1] : undefined;
+
+const { Content } = await render(current);
+---
+
+<PageLayout
+  title={current.data.title}
+  description={current.data.description}
+  prev={prev ? { href: `/${prev.id}/`, label: prev.data.title } : undefined}
+  next={next ? { href: `/${next.id}/`, label: next.data.title } : undefined}
+>
+  <Content />
+</PageLayout>

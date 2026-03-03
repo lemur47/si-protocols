@@ -1,0 +1,167 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 680" font-family="'Courier New','Lucida Console',monospace">
+  <defs>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="glow-soft">
+      <feGaussianBlur stdDeviation="2" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <pattern id="scan" width="4" height="4" patternUnits="userSpaceOnUse">
+      <rect width="4" height="2" fill="#fff" opacity="0.015"/>
+    </pattern>
+  </defs>
+
+  <!-- Background -->
+  <rect width="900" height="680" fill="#0a0a0f"/>
+  <rect width="900" height="680" fill="url(#scan)"/>
+
+  <!-- HUD Frame corners -->
+  <path d="M 24 8 L 8 8 L 8 36" stroke="#00ffa3" stroke-width="1.5" fill="none" opacity="0.5"/>
+  <path d="M 876 8 L 892 8 L 892 36" stroke="#00ffa3" stroke-width="1.5" fill="none" opacity="0.5"/>
+  <path d="M 8 648 L 8 672 L 24 672" stroke="#00ffa3" stroke-width="1.5" fill="none" opacity="0.5"/>
+  <path d="M 892 648 L 892 672 L 876 672" stroke="#00ffa3" stroke-width="1.5" fill="none" opacity="0.5"/>
+  <rect x="4" y="4" width="892" height="672" rx="2" fill="none" stroke="#2a2a3a" stroke-width="0.5"/>
+
+  <!-- Title bar -->
+  <line x1="20" y1="44" x2="880" y2="44" stroke="#2a2a3a" stroke-width="0.5"/>
+  <text x="28" y="30" fill="#00ffa3" font-size="11" font-weight="bold" letter-spacing="2">SI-PROTOCOLS // CVP LAYER STACK</text>
+  <text x="872" y="30" fill="#8888a0" font-size="9" text-anchor="end" letter-spacing="1">VIRTUALISATION MODEL</text>
+
+  <!-- Column headers -->
+  <text x="120" y="72" fill="#00d4ff" font-size="9" text-anchor="middle" letter-spacing="1.5" opacity="0.7">INFRASTRUCTURE</text>
+  <text x="450" y="72" fill="#00d4ff" font-size="9" text-anchor="middle" letter-spacing="1.5" opacity="0.7">LAYER</text>
+  <text x="740" y="72" fill="#00d4ff" font-size="9" text-anchor="middle" letter-spacing="1.5" opacity="0.7">CONSCIOUSNESS</text>
+
+  <!-- Layer 6: Containers / Illusion (TOP) -->
+  <g transform="translate(40,86)">
+    <rect x="180" y="0" width="540" height="76" rx="3" fill="#12121a" stroke="#ff4444" stroke-width="0.8" opacity="0.9"/>
+    <rect x="180" y="0" width="540" height="18" rx="3" fill="#1a1a28"/>
+    <line x1="180" y1="18" x2="720" y2="18" stroke="#ff4444" stroke-width="0.4" opacity="0.5"/>
+    <text x="450" y="13" fill="#ff4444" font-size="9" text-anchor="middle" letter-spacing="2" font-weight="bold">LAYER 6 — CONTAINERS / ILLUSION</text>
+    <text x="195" y="38" fill="#8888a0" font-size="8">Shared cultural and social containers (Dockerised</text>
+    <text x="195" y="50" fill="#8888a0" font-size="8">"Common Sense") — standardises I/O across instances</text>
+    <text x="195" y="66" fill="#8888a0" font-size="8">Failure mode: rigid orchestration locks VM from SAN</text>
+    <!-- Left label -->
+    <text x="170" y="42" fill="#8888a0" font-size="8" text-anchor="end">Kubernetes</text>
+    <text x="170" y="54" fill="#8888a0" font-size="8" text-anchor="end">Docker images</text>
+    <!-- Right label -->
+    <text x="740" y="42" fill="#8888a0" font-size="8">Social dogma</text>
+    <text x="740" y="54" fill="#8888a0" font-size="8">Cultural norms</text>
+    <!-- PSEUDO badge -->
+    <rect x="570" y="52" width="130" height="18" rx="9" fill="none" stroke="#ff4444" stroke-width="1" opacity="0.8"/>
+    <circle cx="584" cy="61" r="4" fill="#ff4444" opacity="0.8" filter="url(#glow-soft)"/>
+    <text x="594" y="65" fill="#ff4444" font-size="8" letter-spacing="1" font-weight="bold">PSEUDO origin</text>
+  </g>
+
+  <!-- Layer 5: VMs / Mental Instances -->
+  <g transform="translate(40,174)">
+    <rect x="180" y="0" width="540" height="76" rx="3" fill="#12121a" stroke="#ffaa00" stroke-width="0.8" opacity="0.9"/>
+    <rect x="180" y="0" width="540" height="18" rx="3" fill="#1a1a28"/>
+    <line x1="180" y1="18" x2="720" y2="18" stroke="#ffaa00" stroke-width="0.4" opacity="0.5"/>
+    <text x="450" y="13" fill="#ffaa00" font-size="9" text-anchor="middle" letter-spacing="2" font-weight="bold">LAYER 5 — VIRTUAL MACHINES / EGO</text>
+    <text x="195" y="38" fill="#8888a0" font-size="8">VM with specific resource allocations — processes</text>
+    <text x="195" y="50" fill="#8888a0" font-size="8">environmental input against genetic patterns</text>
+    <text x="195" y="66" fill="#8888a0" font-size="8">Produces behavioural output via weighted logic</text>
+    <!-- Left label -->
+    <text x="170" y="42" fill="#8888a0" font-size="8" text-anchor="end">Virtual machine</text>
+    <text x="170" y="54" fill="#8888a0" font-size="8" text-anchor="end">CPU scheduler</text>
+    <!-- Right label -->
+    <text x="740" y="42" fill="#8888a0" font-size="8">Ego processing</text>
+    <text x="740" y="54" fill="#8888a0" font-size="8">Conscious mind</text>
+    <!-- INDETERMINATE badge -->
+    <rect x="547" y="52" width="153" height="18" rx="9" fill="none" stroke="#ffaa00" stroke-width="1" opacity="0.8"/>
+    <circle cx="561" cy="61" r="4" fill="#ffaa00" opacity="0.8" filter="url(#glow-soft)"/>
+    <text x="571" y="65" fill="#ffaa00" font-size="8" letter-spacing="1" font-weight="bold">INDETERMINATE</text>
+  </g>
+
+  <!-- Layer 4: Environmental Switch -->
+  <g transform="translate(40,262)">
+    <rect x="180" y="0" width="540" height="76" rx="3" fill="#12121a" stroke="#00d4ff" stroke-width="0.8" opacity="0.9"/>
+    <rect x="180" y="0" width="540" height="18" rx="3" fill="#1a1a28"/>
+    <line x1="180" y1="18" x2="720" y2="18" stroke="#00d4ff" stroke-width="0.4" opacity="0.5"/>
+    <text x="450" y="13" fill="#00d4ff" font-size="9" text-anchor="middle" letter-spacing="2" font-weight="bold">LAYER 4 — ENVIRONMENTAL SWITCH</text>
+    <text x="195" y="38" fill="#8888a0" font-size="8">High-speed interconnect routing environmental</text>
+    <text x="195" y="50" fill="#8888a0" font-size="8">signals to the VM — electromagnetic, circadian,</text>
+    <text x="195" y="66" fill="#8888a0" font-size="8">seasonal, and sensory signal modulation</text>
+    <!-- Left label -->
+    <text x="170" y="42" fill="#8888a0" font-size="8" text-anchor="end">Fibre Channel</text>
+    <text x="170" y="54" fill="#8888a0" font-size="8" text-anchor="end">Signal router</text>
+    <!-- Right label -->
+    <text x="740" y="42" fill="#8888a0" font-size="8">Environmental</text>
+    <text x="740" y="54" fill="#8888a0" font-size="8">signal modulation</text>
+  </g>
+
+  <!-- Layer 3: Genetic Repository -->
+  <g transform="translate(40,350)">
+    <rect x="180" y="0" width="540" height="76" rx="3" fill="#12121a" stroke="#00ffa3" stroke-width="0.8" opacity="0.9"/>
+    <rect x="180" y="0" width="540" height="18" rx="3" fill="#1a1a28"/>
+    <line x1="180" y1="18" x2="720" y2="18" stroke="#00ffa3" stroke-width="0.4" opacity="0.5"/>
+    <text x="450" y="13" fill="#00ffa3" font-size="9" text-anchor="middle" letter-spacing="2" font-weight="bold">LAYER 3 — GENETIC REPOSITORY</text>
+    <text x="195" y="38" fill="#8888a0" font-size="8">Multi-petabyte history of human source code —</text>
+    <text x="195" y="50" fill="#8888a0" font-size="8">"Life" is a git checkout of a specific branch.</text>
+    <text x="195" y="66" fill="#8888a0" font-size="8">Stores executable patterns and behavioural subroutines</text>
+    <!-- Left label -->
+    <text x="170" y="42" fill="#8888a0" font-size="8" text-anchor="end">Git on SAN</text>
+    <text x="170" y="54" fill="#8888a0" font-size="8" text-anchor="end">Version control</text>
+    <!-- Right label -->
+    <text x="740" y="42" fill="#8888a0" font-size="8">Inherited patterns</text>
+    <text x="740" y="54" fill="#8888a0" font-size="8">Deep memory</text>
+  </g>
+
+  <!-- Layer 2: Virtual Universe / SAN -->
+  <g transform="translate(40,438)">
+    <rect x="180" y="0" width="540" height="76" rx="3" fill="#12121a" stroke="#00ffa3" stroke-width="0.8" opacity="0.9"/>
+    <rect x="180" y="0" width="540" height="18" rx="3" fill="#1a1a28"/>
+    <line x1="180" y1="18" x2="720" y2="18" stroke="#00ffa3" stroke-width="0.4" opacity="0.5"/>
+    <text x="450" y="13" fill="#00ffa3" font-size="9" text-anchor="middle" letter-spacing="2" font-weight="bold">LAYER 2 — VIRTUAL UNIVERSE / SAN</text>
+    <text x="195" y="38" fill="#8888a0" font-size="8">Massive, high-availability storage array where all</text>
+    <text x="195" y="50" fill="#8888a0" font-size="8">data resides — a living distributed repository.</text>
+    <text x="195" y="66" fill="#8888a0" font-size="8">Every human instance is a contributor</text>
+    <!-- Left label -->
+    <text x="170" y="42" fill="#8888a0" font-size="8" text-anchor="end">Storage Area</text>
+    <text x="170" y="54" fill="#8888a0" font-size="8" text-anchor="end">Network (SAN)</text>
+    <!-- Right label -->
+    <text x="740" y="42" fill="#8888a0" font-size="8">Collective</text>
+    <text x="740" y="54" fill="#8888a0" font-size="8">unconscious</text>
+    <!-- TRUE badge -->
+    <rect x="582" y="52" width="118" height="18" rx="9" fill="none" stroke="#00ffa3" stroke-width="1" opacity="0.8"/>
+    <circle cx="596" cy="61" r="4" fill="#00ffa3" opacity="0.8" filter="url(#glow-soft)"/>
+    <text x="606" y="65" fill="#00ffa3" font-size="8" letter-spacing="1" font-weight="bold">TRUE origin</text>
+  </g>
+
+  <!-- Layer 1: Bare Metal -->
+  <g transform="translate(40,526)">
+    <rect x="180" y="0" width="540" height="76" rx="3" fill="#12121a" stroke="#2a2a3a" stroke-width="0.8" opacity="0.9"/>
+    <rect x="180" y="0" width="540" height="18" rx="3" fill="#1a1a28"/>
+    <line x1="180" y1="18" x2="720" y2="18" stroke="#2a2a3a" stroke-width="0.4" opacity="0.5"/>
+    <text x="450" y="13" fill="#e0e0e8" font-size="9" text-anchor="middle" letter-spacing="2" font-weight="bold">LAYER 1 — BARE METAL</text>
+    <text x="195" y="38" fill="#8888a0" font-size="8">Physical hardware providing compute resources and</text>
+    <text x="195" y="50" fill="#8888a0" font-size="8">electromagnetic clock signals. The substrate upon</text>
+    <text x="195" y="66" fill="#8888a0" font-size="8">which all higher layers depend</text>
+    <!-- Left label -->
+    <text x="170" y="42" fill="#8888a0" font-size="8" text-anchor="end">Physical server</text>
+    <text x="170" y="54" fill="#8888a0" font-size="8" text-anchor="end">Hardware</text>
+    <!-- Right label -->
+    <text x="740" y="42" fill="#8888a0" font-size="8">The planet</text>
+    <text x="740" y="54" fill="#8888a0" font-size="8">Physical body</text>
+  </g>
+
+  <!-- Upward arrow on left side -->
+  <line x1="200" y1="600" x2="200" y2="100" stroke="#00ffa3" stroke-width="0.8" opacity="0.25" stroke-dasharray="4,4"/>
+  <polygon points="200,100 196,112 204,112" fill="#00ffa3" opacity="0.3"/>
+  <text x="196" y="618" fill="#8888a0" font-size="7" text-anchor="middle" letter-spacing="1" opacity="0.5">ABSTRACTION</text>
+
+  <!-- Legend -->
+  <text x="28" y="638" fill="#e0e0e8" font-size="9" letter-spacing="1" opacity="0.7">LEGEND</text>
+  <circle cx="100" cy="635" r="4" fill="#00ffa3" opacity="0.8"/>
+  <text x="110" y="638" fill="#8888a0" font-size="8">TRUE</text>
+  <circle cx="170" cy="635" r="4" fill="#ffaa00" opacity="0.8"/>
+  <text x="180" y="638" fill="#8888a0" font-size="8">INDETERMINATE</text>
+  <circle cx="290" cy="635" r="4" fill="#ff4444" opacity="0.8"/>
+  <text x="300" y="638" fill="#8888a0" font-size="8">PSEUDO</text>
+
+  <!-- Status -->
+  <text x="872" y="660" fill="#8888a0" font-size="8" text-anchor="end" letter-spacing="1" opacity="0.5">CVP v1.0 // 6 LAYERS</text>
+</svg>

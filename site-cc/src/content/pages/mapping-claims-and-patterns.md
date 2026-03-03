@@ -62,4 +62,4 @@ The topology map is a lens for structured thinking. It helps you ask better ques
 
 These are the questions that strengthen your ability to engage with spiritual content on your own terms.
 
-Continue to the [developer site](https://spiritualintelligence.dev) to explore the technical documentation and try the tools yourself.
+Continue to [The Virtualisation Model](/the-virtualisation-model/) to explore the conceptual framework behind these classifications — where claims come from, and why some content resonates deeply whilst carrying manufactured conclusions.

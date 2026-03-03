@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 420" font-family="'Courier New','Lucida Console',monospace">
+  <defs>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="glow-soft">
+      <feGaussianBlur stdDeviation="2" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <pattern id="scan" width="4" height="4" patternUnits="userSpaceOnUse">
+      <rect width="4" height="2" fill="#fff" opacity="0.015"/>
+    </pattern>
+    <marker id="arrow-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#00ffa3" opacity="0.8"/>
+    </marker>
+    <marker id="arrow-purple" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#a855f7" opacity="0.8"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="420" fill="#0a0a0f"/>
+  <rect width="800" height="420" fill="url(#scan)"/>
+
+  <!-- HUD Frame corners -->
+  <path d="M 24 8 L 8 8 L 8 36" stroke="#00ffa3" stroke-width="1.5" fill="none" opacity="0.5"/>
+  <path d="M 776 8 L 792 8 L 792 36" stroke="#00ffa3" stroke-width="1.5" fill="none" opacity="0.5"/>
+  <path d="M 8 388 L 8 412 L 24 412" stroke="#00ffa3" stroke-width="1.5" fill="none" opacity="0.5"/>
+  <path d="M 792 388 L 792 412 L 776 412" stroke="#00ffa3" stroke-width="1.5" fill="none" opacity="0.5"/>
+  <rect x="4" y="4" width="792" height="412" rx="2" fill="none" stroke="#2a2a3a" stroke-width="0.5"/>
+
+  <!-- Title bar -->
+  <line x1="20" y1="44" x2="780" y2="44" stroke="#2a2a3a" stroke-width="0.5"/>
+  <text x="28" y="30" fill="#00ffa3" font-size="11" font-weight="bold" letter-spacing="2">SI-PROTOCOLS // BIDIRECTIONAL FLOW</text>
+  <text x="772" y="30" fill="#8888a0" font-size="9" text-anchor="end" letter-spacing="1">PULL / PUSH MODEL</text>
+
+  <!-- Genetic Repository node (left) -->
+  <rect x="50" y="150" width="200" height="100" rx="4" fill="#12121a" stroke="#00ffa3" stroke-width="1.2" opacity="0.9"/>
+  <rect x="50" y="150" width="200" height="22" rx="4" fill="#1a1a28"/>
+  <line x1="50" y1="172" x2="250" y2="172" stroke="#00ffa3" stroke-width="0.4" opacity="0.5"/>
+  <text x="150" y="166" fill="#00ffa3" font-size="9" text-anchor="middle" letter-spacing="1.5" font-weight="bold">GENETIC REPOSITORY</text>
+  <text x="65" y="192" fill="#8888a0" font-size="8">Git on SAN — multi-petabyte</text>
+  <text x="65" y="204" fill="#8888a0" font-size="8">history of human source code</text>
+  <text x="65" y="220" fill="#e0e0e8" font-size="8" opacity="0.6">Read-write shared filesystem</text>
+  <text x="65" y="240" fill="#8888a0" font-size="7">[ deep memory / inherited patterns ]</text>
+
+  <!-- VM / Ego node (right) -->
+  <rect x="550" y="150" width="200" height="100" rx="4" fill="#12121a" stroke="#ffaa00" stroke-width="1.2" opacity="0.9"/>
+  <rect x="550" y="150" width="200" height="22" rx="4" fill="#1a1a28"/>
+  <line x1="550" y1="172" x2="750" y2="172" stroke="#ffaa00" stroke-width="0.4" opacity="0.5"/>
+  <text x="650" y="166" fill="#ffaa00" font-size="9" text-anchor="middle" letter-spacing="1.5" font-weight="bold">VM / EGO SYSTEM</text>
+  <text x="565" y="192" fill="#8888a0" font-size="8">Virtual machine — processes</text>
+  <text x="565" y="204" fill="#8888a0" font-size="8">input against genetic patterns</text>
+  <text x="565" y="220" fill="#e0e0e8" font-size="8" opacity="0.6">Weighted logic processor</text>
+  <text x="565" y="240" fill="#8888a0" font-size="7">[ ego / conscious mind ]</text>
+
+  <!-- Environmental Switch diamond (centre) -->
+  <polygon points="400,140 440,200 400,260 360,200" fill="#12121a" stroke="#00d4ff" stroke-width="1" opacity="0.9"/>
+  <text x="400" y="196" fill="#00d4ff" font-size="7" text-anchor="middle" letter-spacing="1">ENV</text>
+  <text x="400" y="208" fill="#00d4ff" font-size="7" text-anchor="middle" letter-spacing="1">SWITCH</text>
+
+  <!-- Pull path (top arc, green) — Genetic Repo → ENV → VM -->
+  <path d="M 250,170 Q 325,80 400,140" fill="none" stroke="#00ffa3" stroke-width="1.5" opacity="0.7" marker-end="url(#arrow-green)"/>
+  <path d="M 440,140 Q 520,80 550,170" fill="none" stroke="#00ffa3" stroke-width="1.5" opacity="0.7" marker-end="url(#arrow-green)"/>
+
+  <!-- Pull label -->
+  <rect x="310" y="68" width="180" height="38" rx="3" fill="#12121a" stroke="#00ffa3" stroke-width="0.6" opacity="0.8"/>
+  <text x="400" y="82" fill="#00ffa3" font-size="8" text-anchor="middle" letter-spacing="1" font-weight="bold">PULL (checkout)</text>
+  <text x="400" y="96" fill="#8888a0" font-size="7" text-anchor="middle">Fractal-topological resonance</text>
+  <text x="400" y="96" fill="#8888a0" font-size="7" text-anchor="middle">triggers pattern activation</text>
+
+  <!-- Push path (bottom arc, purple) — VM → ENV → Genetic Repo -->
+  <path d="M 550,230 Q 520,310 440,260" fill="none" stroke="#a855f7" stroke-width="1.5" opacity="0.7" marker-end="url(#arrow-purple)"/>
+  <path d="M 360,260 Q 325,310 250,230" fill="none" stroke="#a855f7" stroke-width="1.5" opacity="0.7" marker-end="url(#arrow-purple)"/>
+
+  <!-- Push label -->
+  <rect x="310" y="296" width="180" height="38" rx="3" fill="#12121a" stroke="#a855f7" stroke-width="0.6" opacity="0.8"/>
+  <text x="400" y="310" fill="#a855f7" font-size="8" text-anchor="middle" letter-spacing="1" font-weight="bold">PUSH (commit)</text>
+  <text x="400" y="324" fill="#8888a0" font-size="7" text-anchor="middle">Modified/new behavioural patterns</text>
+
+  <!-- Info panel bottom -->
+  <rect x="50" y="354" width="700" height="40" rx="3" fill="#12121a" stroke="#2a2a3a" stroke-width="0.6" opacity="0.8"/>
+  <text x="66" y="370" fill="#e0e0e8" font-size="8" opacity="0.7">KEY PROPERTY:</text>
+  <text x="160" y="370" fill="#8888a0" font-size="8">VM death does not destroy commits — they are already merged into the shared history.</text>
+  <text x="160" y="384" fill="#8888a0" font-size="8">The SAN functions as a planetary resource pool — a shared, ever-expanding knowledge base.</text>
+
+  <!-- Status -->
+  <text x="772" y="406" fill="#8888a0" font-size="8" text-anchor="end" letter-spacing="1" opacity="0.5">CVP v1.0 // BIDIRECTIONAL</text>
+</svg>
