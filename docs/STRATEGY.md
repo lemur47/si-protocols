@@ -71,7 +71,7 @@ No mainstream content moderation tool addresses these patterns. si-protocols fil
 6. **Community building** — contributor programme, marker refinement, tradition-specific modules, language contributions
 7. **Consulting and SaaS** — professional services for organisations dealing with spiritual disinformation
 
-See [ROADMAP.md](ROADMAP.md) for detailed phasing and milestones.
+See [ROADMAP.md](ROADMAP.md) for detailed phasing and milestones. See [CVP.md](CVP.md) for the theoretical framework (Cosmic-Virtualisation-Protocol) that grounds the topology module's classification logic.
 
 ## Two-Domain Strategy
 

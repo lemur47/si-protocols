@@ -87,6 +87,10 @@ Tier 0 is the default and aligns with the local-only principle. Tier 1 trades lo
 
 SVG is a text-based, version-controllable, zero-dependency output format. The renderer uses only `xml.etree.ElementTree` from the standard library — no external SVG or graphing packages. The intelligence-themed visual design (dark background, HUD frame, glow filters) matches the project's "cybersecurity for the soul" identity.
 
+## Theoretical Framework
+
+The [Cosmic-Virtualisation-Protocol (CVP)](CVP.md) provides a conceptual grounding for the topology module's classification logic. It models the human mind as a disaggregated compute instance booting from a decentralised SAN, mapping the `TRUE` / `PSEUDO` / `INDETERMINATE` variable classification to architectural layers (SAN-level data, container-layer artefacts, and in-process VM evaluation respectively). The four classification axes can be understood as **layer detectors** — measuring which layer of the CVP stack a claim originates from.
+
 ## Immutability Decisions
 
 All result types (`ThreatResult`, `TopologyResult`, `Variable`, `VariableClassification`, `TopologyNode`, `TopologyEdge`) are frozen dataclasses. Collections inside them use `tuple` rather than `list` so that the entire object graph is hashable and cannot be mutated after construction. This prevents accidental state changes in downstream code and makes results safe to cache, log, or pass between threads.
