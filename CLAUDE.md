@@ -100,3 +100,4 @@ Marker definitions are static word/phrase lists (frozenset for adjectives, lists
 - Topology module lives in `src/si_protocols/topology/` with its own NLP cache (independent from `threat_filter.py`)
 - Topology types are frozen dataclasses with `tuple` (not `list`) for full immutability and hashability
 - `AnthropicEngine` requires the `anthropic` optional extra (`uv sync --extra anthropic`) and an `ANTHROPIC_API_KEY` environment variable
+- **Skills** live in `skills/` — standalone prompt files that encode the detection methodology for use in Claude Projects (claude.ai) without installing the Python toolkit. Each `.md` file has an installation header followed by a system prompt payload.
