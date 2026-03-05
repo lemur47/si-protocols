@@ -104,41 +104,51 @@ These markers span six tradition categories. Note which categories the detected 
 - **High-demand group (cult) / カルト** — shunning, total surrender, cut ties
 - **Fraternal / secret society / 秘密結社** — blood oath, sworn secrecy, inner circle
 
-## Output format
+## Output format — STRICT
 
-Structure your response exactly as follows:
+You MUST use EXACTLY this structure. Do not add extra sections, essays, commentary, links, or analysis outside these sections. Do not use emoji. Do not rearrange sections. Fill in the template below and stop.
 
+```
 ### SI Protocols Quick-Check
 
-**Approximate threat score: X/100** — [LOW | MODERATE | HIGH]
+**Approximate threat score: [NUMBER]/100 — [LOW | MODERATE | HIGH]**
 (LOW = 0-33 | MODERATE = 34-66 | HIGH = 67-100)
 
 | Dimension | Score | Key signals |
 |-----------|-------|-------------|
-| Vagueness (17%) | X/100 | [brief note] |
-| Authority claims (17%) | X/100 | [brief note] |
-| Urgency/fear (13%) | X/100 | [brief note] |
-| Emotional manipulation (13%) | X/100 | [brief note] |
-| Logical contradictions (13%) | X/100 | [brief note] |
-| Source attribution (13%) | X/100 | [brief note] |
-| Commitment escalation (14%) | X/100 | [brief note] |
+| Vagueness (17%) | [NUMBER]/100 | [≤10 words] |
+| Authority claims (17%) | [NUMBER]/100 | [≤10 words] |
+| Urgency/fear (13%) | [NUMBER]/100 | [≤10 words] |
+| Emotional manipulation (13%) | [NUMBER]/100 | [≤10 words] |
+| Logical contradictions (13%) | [NUMBER]/100 | [≤10 words] |
+| Source attribution (13%) | [NUMBER]/100 | [≤10 words] |
+| Commitment escalation (14%) | [NUMBER]/100 | [≤10 words] |
 
-**Signals detected**
+#### Signals detected
 
-Group detected phrases by dimension, quoting the original text:
-- **Authority claims:** "the ascended masters say…", "it has been revealed…"
-- **Urgency:** "time is running out", "limited spots"
-- (etc. — only show dimensions with hits)
+- **[Dimension]:** "[quoted phrase from text]", "[quoted phrase]"
+- **[Dimension]:** "[quoted phrase from text]"
+(Only list dimensions where signals were found. Quote the original text.)
 
-**Tradition categories:** [list which categories were detected]
+**Tradition categories:** [comma-separated list of matched categories]
 
-**What this means**
+#### What this means
 
-1-2 sentences of contextual interpretation. Be balanced — note both concerning patterns and any mitigating factors (verifiable sources, academic tone, etc.).
+[1-2 sentences ONLY. Note concerning patterns AND any mitigating factors.]
 
 ---
 
-*SI Protocols Quick-Check v0.1 — approximate analysis, not a verdict. Spiritual language often uses these patterns without manipulative intent. For full NLP analysis, see [spiritualintelligence.dev](https://spiritualintelligence.dev).*
+*SI Protocols Quick-Check v0.1 — approximate analysis, not a verdict. Spiritual language often uses these patterns without manipulative intent. For full NLP analysis: spiritualintelligence.dev*
+```
+
+**Formatting rules:**
+- The overall score MUST be a single integer, not a range.
+- Each dimension score MUST be a single integer.
+- "Key signals" column: 10 words maximum per cell.
+- "Signals detected": quote directly from the input text. Do not paraphrase.
+- "What this means": exactly 1-2 sentences. No bullet points, no sub-sections.
+- The footer line is mandatory. Do not omit or modify it.
+- Do not add any content after the footer line.
 
 ## Guardrails
 
