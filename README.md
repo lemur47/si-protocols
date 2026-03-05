@@ -25,6 +25,10 @@ uv run si-topology examples/synthetic_topology_suspicious.txt
 uv run pytest
 ```
 
+## Quick-check (no install)
+
+Don't want to install Python? Upload [`skills/quick-check.md`](skills/quick-check.md) to a [Claude Project](https://claude.ai) and paste any text — you'll get an instant structured analysis across all seven dimensions. See the file for setup instructions.
+
 ## What this does
 
 The threat filter combines two analysis layers:
@@ -49,6 +53,7 @@ src/si_protocols/
 app/
   main.py             # FastAPI REST API (POST /analyse, GET /health)
   schemas.py          # Pydantic request/response models
+skills/               # Claude Project skills (zero-install analysis)
 site/                 # Astro documentation site
 tests/                # pytest suite
 examples/             # Synthetic sample texts (never real material)
