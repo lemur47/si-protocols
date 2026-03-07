@@ -38,6 +38,21 @@ Sophisticated manipulation often works both sides of the emotional spectrum simu
 
 ![Emotional signal analysis showing fear-euphoria cycling waveform with diminishing highs and deepening lows](/images/emotion-cycle.svg)
 
+## Egregoric Systems
+
+Some threats do not originate from a single manipulative actor. They emerge from **stateful containers** — collective systems that sustain themselves by harvesting resources from their members. In the [Virtualisation Model](/the-virtualisation-model/), these are called egregores: living orchestration middleware that draws its compute from the very nodes it manages.
+
+The pattern looks like this: a spiritual community, retreat network, or teaching lineage builds a self-reinforcing loop. Members contribute money, attention, and emotional energy. The system aggregates these contributions and returns real benefits — status, community, business connections, subjective transformation experiences — but only to those who keep contributing. The system grows more coherent and more demanding over time, and no single person controls it. It is constituted by its participants.
+
+Two diagnostic markers help identify this pattern:
+
+- **The price-gate test.** If the teaching were genuine deep-layer truth, it would not require a financial gate. Patterns stored in the shared repository are accessible to any instance that can match their topological signature through the Environmental Switch. When "wisdom" is accessible only to paying members, it is a container-layer artefact, not deep data.
+- **The non-contributor test.** People who cannot afford to participate receive nothing from the system. The system does not serve non-contributors. This asymmetry is diagnostically significant — genuine pattern activation from the repository does not discriminate by financial contribution.
+
+Egregoric systems are harder to critique than straightforward scams because they deliver real results to members. The mechanism is not fraud — it is architectural. The system works, but it works *for itself*, using its members as both resource and infrastructure.
+
+For a deeper analysis of how stateful containers operate, how they contaminate the shared repository, and why escape triggers multi-layer resistance, see the [full egregores page](/egregores/).
+
 ## Conspirituality
 
 A growing threat is the fusion of conspiracy theories with spiritual language — sometimes called "conspirituality." This pattern wraps political or ideological content in spiritual framing:

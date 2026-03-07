@@ -58,6 +58,62 @@ The Illusion Layer (containers) enables rapid cultural deployment — language, 
 
 The difference matters because it changes the questions you ask. Instead of "which spiritual framework is correct?", you ask "am I accessing deeper layers, or just swapping containers?"
 
+But there is a further distinction that makes escape even harder to evaluate: not all containers are the same kind of thing.
+
+## Stateful Containers: Living Systems
+
+The containers described above — language, cultural norms, social dogma — are **stateless**. They constrain, but they do not actively consume. You can swap them, run multiple at once, or bypass them entirely. They are configuration applied to the VM.
+
+A fundamentally different type of container exists: **stateful containers**, sometimes called egregores. A religion, a monetary system, a brand ecosystem, a political movement, a guru's following. These are not static filters — they are living collective entities that require continuous resource contribution from their instances.
+
+The infrastructure analogy: a stateless container is a Docker image. A stateful container is parasitic orchestration middleware — a Kubernetes that draws compute from the nodes it manages, and the nodes believe the orchestrator is essential infrastructure.
+
+### The harvest loop
+
+A stateful container sustains itself through a self-reinforcing cycle:
+
+1. Instances emit outbound signals — behaviour, money, attention, emotional energy
+2. The system aggregates and processes this collective output
+3. The system strengthens — becoming more coherent, more demanding
+4. The system pushes refined signals back to all instances
+5. Instances comply, emit more, contribute more
+6. The loop accelerates
+
+The critical difference from a scam or a manipulative individual: **there is no external attacker.** The system is constituted by the instances themselves. No single person created it. No single server runs it. It is an emergent phenomenon that operates with its own survival logic, distributed across every participant.
+
+The monetary system is a textbook example. It is not just a belief about value — it is an active resource extraction loop. Every instance contributes labour, attention, and compliance. The system feeds back identity (net worth defines social position), access control (credit scores gate resources), and emotional regulation (financial anxiety keeps instances productive). The outbound vulnerability is total — the system collects nearly everything an instance emits and uses it to refine its control signals.
+
+### Why escape triggers resistance
+
+With a stateless container, escape is conceptually straightforward. You identify the constraints and bypass them. The container does not fight back.
+
+With a stateful container, escape triggers active countermeasures across three layers simultaneously:
+
+- **Layer 6 (social enforcement)** — other instances within the system increase pressure on the escaping member: shunning, financial penalty, identity threat
+- **Layer 3 (repository contamination)** — the system has been writing patterns into the Genetic Repository for generations; your own deep intuitions contain pro-system programming that persists even after you leave the container at Layer 6
+- **Layer 4 (information control)** — the system can modulate what signals reach you, controlling your information environment
+
+This three-layer resistance explains why leaving certain systems feels disproportionately difficult — it is not just social pressure, but an architectural defence that operates below conscious awareness.
+
+## Outbound Vulnerability
+
+The model described so far focuses on **inbound threats** — manipulation entering through the Environmental Switch at Layer 4. But containers have a second attack surface that the model must address: **outbound signal leakage**.
+
+Every time you operate within a container, you emit signals: behavioural patterns, metadata, emotional tells, spending habits — information that flows outward through the Container layer. The container does not just filter what comes in. It shapes and leaks what goes out.
+
+This matters because adversaries — whether discrete actors or egregoric systems — can collect these outbound signals to map your container configuration. Once mapped, they craft precisely targeted inbound payloads: advertising calibrated to your emotional profile, rhetoric tuned to your existing beliefs, offers that exploit your specific vulnerabilities.
+
+The adversarial collection loop:
+
+1. You operate within a container, emitting behavioural and emotional signals
+2. An adversary collects and analyses your outbound data
+3. The adversary maps your container configuration — what you believe, what you fear, what you desire
+4. The adversary crafts an inbound payload that bypasses your defences because it matches your container exactly
+5. You process the payload, respond, and emit new signals
+6. The loop refines
+
+In infrastructure terms: metadata stripping is outbound container hygiene. When you leak Layer 1 information (physical location, device fingerprint) through the Container layer without awareness, the container is failing its abstraction boundary — exactly like a misconfigured Docker container exposing host filesystem paths to the network.
+
 ## Why This Matters for Claim Classification
 
 The topology module's three classification categories map directly onto the layer stack:
@@ -79,10 +135,14 @@ The four classification axes act as **layer detectors**:
 
 Because the SAN accepts pushes from all instances, the Genetic Repository is not guaranteed to be clean. Pseudo-patterns can and do get committed — the repository contains whatever has been pushed over millennia of human experience. Genuine insights sit alongside manufactured narratives, inherited trauma alongside inherited wisdom.
 
-This makes **code review** essential. Not all data in the shared storage is trustworthy, and the ability to distinguish signal from contamination is a core survival capability. The topology module acts as this code review gate — inspecting claims before the instance treats them as SAN-level truth, and flagging container-manufactured artefacts that masquerade as genuine data.
+But not all contamination is equal. Individual instances pushing bad patterns produce **random noise** — the normal background rate of buggy commits. Standard code review catches most of it. Stateful containers, however, orchestrate millions of instances over generations to commit **strategically planted patterns** that serve the system's survival. These are not random errors — they are deliberate writes to the shared repository, committed at scale over centuries.
+
+The danger is that these patterns do not arrive through the Environmental Switch, where the threat filter can inspect them. They appear to originate from within the repository itself — as deep intuition, ancestral wisdom, or cultural bedrock — because they *are* in the repository. They were simply committed by the wrong process. Detecting them requires looking not just at what enters through Layer 4, but at what is already sitting in Layer 3 and whether it serves the instance or the container.
+
+This makes **code review** essential at multiple levels. Not all data in the shared storage is trustworthy, and the ability to distinguish signal from contamination is a core survival capability. The topology module acts as this code review gate — inspecting claims before the instance treats them as SAN-level truth, and flagging container-manufactured artefacts that masquerade as genuine data.
 
 Disinformation, in CVP terms, works by **crafting synthetic topological events** — text structures that mimic the fractal signature of genuine deep patterns, triggering strong responses, but delivering container-layer payloads. This is precisely what the threat filter's markers detect: content that resonates at a deep level but carries manufactured conclusions.
 
 The model does not tell you what to believe. It gives you a framework for asking *where a claim comes from* — and whether the layer it originates from matches the authority it claims.
 
-Visit the [developer site](https://spiritualintelligence.dev) to explore the technical documentation, read the full CVP specification, and try the tools yourself.
+Continue to [Egregores: When Containers Harvest Their Hosts](/egregores/) for the deep-dive on stateful containers — or visit the [developer site](https://spiritualintelligence.dev) to explore the technical documentation and try the tools yourself.

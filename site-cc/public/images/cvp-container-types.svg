@@ -1,0 +1,127 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 520" font-family="'Courier New','Lucida Console',monospace">
+  <defs>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="glow-soft">
+      <feGaussianBlur stdDeviation="2" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <pattern id="scan" width="4" height="4" patternUnits="userSpaceOnUse">
+      <rect width="4" height="2" fill="#fff" opacity="0.015"/>
+    </pattern>
+    <marker id="arrow-cyan" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#00ffa3" opacity="0.8"/>
+    </marker>
+    <marker id="arrow-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#ff4444" opacity="0.8"/>
+    </marker>
+    <marker id="arrow-amber" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#ffaa00" opacity="0.8"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="900" height="520" fill="#0a0a0f"/>
+  <rect width="900" height="520" fill="url(#scan)"/>
+
+  <!-- HUD Frame corners -->
+  <path d="M 24 8 L 8 8 L 8 36" stroke="#00ffa3" stroke-width="1.5" fill="none" opacity="0.5"/>
+  <path d="M 876 8 L 892 8 L 892 36" stroke="#00ffa3" stroke-width="1.5" fill="none" opacity="0.5"/>
+  <path d="M 8 488 L 8 512 L 24 512" stroke="#00ffa3" stroke-width="1.5" fill="none" opacity="0.5"/>
+  <path d="M 892 488 L 892 512 L 876 512" stroke="#00ffa3" stroke-width="1.5" fill="none" opacity="0.5"/>
+  <rect x="4" y="4" width="892" height="512" rx="2" fill="none" stroke="#2a2a3a" stroke-width="0.5"/>
+
+  <!-- Title bar -->
+  <line x1="20" y1="44" x2="880" y2="44" stroke="#2a2a3a" stroke-width="0.5"/>
+  <text x="28" y="30" fill="#00ffa3" font-size="11" font-weight="bold" letter-spacing="2">SI-PROTOCOLS // CONTAINER TYPES</text>
+  <text x="872" y="30" fill="#8888a0" font-size="9" text-anchor="end" letter-spacing="1">STATELESS vs STATEFUL</text>
+
+  <!-- Divider line -->
+  <line x1="450" y1="54" x2="450" y2="480" stroke="#2a2a3a" stroke-width="0.5" stroke-dasharray="6,4" opacity="0.5"/>
+
+  <!-- ========== LEFT HALF: Stateless Container ========== -->
+  <text x="225" y="72" fill="#00ffa3" font-size="10" text-anchor="middle" letter-spacing="2" font-weight="bold">STATELESS CONTAINER</text>
+  <text x="225" y="88" fill="#8888a0" font-size="8" text-anchor="middle">Docker image — static configuration</text>
+
+  <!-- Container box -->
+  <rect x="70" y="110" width="310" height="100" rx="4" fill="#12121a" stroke="#00ffa3" stroke-width="1" opacity="0.9"/>
+  <rect x="70" y="110" width="310" height="20" rx="4" fill="#1a1a28"/>
+  <line x1="70" y1="130" x2="380" y2="130" stroke="#00ffa3" stroke-width="0.4" opacity="0.5"/>
+  <text x="225" y="124" fill="#00ffa3" font-size="8" text-anchor="middle" letter-spacing="1" font-weight="bold">L6 // CONTAINER IMAGE</text>
+  <text x="85" y="150" fill="#8888a0" font-size="7.5">Language, ethics, social norms</text>
+  <text x="85" y="166" fill="#8888a0" font-size="7.5">Cultural defaults, conventions</text>
+  <text x="85" y="186" fill="#00ffa3" font-size="7" opacity="0.7">[ constrains but does not consume ]</text>
+  <text x="85" y="200" fill="#00ffa3" font-size="7" opacity="0.7">[ swappable, no active resistance ]</text>
+
+  <!-- VM inside -->
+  <rect x="120" y="230" width="210" height="60" rx="3" fill="#12121a" stroke="#ffaa00" stroke-width="0.8" opacity="0.8"/>
+  <rect x="120" y="230" width="210" height="16" rx="3" fill="#1a1a28"/>
+  <text x="225" y="242" fill="#ffaa00" font-size="7" text-anchor="middle" letter-spacing="1">L5 // VM INSTANCE</text>
+  <text x="135" y="262" fill="#8888a0" font-size="7.5">Processes input freely</text>
+  <text x="135" y="278" fill="#8888a0" font-size="7.5">No resource extraction</text>
+
+  <!-- Simple one-way arrows (input only) -->
+  <text x="225" y="308" fill="#8888a0" font-size="7" text-anchor="middle">Input filtered by container</text>
+  <line x1="225" y1="314" x2="225" y2="340" stroke="#00ffa3" stroke-width="1" opacity="0.5" marker-end="url(#arrow-cyan)"/>
+
+  <!-- Properties box -->
+  <rect x="70" y="350" width="310" height="100" rx="3" fill="#12121a" stroke="#00ffa3" stroke-width="0.8" opacity="0.8"/>
+  <text x="85" y="372" fill="#00ffa3" font-size="8" font-weight="bold" letter-spacing="1">PROPERTIES</text>
+  <text x="85" y="392" fill="#8888a0" font-size="7.5">No harvest loop</text>
+  <text x="85" y="408" fill="#8888a0" font-size="7.5">Escape = identify constraints + bypass</text>
+  <text x="85" y="424" fill="#8888a0" font-size="7.5">No active countermeasures on exit</text>
+  <text x="85" y="440" fill="#8888a0" font-size="7.5">No repository writes (L3 unaffected)</text>
+
+  <!-- ========== RIGHT HALF: Stateful Container (Egregore) ========== -->
+  <text x="675" y="72" fill="#ff4444" font-size="10" text-anchor="middle" letter-spacing="2" font-weight="bold">STATEFUL CONTAINER</text>
+  <text x="675" y="88" fill="#8888a0" font-size="8" text-anchor="middle">Parasitic orchestration middleware</text>
+
+  <!-- Container box (larger, menacing) -->
+  <rect x="520" y="110" width="310" height="100" rx="4" fill="#12121a" stroke="#ff4444" stroke-width="1.2" opacity="0.9"/>
+  <rect x="520" y="110" width="310" height="20" rx="4" fill="#1a1a28"/>
+  <line x1="520" y1="130" x2="830" y2="130" stroke="#ff4444" stroke-width="0.4" opacity="0.5"/>
+  <text x="675" y="124" fill="#ff4444" font-size="8" text-anchor="middle" letter-spacing="1" font-weight="bold">L6 // EGREGORE</text>
+  <text x="535" y="150" fill="#8888a0" font-size="7.5">Religion, monetary system, guru network</text>
+  <text x="535" y="166" fill="#8888a0" font-size="7.5">Living entity requiring resource feed</text>
+  <text x="535" y="186" fill="#ff4444" font-size="7" opacity="0.7">[ harvests from instances ]</text>
+  <text x="535" y="200" fill="#ff4444" font-size="7" opacity="0.7">[ active resistance on escape ]</text>
+
+  <!-- VM inside -->
+  <rect x="570" y="230" width="210" height="60" rx="3" fill="#12121a" stroke="#ffaa00" stroke-width="0.8" opacity="0.8"/>
+  <rect x="570" y="230" width="210" height="16" rx="3" fill="#1a1a28"/>
+  <text x="675" y="242" fill="#ffaa00" font-size="7" text-anchor="middle" letter-spacing="1">L5 // VM INSTANCE</text>
+  <text x="585" y="262" fill="#8888a0" font-size="7.5">Emits: money, attention, energy</text>
+  <text x="585" y="278" fill="#8888a0" font-size="7.5">Receives: identity, belonging, access</text>
+
+  <!-- Bidirectional harvest arrows -->
+  <!-- Outbound (emission) -->
+  <line x1="620" y1="290" x2="570" y2="330" stroke="#ff4444" stroke-width="1.5" opacity="0.7" marker-end="url(#arrow-red)"/>
+  <text x="558" y="315" fill="#ff4444" font-size="6.5" text-anchor="end" opacity="0.8">emit</text>
+
+  <!-- Inbound (control) -->
+  <line x1="780" y1="330" x2="730" y2="290" stroke="#ffaa00" stroke-width="1.5" opacity="0.7" marker-end="url(#arrow-amber)"/>
+  <text x="792" y="315" fill="#ffaa00" font-size="6.5" opacity="0.8">control</text>
+
+  <!-- Harvest loop indicator -->
+  <rect x="540" y="334" width="270" height="28" rx="3" fill="#1a1020" stroke="#ff4444" stroke-width="0.6" opacity="0.7"/>
+  <text x="675" y="352" fill="#ff4444" font-size="7.5" text-anchor="middle" letter-spacing="1">HARVEST LOOP — self-reinforcing cycle</text>
+
+  <!-- Downward arrow to L3 -->
+  <line x1="675" y1="362" x2="675" y2="384" stroke="#ff4444" stroke-width="1.5" opacity="0.6" stroke-dasharray="3,2" marker-end="url(#arrow-red)"/>
+  <text x="690" y="378" fill="#ff4444" font-size="6.5" opacity="0.7">writes to L3</text>
+
+  <!-- Repository contamination -->
+  <rect x="570" y="388" width="210" height="36" rx="3" fill="#12121a" stroke="#ff4444" stroke-width="0.8" opacity="0.7" stroke-dasharray="4,2"/>
+  <text x="675" y="402" fill="#ff4444" font-size="7" text-anchor="middle" letter-spacing="1" opacity="0.9">L3 // GENETIC REPOSITORY</text>
+  <text x="675" y="416" fill="#8888a0" font-size="7" text-anchor="middle">Contaminated with egregore patterns</text>
+
+  <!-- Three-layer resistance box -->
+  <rect x="520" y="436" width="310" height="42" rx="3" fill="#12121a" stroke="#ff4444" stroke-width="0.8" opacity="0.8"/>
+  <text x="535" y="452" fill="#ff4444" font-size="7" font-weight="bold" letter-spacing="1">ESCAPE RESISTANCE: 3 LAYERS</text>
+  <text x="535" y="468" fill="#8888a0" font-size="7">L6 social + L3 deep patterns + L4 info control</text>
+
+  <!-- Status -->
+  <text x="872" y="504" fill="#8888a0" font-size="8" text-anchor="end" letter-spacing="1" opacity="0.5">CVP v1.1 // EGREGORE ANALYSIS</text>
+</svg>

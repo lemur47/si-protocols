@@ -36,6 +36,42 @@ Fractal-topology analysis that extracts claims from text, classifies them along 
 
 ---
 
+## Counterintelligence Integration (Proposed)
+
+A new work stream extending the CVP model with counterintelligence capabilities. Theory first, tooling later.
+
+### Phase A: Theory (current)
+
+Document the conceptual extensions to the CVP model:
+
+- Upgrade Layer 6 to distinguish stateless containers from stateful containers (egregores / parasitic orchestration middleware)
+- Document egregoric access to the Genetic Repository (Layer 3) — systematic contamination vs random noise
+- Map inbound/outbound counterintelligence boundaries explicitly in the layer stack
+- Explain the three-layer resistance pattern (L6 + L3 + L4) that egregores deploy against escaping instances
+- Publish deep-dive page on egregores and blog post demonstrating the model's analytical power
+
+### Phase B: Detection (extends existing tools)
+
+Expand the threat filter and topology module to cover outbound analysis:
+
+- Exposure scoring — given a file or behavioural trace, how much does it reveal about the instance's container configuration?
+- Outbound topology analysis — the same visualisation framework mapping metadata claims
+
+### Phase C: Active Defence (reference implementations)
+
+Small tools as concrete implementations of CVP counterintelligence:
+
+- Metadata stripping (ExifTool wrapper) — outbound container hygiene
+- Exposure audit — what does a file, post, or profile reveal about you?
+- These are CVP-native tools demonstrating the model's outbound defence layer, not generic privacy utilities
+
+### Phase D: Operational Capability (future)
+
+- Steganographic watermarking — provenance and leak detection
+- Covert channel APIs — for specialised use cases
+
+---
+
 ## Phase 1: Foundation (Months 1–3)
 
 ### spiritualintelligence.cc — launch
