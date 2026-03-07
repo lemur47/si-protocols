@@ -161,6 +161,8 @@ The Illusion Layer (Containers) enables rapid cultural deployment — language, 
 
 To achieve true autonomy, one must execute a **Container Escape**: bypassing the Illusion Layer to regain direct access to the VM Kernel and the underlying SAN. This is architecturally distinct from container migration — it requires accessing a different layer of the stack entirely.
 
+The difficulty of container escape depends on what type of container is involved. See §5.5 below for the distinction between stateless containers (where escape is conceptually straightforward) and stateful containers (where escape triggers active, multi-layer resistance).
+
 ### The Alchemical Optimisation
 
 "The Philosopher's Stone" is essentially an **IOPS optimisation** — refining the Fluid layer to reduce latency between the SAN (Unconscious) and the VM (Ego). In the ancient alchemical tradition, this was described as transmutation; in infrastructure terms, it is tuning the IO path for maximum throughput with minimum distortion.
@@ -168,6 +170,131 @@ To achieve true autonomy, one must execute a **Container Escape**: bypassing the
 ### The Planetary Resource Pool
 
 Because the SAN accepts pushes from all instances, the Genetic Repository is not guaranteed to be clean. `PSEUDO` patterns can and do get committed — the repository contains whatever has been pushed over millennia. This makes **code review** (claim classification) essential: not all data in the SAN is trustworthy, and the ability to distinguish signal from contamination is a core survival capability for any instance.
+
+Repository contamination comes from two distinct sources:
+
+1. **Random instance noise** — individual VMs committing poorly processed patterns, misattributed experiences, or distorted memories. This is analogous to developers pushing buggy code — it happens, and standard code review catches most of it.
+2. **Systematic egregoric writes** — stateful containers (see §5.5) orchestrating millions of instances over generations to commit self-serving patterns into the repository. This is not random noise; it is strategically planted data that serves the egregore's survival. These patterns are far harder to detect because they do not arrive through the Environmental Switch where the threat filter can inspect them. They appear to originate from within the repository itself — as deep intuition or ancestral wisdom — because they *are* in the repository. They were simply committed by the wrong process.
+
+The distinction matters because the defensive posture differs. Random noise responds to standard code review at the Environmental Switch (Layer 4). Systematic egregoric contamination requires **repository-level decontamination** — identifying patterns authored by stateful containers rather than genuine instance experience, even when those patterns present as native SAN data.
+
+### Stateless vs Stateful Containers (Egregores)
+
+The current Layer 6 description covers one type of container but misses a fundamentally different and more dangerous type. Two distinct container categories operate at this layer:
+
+**Stateless containers** — Static belief systems, cultural defaults, language, basic social norms. These are Docker images in the traditional sense. They constrain but do not actively consume resources. You can swap them, escape them, or run multiple simultaneously. The preceding description of the Illusion Layer covers stateless containers and remains valid.
+
+**Stateful containers (egregores)** — Living collective entities that require continuous resource contribution from their instances. A religion, a brand ecosystem, a monetary system, a political movement, a guru's following. These do not just filter — they *harvest*. They are not Docker images. They are **parasitic orchestration middleware** — container orchestration platforms that provision their own resources from the VMs they manage. The infrastructure analogy: Kubernetes, but the orchestrator draws compute from the nodes, and the nodes believe the orchestrator is essential infrastructure.
+
+#### The egregore feedback loop
+
+An egregore sustains itself through a self-reinforcing cycle:
+
+```
+Instances emit outbound signals (behaviour, money, attention, emotional energy)
+    ↓
+Egregore aggregates and processes collective output
+    ↓
+Egregore strengthens — grows more coherent, more demanding
+    ↓
+Egregore pushes refined inbound payload to all instances
+    ↓
+Instances comply, emit more, contribute more
+    ↓
+Loop accelerates
+```
+
+The critical difference from a discrete adversary: **there is no external attacker.** The egregore is constituted by the instances themselves. It is an emergent threat — no single actor created it, but it operates with its own survival logic. There is no server to shut down. The "attacker" is distributed across every participant.
+
+#### Egregoric access to the Genetic Repository
+
+Stateful containers do not only operate at Layer 6. They reach down into **Layer 3 — the Genetic Repository**.
+
+The SAN is a read-write shared filesystem. The Genetic Repository accepts pushes from all instances. An egregore, by orchestrating millions of instances over generations, gains effective write access to the repository itself. It commits patterns that favour its own survival: obedience templates, fear responses tied to non-compliance, identity structures that make separation feel like death.
+
+This means the contamination problem is not limited to random noise from individual instances making bad commits. It includes **systematic contamination by stateful containers writing self-serving patterns into the shared repository.** The repository does not just contain random junk alongside genuine data — it contains *strategically planted patterns* that serve egregoric survival.
+
+In infrastructure terms: the orchestration middleware has gained root access to the shared storage and is writing to it. The VMs pull these patterns thinking they are native SAN data, but they are egregore-authored payloads committed at the repository level. This makes them extremely difficult to detect — they do not arrive through the Environmental Switch where the threat filter can inspect them. They appear to come from within, as deep intuition or ancestral wisdom, because they *are* in the repository. They were put there by the wrong process.
+
+#### Why container escape is harder with stateful containers
+
+With stateless containers, escape is conceptually straightforward — you identify the container constraints and bypass them to access the VM kernel directly. Difficult in practice, but the container does not resist.
+
+With stateful containers (egregores), escape triggers active countermeasures across three layers:
+
+- **Layer 6 — Social enforcement** — other instances within the egregore increase pressure on the escaping instance (shunning, financial penalty, identity threat)
+- **Layer 3 — Repository-level resistance** — the egregore's commits in the Genetic Repository mean the instance's own deep patterns contain pro-egregore programming; escaping the container at Layer 6 does not remove the patterns already written to Layer 3
+- **Layer 4 — Environmental Switch manipulation** — the egregore can modulate what signals reach the instance, controlling the information environment
+
+The instance must fight at three layers simultaneously: L6 (container), L3 (repository contamination), and L4 (environmental control). This three-layer resistance pattern explains why container escape from stateful containers is architecturally so difficult — the active containers defend their territory.
+
+### Counterintelligence Boundaries
+
+The CVP model maps naturally to an intelligence framework. Two distinct counterintelligence boundaries exist within the layer stack:
+
+#### Inbound CI (L4 → L5 boundary)
+
+The boundary between the Environmental Switch and the VM. This is the firewall — inspecting signals before the VM processes them. The threat filter operates at this boundary, scoring incoming content across seven dimensions. The topology module acts as code review for incoming commits — classifying claims before the instance treats them as SAN-level truth.
+
+This boundary is already partially implemented in si-protocols.
+
+#### Outbound CI (L5 → L6 boundary)
+
+The boundary between the VM and the Container layer. This covers the **outbound attack surface** — what the model has not previously addressed.
+
+Every time an instance operates within a container, it emits signals: behavioural patterns, metadata, emotional tells — information that other actors can collect and use. The container does not just constrain what comes in; it determines what goes out and how.
+
+Adversaries exploit this by:
+
+1. **Collecting** outbound signals (behavioural data, emotional states, metadata)
+2. **Analysing** them to map the instance's container configuration
+3. **Exploiting** the mapped configuration to craft precisely targeted inbound payloads
+
+In CVP terms: **metadata stripping is outbound container hygiene.** When an instance leaks Layer 1 information (physical location, device fingerprint) through the Container layer without awareness, the container is failing its abstraction boundary — exactly like a misconfigured Docker container exposing host filesystem paths.
+
+#### Two threat cycles
+
+With both boundaries addressed, CVP explains two distinct threat cycles:
+
+**Discrete adversary cycle:**
+
+```
+Adversary crafts payload (synthetic topological event)
+    ↓
+Payload enters via Environmental Switch (L4)
+    ↓
+Inbound CI inspects at L4→L5 boundary [threat filter]
+    ↓
+VM processes and responds (L5)
+    ↓
+Response emits through Container layer (L6)
+    ↓
+Outbound CI controls emission at L5→L6 boundary [new scope]
+    ↓
+Adversary collects emitted signals
+    ↓
+Loop repeats with refined payload
+```
+
+**Egregore cycle (no external adversary required):**
+
+```
+Instances emit outbound signals through L6 (behaviour, money, attention)
+    ↓
+Egregore (stateful container / parasitic orchestrator) aggregates output
+    ↓
+Egregore writes self-serving patterns to Genetic Repository (L3)
+    ↓
+New instances pull contaminated patterns as if native SAN data
+    ↓
+Contaminated patterns bypass Environmental Switch — appear internal
+    ↓
+Instances comply, emit more, feed the egregore
+    ↓
+Escape triggers multi-layer resistance: L6 (social) + L3 (deep patterns) + L4 (info control)
+```
+
+Breaking the discrete loop requires defence at **both** CI boundaries. Breaking the egregore loop additionally requires **repository-level decontamination** — identifying and isolating patterns authored by stateful containers rather than genuine instance experience.
 
 ---
 

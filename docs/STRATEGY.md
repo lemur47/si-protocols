@@ -14,6 +14,7 @@ Spiritual Intelligence (SI / 霊的知能) is the capacity to discern, evaluate,
 - **Pattern recognition** — identifying recurring disinformation tactics across traditions, cultures, and languages
 - **Emotional sovereignty** — maintaining independent judgement when confronted with fear-based or euphoria-driven persuasion
 - **Systemic awareness** — understanding how spiritual narratives interact with social, economic, and political systems
+- **Outbound awareness** — recognising how your own signals, metadata, and behavioural patterns are collected and used to craft targeted manipulation — the counterintelligence dimension of spiritual literacy
 
 SI is not about debunking spirituality. It is about raising the standard of spiritual discourse by making manipulation patterns visible.
 
@@ -66,10 +67,14 @@ No mainstream content moderation tool addresses these patterns. si-protocols fil
 4. **Chrome extension** — in-situ text analysis on any webpage, local-only processing
 5. **note.com launch** — Japanese-language narrative articles and community engagement
 
+### Mid-term
+
+6. **Counterintelligence integration** — extending the CVP model with outbound vulnerability analysis, egregore theory, and exposure scoring (see [ROADMAP.md](ROADMAP.md) for phasing)
+
 ### Longer-term
 
-6. **Community building** — contributor programme, marker refinement, tradition-specific modules, language contributions
-7. **Consulting and SaaS** — professional services for organisations dealing with spiritual disinformation
+7. **Community building** — contributor programme, marker refinement, tradition-specific modules, language contributions
+8. **Consulting and SaaS** — professional services for organisations dealing with spiritual disinformation
 
 See [ROADMAP.md](ROADMAP.md) for detailed phasing and milestones. See [CVP.md](CVP.md) for the theoretical framework (Cosmic-Virtualisation-Protocol) that grounds the topology module's classification logic.
 
