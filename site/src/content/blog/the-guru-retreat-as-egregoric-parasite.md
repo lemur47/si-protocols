@@ -100,4 +100,4 @@ These questions do not require leaving the system. They require knowing what lay
 
 The CVP model does not tell you which containers to escape. It gives you the structural vocabulary to evaluate the architecture — so that your participation, whatever you decide, is conscious rather than harvested.
 
-For the full Virtualisation Model, visit [spiritualintelligence.cc](https://spiritualintelligence.cc/the-virtualisation-model/). For the deep-dive on stateful containers, see [Egregores: When Containers Harvest Their Hosts](https://spiritualintelligence.cc/egregores/). The tools are open source at [github.com/lemur47/si-protocols](https://github.com/lemur47/si-protocols).
+For the full model and the deep-dive on stateful containers, see [Egregores: When Containers Harvest Their Hosts](https://spiritualintelligence.cc/egregores/).

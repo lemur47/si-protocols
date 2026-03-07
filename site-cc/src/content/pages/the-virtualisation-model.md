@@ -145,4 +145,4 @@ Disinformation, in CVP terms, works by **crafting synthetic topological events**
 
 The model does not tell you what to believe. It gives you a framework for asking *where a claim comes from* — and whether the layer it originates from matches the authority it claims.
 
-Visit the [developer site](https://spiritualintelligence.dev) to explore the technical documentation, read the full CVP specification, and try the tools yourself.
+Continue to [Egregores: When Containers Harvest Their Hosts](/egregores/) for the deep-dive on stateful containers — or visit the [developer site](https://spiritualintelligence.dev) to explore the technical documentation and try the tools yourself.

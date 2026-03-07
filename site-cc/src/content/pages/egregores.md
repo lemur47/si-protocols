@@ -14,6 +14,8 @@ Understanding the distinction is essential for anyone trying to evaluate whether
 
 ## Two Container Types
 
+![Comparison of stateless containers (static Docker images that constrain but do not consume) versus stateful containers (parasitic orchestration middleware with harvest loops, repository contamination, and three-layer escape resistance)](/images/cvp-container-types.svg)
+
 **Stateless containers** are static configuration. A language, a cultural norm, a social convention. They constrain what the VM can express, but they do not actively consume resources. You can swap them, run multiple simultaneously, or bypass them to access the underlying layers. They are Docker images in the traditional sense.
 
 **Stateful containers (egregores)** are living collective entities. A religion, a monetary system, a brand ecosystem, a political movement, a guru's following. They do not just filter — they *harvest*. They require continuous resource contribution from every instance they manage. The infrastructure analogy: an egregore is not a Docker image. It is **parasitic orchestration middleware** — a Kubernetes that draws compute from the nodes, and the nodes believe the orchestrator is essential infrastructure.
