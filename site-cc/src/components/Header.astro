@@ -12,6 +12,11 @@ const currentPath = Astro.url.pathname;
 <header>
   <nav>
     <a href="/" class="logo glow">[SI]</a>
+    <button class="menu-toggle" aria-label="Toggle navigation" aria-expanded="false">
+      <span class="bar"></span>
+      <span class="bar"></span>
+      <span class="bar"></span>
+    </button>
     <ul>
       {links.map(link => (
         <li>
@@ -28,6 +33,16 @@ const currentPath = Astro.url.pathname;
   </nav>
 </header>
 
+<script>
+  const toggle = document.querySelector('.menu-toggle');
+  const ul = toggle?.closest('nav')?.querySelector('ul');
+  toggle?.addEventListener('click', () => {
+    const expanded = toggle.getAttribute('aria-expanded') === 'true';
+    toggle.setAttribute('aria-expanded', String(!expanded));
+    ul?.classList.toggle('open');
+  });
+</script>
+
 <style>
   header {
     border-bottom: 1px solid var(--colour-border);
@@ -41,6 +56,7 @@ const currentPath = Astro.url.pathname;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    flex-wrap: wrap;
   }
 
   .logo {
@@ -51,6 +67,35 @@ const currentPath = Astro.url.pathname;
 
   .logo:hover {
     color: var(--colour-primary);
+  }
+
+  .menu-toggle {
+    display: none;
+    flex-direction: column;
+    gap: 4px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+  }
+
+  .bar {
+    display: block;
+    width: 20px;
+    height: 2px;
+    background: var(--colour-text-muted);
+    border-radius: 1px;
+    transition: transform 0.2s, opacity 0.2s;
+  }
+
+  .menu-toggle[aria-expanded="true"] .bar:nth-child(1) {
+    transform: translateY(6px) rotate(45deg);
+  }
+  .menu-toggle[aria-expanded="true"] .bar:nth-child(2) {
+    opacity: 0;
+  }
+  .menu-toggle[aria-expanded="true"] .bar:nth-child(3) {
+    transform: translateY(-6px) rotate(-45deg);
   }
 
   ul {
@@ -71,5 +116,28 @@ const currentPath = Astro.url.pathname;
   a:hover,
   a.active {
     color: var(--colour-primary);
+  }
+
+  @media (max-width: 640px) {
+    .menu-toggle {
+      display: flex;
+    }
+
+    ul {
+      display: none;
+      flex-direction: column;
+      width: 100%;
+      gap: 0;
+      padding-top: 0.75rem;
+    }
+
+    ul.open {
+      display: flex;
+    }
+
+    li a {
+      display: block;
+      padding: 0.5rem 0;
+    }
   }
 </style>
