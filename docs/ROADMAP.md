@@ -180,6 +180,7 @@ The web demo is the gateway; the extension is the habit. Without the demo, peopl
 ## What This Roadmap Does Not Cover
 
 - Additional language support beyond EN/JA (deferred until contributor programme is established)
-- Consulting/SaaS services (deferred until community traction is demonstrated)
+- Professional services — consulting, training, and bespoke analysis (deferred until community traction is demonstrated; see Revenue Model in STRATEGY.md)
+- Hosted or SaaS analysis services — these are outside the organisation's data sovereignty commitment and will not be developed
 - Mobile applications
 - Social media integrations beyond the Chrome extension
