@@ -31,9 +31,25 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: astral-sh/setup-uv@v5
-      - run: uv sync --all-extras
-      - run: uv run bandit -c pyproject.toml -r src/
+      - name: Install opengrep
+        run: |
+          curl -fsSL https://raw.githubusercontent.com/opengrep/opengrep/main/install.sh | bash
+          echo "$HOME/.opengrep/cli/latest" >> "$GITHUB_PATH"
+      - name: Run opengrep SAST
+        run: opengrep scan --config auto --error src/ app/
+
+  vulnerability-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run OSV-Scanner
+        uses: google/osv-scanner-action/osv-scanner-action@v2.3.3
+        with:
+          scan-args: |-
+            --config=osv-scanner.toml
+            --recursive
+            .
+
 
   test:
     runs-on: ubuntu-latest
@@ -86,6 +102,3 @@ jobs:
 
       - name: Build
         run: npm run build
-
-      - name: Audit dependencies
-        run: npm audit --audit-level=moderate --omit=dev
