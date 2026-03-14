@@ -29,7 +29,7 @@ dev = [
     "pytest-cov>=6.0",
     "pyright>=1.1",
     "ruff>=0.9",
-    "bandit>=1.8",
+
     "pre-commit>=4.0",
     "httpx>=0.28",
 ]
@@ -72,7 +72,7 @@ select = [
     "N",   # pep8-naming
     "UP",  # pyupgrade
     "B",   # flake8-bugbear
-    "S",   # flake8-bandit (overlaps with standalone bandit — belt and braces)
+    "S",   # flake8-bandit (lightweight lint-time security checks)
     "A",   # flake8-builtins
     "C4",  # flake8-comprehensions
     "RUF", # ruff-specific rules
@@ -110,8 +110,3 @@ source = ["si_protocols"]
 [tool.coverage.report]
 show_missing = true
 fail_under = 70
-
-# --- Bandit ---
-[tool.bandit]
-exclude_dirs = ["tests"]
-skips = ["B311"]  # random — same rationale as ruff S311

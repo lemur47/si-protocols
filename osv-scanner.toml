@@ -1,0 +1,8 @@
+# OSV-Scanner configuration
+# Lockfiles (uv.lock, site/package-lock.json, site-cc/package-lock.json)
+# are auto-discovered via --recursive scanning.
+#
+# To ignore a vulnerability, add:
+# [[IgnoredVulns]]
+# id = "GHSA-xxxx-yyyy-zzzz"
+# reason = "Not applicable because ..."

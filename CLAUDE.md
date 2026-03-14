@@ -19,8 +19,9 @@ uv run pytest -m "not slow"                   # Skip slow tests (spaCy-dependent
 uv run ruff check src/ tests/ app/             # Lint (CI also lints tests/)
 uv run ruff format src/ tests/ app/           # Format
 uv run pyright                                # Type check
-uv run bandit -r src/                         # Security scan
-pre-commit run --all-files                    # Run all hooks (lint, format, gitleaks, bandit, pytest)
+opengrep scan --config auto --error src/ app/  # SAST scan
+osv-scanner scan source --config=osv-scanner.toml --recursive .  # Dependency vulnerability scan
+pre-commit run --all-files                    # Run all hooks (lint, format, gitleaks, opengrep, osv-scanner, pytest)
 uvicorn app.main:app --host 127.0.0.1 --port 8000  # Run API server (local-only)
 ```
 
@@ -92,9 +93,9 @@ Marker definitions are static word/phrase lists (frozenset for adjectives, lists
 - **src layout** — all library code under `src/si_protocols/`
 - **`requires-python = ">=3.12"`** — dev on 3.13, CI tests 3.12 + 3.13. spaCy does not yet support 3.14
 - **Synthetic examples only** — no real channelled material in repo
-- `random` usage in heuristic layer is intentional — `S311`/`B311` suppressed in both ruff and bandit configs
+- `random` usage in heuristic layer is intentional — `S311` suppressed in ruff config
 - Ruff line length: 99. Ruff rules include isort (`I`), pyupgrade (`UP`), bugbear (`B`), bandit (`S`)
-- Pre-commit hooks run ruff, gitleaks, bandit, and pytest on every commit
+- Pre-commit hooks run ruff, gitleaks, opengrep, osv-scanner, and pytest on every commit
 - Coverage threshold: 70% (`fail_under` in pyproject.toml)
 - Adding a new language requires: a `markers_<lang>.py` file, a loader in `marker_registry.py`, a model entry in `_LANG_MODELS`, and the `SupportedLang` Literal updated
 - Topology module lives in `src/si_protocols/topology/` with its own NLP cache (independent from `threat_filter.py`)
