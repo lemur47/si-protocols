@@ -8,7 +8,10 @@ module on first access.
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from typing import Literal
+from typing import TYPE_CHECKING, Literal
+
+if TYPE_CHECKING:
+    from collections.abc import Callable
 
 SupportedLang = Literal["en", "ja"]
 
@@ -94,7 +97,7 @@ def _load_ja() -> MarkerSet:
     )
 
 
-_LOADERS: dict[str, callable] = {  # type: ignore[type-arg]
+_LOADERS: dict[str, Callable[[], MarkerSet]] = {
     "en": _load_en,
     "ja": _load_ja,
 }

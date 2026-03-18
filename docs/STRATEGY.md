@@ -95,7 +95,7 @@ An intelligence organisation that collects the data it claims to help you protec
 7. **Community building** — contributor programme, marker refinement, tradition-specific modules, language contributions
 8. **Professional services** — consulting, training, and bespoke analysis for organisations dealing with spiritual disinformation (see Revenue Model)
 
-See [ROADMAP.md](ROADMAP.md) for detailed phasing and milestones. See [CVP.md](CVP.md) for the theoretical framework (Cosmic-Virtualisation-Protocol) that grounds the topology module's classification logic.
+See [ROADMAP.md](ROADMAP.md) for detailed phasing and milestones. See [CVP.md](CVP.md) for the theoretical framework (Consciousness Virtualisation Platform) that grounds the topology module's classification logic.
 
 ## Two-Domain Strategy
 

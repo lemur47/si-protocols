@@ -89,7 +89,7 @@ SVG is a text-based, version-controllable, zero-dependency output format. The re
 
 ## Theoretical Framework
 
-The [Cosmic-Virtualisation-Protocol (CVP)](CVP.md) provides a conceptual grounding for the topology module's classification logic. It models the human mind as a disaggregated compute instance booting from a decentralised SAN, mapping the `TRUE` / `PSEUDO` / `INDETERMINATE` variable classification to architectural layers (SAN-level data, container-layer artefacts, and in-process VM evaluation respectively). The four classification axes can be understood as **layer detectors** — measuring which layer of the CVP stack a claim originates from.
+The [Consciousness Virtualisation Platform (CVP)](CVP.md) provides a conceptual grounding for the topology module's classification logic. It models the human mind as a disaggregated compute instance booting from a decentralised SAN, mapping the `TRUE` / `PSEUDO` / `INDETERMINATE` variable classification to architectural layers (SAN-level data, container-layer artefacts, and in-process VM evaluation respectively). The four classification axes can be understood as **layer detectors** — measuring which layer of the CVP stack a claim originates from.
 
 ## Immutability Decisions
 
