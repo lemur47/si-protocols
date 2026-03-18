@@ -1,4 +1,4 @@
-# Cosmic-Virtualisation-Protocol (CVP)
+# Consciousness Virtualisation Platform (CVP)
 
 A conceptual framework that models the human mind as a disaggregated compute instance booting from a decentralised storage area network. This document provides a theoretical grounding for si-protocols' topology module and its classification of claims into `TRUE`, `PSEUDO`, and `INDETERMINATE` categories.
 

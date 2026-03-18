@@ -75,7 +75,8 @@ pre-commit install
 uv run pytest                 # Tests
 uv run ruff check src/        # Lint
 uv run pyright                # Type check
-uv run bandit -r src/         # Security scan
+opengrep scan --config auto --error src/ app/  # SAST scan
+osv-scanner scan source --config=osv-scanner.toml --recursive .  # Dependency vulnerability scan
 ```
 
 ## Docs
