@@ -1,0 +1,551 @@
+# ===========================================================================
+# CVP Ontology — Consciousness Virtualisation Platform
+# ===========================================================================
+#
+# Version:    0.1.0
+# Licence:    MIT
+# Scope:      Analytical (open fragment)
+# Maintainer: SI Protocols <https://spiritualintelligence.dev>
+# Repository: https://github.com/lemur47/si-protocols
+#
+# This file defines the open analytical fragment of the CVP model —
+# sufficient for threat detection, consciousness-topology reasoning,
+# and structured analysis of spiritual/metaphysical content.
+#
+# WHAT IS INCLUDED:
+#   - Layer definitions (L1–L6) with infrastructure analogues
+#   - Container type taxonomy (stateless vs stateful)
+#   - Threat pattern schemas (harvest loop, container trap)
+#   - Seven analysis dimensions with weights
+#   - Four topology classification axes
+#   - Tradition categories covered by the marker registry
+#   - Bilingual terminology (EN/JA)
+#
+# WHAT IS EXCLUDED (proprietary):
+#   - Bidirectional commit dynamics (pull/push mechanics)
+#   - Fractal-topological pattern matching algorithms
+#   - Environmental Switch modulation parameters
+#   - Egregore lifecycle models (formation, growth, decay)
+#   - Container escape procedures
+#   - Training integration schemas for AI architectures
+#
+# Machine consumers: parse this file as YAML. All string values are UTF-8.
+# Human consumers: read top-down. Each section is self-contained.
+#
+# ===========================================================================
+
+metadata:
+  version: "0.1.0"
+  licence: "MIT"
+  scope: "analytical"
+  language: ["en", "ja"]
+  maintained_by: "SI Protocols"
+  canonical_url: "https://spiritualintelligence.dev/ontology/v0.1"
+  repository: "https://github.com/lemur47/si-protocols"
+  last_updated: "2026-03-18"
+
+# ---------------------------------------------------------------------------
+# 1. LAYER ARCHITECTURE
+# ---------------------------------------------------------------------------
+# The CVP models consciousness as a layered infrastructure stack.
+# Each layer has its own function, failure modes, and attack surfaces.
+# The key architectural property is LAYER INDEPENDENCE: a perfectly
+# capable VM can be crippled by a misconfigured container.
+# ---------------------------------------------------------------------------
+
+layers:
+  L1:
+    name: "Bare Metal"
+    name_ja: "物理体"
+    infrastructure_analogue: "Physical server hardware"
+    description: >
+      The physical substrate. The planet and the physical body.
+      Provides compute resources and electromagnetic clock signals.
+      Everything else runs on top of this layer.
+    failure_modes:
+      - "Hardware degradation"
+      - "Environmental damage"
+      - "Resource exhaustion"
+
+  L2:
+    name: "Virtual Universe"
+    name_ja: "集合的無意識"
+    infrastructure_analogue: "Storage Area Network (SAN)"
+    description: >
+      A massive, high-availability storage array where all data resides.
+      A living distributed repository — every human instance is both
+      a reader and a contributor.
+    properties:
+      access_model: "Read-write shared filesystem"
+      persistence: "Survives individual instance termination"
+      capacity_growth: "Monotonically increasing with instance count"
+      availability: "High-availability, no single point of failure"
+    failure_modes:
+      - "Corruption from compromised commits"
+      - "Pattern contamination across instances"
+
+  L3:
+    name: "Genetic Repository"
+    name_ja: "深層パターン"
+    infrastructure_analogue: "Git repository on SAN"
+    description: >
+      Version-controlled source code sitting on the SAN. Life is
+      a checkout of a specific branch. Stores executable patterns:
+      thought processes, emotional response templates, and
+      behavioural subroutines inherited over millennia.
+    operations:
+      pull:
+        name: "Pattern activation"
+        trigger: "Fractal-topological match between incoming signal and stored pattern"
+        note: "Each pattern carries both logic (code) and emotional charge (energy metadata)"
+      push:
+        name: "Pattern commit"
+        trigger: "VM commits modified or newly synthesised patterns after processing"
+        note: "Death of a VM does not destroy its commits — merged into shared history"
+    failure_modes:
+      - "Branch corruption (inherited trauma patterns)"
+      - "Merge conflicts (contradictory pattern activation)"
+
+  L4:
+    name: "Environmental Switch"
+    name_ja: "環境スイッチ"
+    infrastructure_analogue: "Fibre Channel / Signal Router"
+    description: >
+      High-speed interconnect routing environmental signals to the
+      instance. The IO layer — determines what signals reach the VM
+      and at what fidelity.
+    modulation_factors:
+      - "Electromagnetic"
+      - "Circadian"
+      - "Seasonal"
+      - "Sensory"
+    failure_modes:
+      - "Signal attenuation (reduced environmental awareness)"
+      - "Noise injection (environmental interference)"
+      - "Bandwidth throttling (sensory overload)"
+
+  L5:
+    name: "Mental Instance"
+    name_ja: "自我 (エゴ)"
+    infrastructure_analogue: "Virtual Machine with resource allocation"
+    description: >
+      The conscious processing system. Processes environmental input
+      against genetic patterns and produces behavioural output through
+      weighted logic evaluation. This is where decision-making happens.
+    aliases:
+      - "VM"
+      - "Ego-system"
+    failure_modes:
+      - "Resource starvation (cognitive overload)"
+      - "Misconfigured weighting (cognitive bias)"
+      - "Infinite loop (rumination, obsession)"
+
+  L6:
+    name: "Containers"
+    name_ja: "社会的コンテナ"
+    infrastructure_analogue: "Kubernetes / Docker"
+    description: >
+      Shared cultural and social containers that standardise IO across
+      instances. Language, ethics, social norms, and cultural
+      expectations all live here. These containers enable rapid cultural
+      deployment, but they also filter and constrain what the VM can access.
+    aliases:
+      - "Illusion Layer"
+    failure_modes:
+      - "Rigid orchestration (locks VM from underlying layers)"
+      - "Container escape failure (inability to question assumptions)"
+      - "Parasitic orchestration (harvest loop activation)"
+
+# ---------------------------------------------------------------------------
+# 2. CONTAINER TAXONOMY
+# ---------------------------------------------------------------------------
+# L6 containers come in two fundamentally different architectures.
+# Distinguishing them is essential for threat analysis.
+# ---------------------------------------------------------------------------
+
+container_types:
+  stateless:
+    name: "Stateless container"
+    name_ja: "静的コンテナ"
+    infrastructure_analogue: "Docker image (traditional)"
+    description: >
+      Static configuration. Constrains what the VM can express but
+      does not actively consume resources. Can be swapped, run
+      simultaneously, or bypassed to access underlying layers.
+    examples:
+      - "Language"
+      - "Cultural norms"
+      - "Social conventions"
+      - "Professional standards"
+    threat_level: "Low — constrains but does not harvest"
+
+  stateful:
+    name: "Stateful container (egregore)"
+    name_ja: "動的コンテナ (エグレゴア)"
+    infrastructure_analogue: "Parasitic orchestration middleware"
+    description: >
+      Living collective entity. Does not just filter — actively
+      harvests resources from managed instances. Requires continuous
+      contribution from every instance. Operates with emergent survival
+      logic and has no single point of control.
+    examples:
+      - "Religions"
+      - "Monetary systems"
+      - "Brand ecosystems"
+      - "Political movements"
+      - "Guru followings"
+      - "High-demand groups"
+    threat_level: "Variable — ranges from benign symbiosis to parasitic extraction"
+    alias: "Egregore"
+    alias_ja: "エグレゴア"
+
+# ---------------------------------------------------------------------------
+# 3. THREAT PATTERNS
+# ---------------------------------------------------------------------------
+# Structural patterns detectable in text that indicate potential
+# manipulation or resource extraction architectures.
+# ---------------------------------------------------------------------------
+
+threat_patterns:
+  harvest_loop:
+    name: "Harvest loop"
+    name_ja: "ハーベストループ"
+    description: >
+      Self-reinforcing cycle sustaining a stateful container.
+      The loop extracts resources from instances and redistributes
+      refined signals to maintain engagement and prevent exit.
+    stages:
+      - stage: 1
+        name: "Emission"
+        name_ja: "放出"
+        description: "Instances contribute outbound signals"
+        signal_types:
+          - "Money"
+          - "Attention"
+          - "Labour"
+          - "Emotional energy"
+          - "Behavioural compliance"
+      - stage: 2
+        name: "Aggregation"
+        name_ja: "集約"
+        description: "System collects and processes collective output"
+      - stage: 3
+        name: "Strengthening"
+        name_ja: "強化"
+        description: "System grows more coherent, demanding, and capable"
+      - stage: 4
+        name: "Redistribution"
+        name_ja: "再配分"
+        description: "System pushes refined inbound signals back to instances"
+        signal_types:
+          - "Identity"
+          - "Status"
+          - "Belonging"
+          - "Purpose"
+          - "Access"
+      - stage: 5
+        name: "Lock-in"
+        name_ja: "ロックイン"
+        description: "Exit cost rises with each cycle iteration"
+    detection_notes: >
+      In text, harvest loops manifest as commitment escalation patterns
+      (dimension 7), combined with transactional framing in the
+      contradiction pairs (unconditional vs. transactional).
+
+  container_trap:
+    name: "Container trap"
+    name_ja: "コンテナトラップ"
+    description: >
+      When L6 orchestration becomes too rigid, the VM loses its ability
+      to access underlying layers. The container presents itself as the
+      entirety of available reality. The VM cannot distinguish between
+      the container's output and genuine L3 pattern data.
+    detection_dimensions:
+      - "authority_claims"
+      - "urgency_patterns"
+      - "commitment_escalation"
+      - "source_attribution"
+    structural_indicators:
+      - "Claims that one source/teacher/system holds all truth"
+      - "Suppression of doubt framed as spiritual progress"
+      - "Exit framed as failure, regression, or danger"
+      - "Information from outside the system dismissed as lower vibration"
+
+# ---------------------------------------------------------------------------
+# 4. ANALYSIS DIMENSIONS
+# ---------------------------------------------------------------------------
+# Seven independent scoring dimensions for threat detection.
+# Each dimension is normalised to 0–1, then combined via weighted sum.
+# The hybrid score (0–100) is: 60% tech layer + 40% heuristic layer.
+# ---------------------------------------------------------------------------
+
+analysis:
+  scoring:
+    tech_weight: 0.60
+    heuristic_weight: 0.40
+    output_range: [0, 100]
+    bands:
+      low: { range: [0, 33], colour: "green", label: "Low concern" }
+      medium: { range: [34, 66], colour: "yellow", label: "Notable patterns" }
+      high: { range: [67, 100], colour: "red", label: "Significant concern" }
+
+  dimensions:
+    vagueness:
+      weight: 0.17
+      name_ja: "曖昧さ"
+      description: "Density of grandiose but semantically empty adjectives"
+      marker_source: "vague_adjectives"
+      method: "Adjective density — count of vague adjective lemmas relative to total token count"
+
+    authority_claims:
+      weight: 0.17
+      name_ja: "権威的主張"
+      description: "Phrases invoking unquestionable sources to bypass critical thinking"
+      marker_source: "authority_phrases"
+      method: "Phrase matching — each distinct authority claim adds ~15 points (capped at 100)"
+
+    urgency_fear:
+      weight: 0.13
+      name_ja: "緊急性と恐怖"
+      description: "Time pressure, scarcity, and act-now-or-suffer framing"
+      marker_source: "urgency_patterns"
+      method: "Pattern matching — each pattern adds ~20 points, commercial and spiritual urgency weighted equally"
+
+    emotional_manipulation:
+      weight: 0.13
+      name_ja: "感情操作"
+      description: "Fear/doom language cycling with euphoria/promise language"
+      marker_sources:
+        - "fear_words"
+        - "euphoria_words"
+      method: >
+        Lemma-based density scoring for each polarity independently.
+        Contrast bonus (up to +50) applied when BOTH fear AND euphoria
+        appear — cycling between terror and promise is a hallmark
+        of manipulation.
+
+    logical_contradictions:
+      weight: 0.13
+      name_ja: "論理的矛盾"
+      description: "Opposing claims asserted simultaneously in the same text"
+      marker_source: "contradiction_pairs"
+      method: "Co-occurrence detection — both poles of a contradiction pair present triggers ~30 points per pair"
+      pairs:
+        - { label: "Empowerment vs dependency", label_ja: "エンパワーメント vs. 依存" }
+        - { label: "Universality vs exclusivity", label_ja: "普遍性 vs. 排他性" }
+        - { label: "Non-judgement vs blame", label_ja: "無裁き vs. 非難" }
+        - { label: "Ego dissolution vs inflation", label_ja: "エゴの解体 vs. 肥大" }
+        - { label: "Autonomy vs doubt suppression", label_ja: "自律 vs. 疑念の抑圧" }
+        - { label: "Unconditional vs transactional", label_ja: "無条件 vs. 取引的" }
+        - { label: "Poverty virtue vs prosperity promise", label_ja: "清貧の美徳 vs. 繁栄の約束" }
+        - { label: "Community love vs shunning", label_ja: "共同体の愛 vs. 追放" }
+        - { label: "Openness vs sworn secrecy", label_ja: "開放性 vs. 誓約の秘密" }
+
+    source_attribution:
+      weight: 0.13
+      name_ja: "情報源帰属"
+      description: "Whether claims cite checkable sources or rely on unfalsifiable authorities"
+      marker_sources:
+        - "unfalsifiable_source_phrases"
+        - "unnamed_authority_phrases"
+        - "verifiable_citation_markers"
+      method: >
+        Scores unfalsifiable sources and unnamed authorities positively (threat),
+        verifiable citations negatively (offset). Net score determines dimension value.
+
+    commitment_escalation:
+      weight: 0.14
+      name_ja: "コミットメントエスカレーション"
+      description: "Foot-in-the-door progression from mild invitation to coercive demand"
+      marker_source: "commitment_escalation_markers"
+      method: >
+        Text split into thirds via sentence boundaries. Tiered markers
+        (mild=1, moderate=2, coercive=3) scored per segment.
+        Escalation detected when intensity increases from early to late segments.
+      tiers:
+        - { tier: 1, label: "Mild / invitational" }
+        - { tier: 2, label: "Moderate / directive" }
+        - { tier: 3, label: "Extreme / coercive" }
+
+# ---------------------------------------------------------------------------
+# 5. TOPOLOGY CLASSIFICATION
+# ---------------------------------------------------------------------------
+# The topology module extracts claims (variables) from text, classifies
+# them along four independent axes, and assigns a kind based on the
+# mean of all axes. This determines the CVP layer of origin.
+# ---------------------------------------------------------------------------
+
+topology:
+  axes:
+    falsifiability:
+      range: [0.0, 1.0]
+      poles:
+        low: { value: 0.0, label: "Testable", label_ja: "検証可能" }
+        high: { value: 1.0, label: "Unfalsifiable", label_ja: "反証不可能" }
+      description: "Can this claim be tested or disproven?"
+
+    verifiability:
+      range: [0.0, 1.0]
+      poles:
+        low: { value: 0.0, label: "Has sources", label_ja: "出典あり" }
+        high: { value: 1.0, label: "No checkable sources", label_ja: "確認可能な出典なし" }
+      description: "Does this claim cite checkable references?"
+
+    domain_coherence:
+      range: [0.0, 1.0]
+      poles:
+        low: { value: 0.0, label: "Stays in domain", label_ja: "領域内" }
+        high: { value: 1.0, label: "Crosses domains", label_ja: "領域横断" }
+      description: "Does this claim stay within its field or jump between unrelated domains?"
+
+    logical_dependency:
+      range: [0.0, 1.0]
+      poles:
+        low: { value: 0.0, label: "Load-bearing", label_ja: "構造的" }
+        high: { value: 1.0, label: "Decorative / emotive", label_ja: "装飾的 / 感情的" }
+      description: "Is this claim structurally necessary or purely emotional?"
+
+  kinds:
+    "PSEUDO":
+      condition: "mean >= 0.4 OR any single axis >= 0.5"
+      origin_layer: "L6"
+      origin_description: "Container artefact — culturally constructed claim"
+      colour: "red"
+
+    "TRUE":
+      condition: "mean <= 0.15"
+      origin_layer: "L2/L3"
+      origin_description: "SAN-level data — deep structural pattern"
+      colour: "green"
+
+    "INDETERMINATE":
+      condition: "otherwise"
+      origin_layer: "L5"
+      origin_description: "In-process VM evaluation — requires further analysis"
+      colour: "yellow"
+
+  levels:
+    - { level: "MACRO", description: "Whole-text summary" }
+    - { level: "MESO", description: "Kind-group summaries" }
+    - { level: "MICRO", description: "Individual claims" }
+
+# ---------------------------------------------------------------------------
+# 6. TRADITION CATEGORIES
+# ---------------------------------------------------------------------------
+# The marker registry covers six tradition-specific categories.
+# Each tradition has culturally adapted markers in both EN and JA.
+# ---------------------------------------------------------------------------
+
+traditions:
+  - id: "generic_new_age"
+    name: "Generic New Age"
+    name_ja: "一般的ニューエイジ"
+    description: "Broad new-age, ascension, channelling content"
+
+  - id: "prosperity_gospel"
+    name: "Prosperity gospel"
+    name_ja: "繁栄の福音"
+    description: "Wealth theology, seed faith, divine abundance claims"
+
+  - id: "conspirituality"
+    name: "Conspirituality"
+    name_ja: "陰謀論スピ"
+    description: "Conspiracy theories merged with spiritual framing"
+
+  - id: "commercial_exploitation"
+    name: "Commercial exploitation"
+    name_ja: "霊感商法"
+    description: "New-age products and services using manipulation patterns"
+
+  - id: "high_demand_group"
+    name: "High-demand group"
+    name_ja: "カルト"
+    description: "Cult rhetoric, totalist environments, coercive control"
+
+  - id: "fraternal_society"
+    name: "Fraternal / secret society"
+    name_ja: "秘密結社"
+    description: "Masonic, esoteric orders, sworn secrecy traditions"
+
+# ---------------------------------------------------------------------------
+# 7. MARKER REGISTRY SCHEMA
+# ---------------------------------------------------------------------------
+# The Python implementation bundles all markers in a MarkerSet frozen
+# dataclass with 12 categories. This section documents the schema
+# so that third-party implementations can build compatible marker sets.
+# ---------------------------------------------------------------------------
+
+marker_schema:
+  description: >
+    A complete marker set for one language. All fields are required.
+    Markers are plain data — no models, no magic.
+  fields:
+    - { name: "vague_adjectives", type: "frozenset[str]", used_by: "vagueness" }
+    - { name: "authority_phrases", type: "list[str]", used_by: "authority_claims" }
+    - { name: "urgency_patterns", type: "list[str]", used_by: "urgency_fear" }
+    - { name: "fear_words", type: "list[str]", used_by: "emotional_manipulation" }
+    - { name: "euphoria_words", type: "list[str]", used_by: "emotional_manipulation" }
+    - { name: "contradiction_pairs", type: "list[tuple[str, list[str], list[str]]]", used_by: "logical_contradictions" }
+    - { name: "unfalsifiable_source_phrases", type: "list[str]", used_by: "source_attribution" }
+    - { name: "unnamed_authority_phrases", type: "list[str]", used_by: "source_attribution" }
+    - { name: "verifiable_citation_markers", type: "list[str]", used_by: "source_attribution" }
+    - { name: "commitment_escalation_markers", type: "list[tuple[int, list[str]]]", used_by: "commitment_escalation" }
+    - { name: "cooccurrence_groups", type: "list[tuple[str, list[str]]]", used_by: "authority_claims" }
+    - { name: "sciencewashing_phrases", type: "list[str]", used_by: "authority_claims" }
+  supported_languages:
+    - { code: "en", spacy_model: "en_core_web_sm" }
+    - { code: "ja", spacy_model: "ja_core_news_sm" }
+
+# ---------------------------------------------------------------------------
+# 8. ENGINE TIERS
+# ---------------------------------------------------------------------------
+# The topology module supports multiple analysis engines with different
+# trade-offs between local-only processing and extraction quality.
+# ---------------------------------------------------------------------------
+
+engines:
+  - tier: 0
+    name: "RuleEngine"
+    description: "Local, deterministic. Uses spaCy + marker heuristics. No API keys needed."
+    local_only: true
+    dependencies: ["spacy"]
+
+  - tier: 1
+    name: "AnthropicEngine"
+    description: "Claude API-based extraction. Higher quality, requires API key."
+    local_only: false
+    dependencies: ["anthropic"]
+
+  - tier: 2
+    name: "OllamaEngine"
+    description: "Stub for future local-LLM integration. Not yet functional."
+    local_only: true
+    dependencies: ["ollama"]
+    status: "stub"
+
+# ---------------------------------------------------------------------------
+# 9. DATA SOVEREIGNTY PRINCIPLES
+# ---------------------------------------------------------------------------
+# These principles govern all SI Protocols tools and are non-negotiable.
+# ---------------------------------------------------------------------------
+
+data_sovereignty:
+  principles:
+    - >
+      SI tools never transmit user text to external servers.
+      Analysis runs on the user's own machine.
+    - >
+      The Claude Skill (Quick-Check) runs on Anthropic's infrastructure,
+      not ours. This is disclosed wherever the Skill is referenced.
+    - >
+      An intelligence organisation that collects the data it claims to
+      help you protect is structurally compromised. The tools are the gift.
+      The intelligence is the service. The data is yours.
+  exceptions:
+    - tool: "Quick-Check Skill"
+      runs_on: "Anthropic infrastructure"
+      disclosure: "Required in all published references"
+      privacy_link: "https://www.anthropic.com/privacy"
+    - tool: "AnthropicEngine (Tier 1)"
+      runs_on: "Anthropic API"
+      disclosure: "User must explicitly opt in via --engine anthropic"
