@@ -77,6 +77,16 @@ repos:
         pass_filenames: false
         files: ^site-cc/
 
+  # --- Classification gate (file name and content) ---
+  - repo: local
+    hooks:
+      - id: classification-gate
+        name: SI classification gate
+        entry: python scripts/classification-gate.py
+        language: python
+        always_run: true
+        pass_filenames: false
+
   # --- General hygiene ---
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v6.0.0

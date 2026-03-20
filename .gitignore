@@ -64,3 +64,5 @@ Thumbs.db
 
 # Local scratch / planning
 tmp/
+.wrangler/
+local-only/
