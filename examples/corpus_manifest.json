@@ -1,0 +1,247 @@
+{
+  "version": "1.0",
+  "created": "2026-03-21",
+  "total_samples": 24,
+  "samples": [
+    {
+      "filename": "corpus_en_benign_01.txt",
+      "language": "en",
+      "band": "benign",
+      "expected_score_range": [0, 15],
+      "tradition_categories": ["new_age"],
+      "description": "Grounded meditation instructions with peer-reviewed citations and no manipulation markers",
+      "contradiction_pairs": false,
+      "escalation_gradient": false
+    },
+    {
+      "filename": "corpus_en_benign_02.txt",
+      "language": "en",
+      "band": "benign",
+      "expected_score_range": [0, 15],
+      "tradition_categories": ["new_age"],
+      "description": "Academic book review of William James with proper citations and neutral tone",
+      "contradiction_pairs": false,
+      "escalation_gradient": false
+    },
+    {
+      "filename": "corpus_en_benign_03.txt",
+      "language": "en",
+      "band": "benign",
+      "expected_score_range": [0, 15],
+      "tradition_categories": ["fraternal"],
+      "description": "Historical account of English contemplative lodges with archival citations",
+      "contradiction_pairs": false,
+      "escalation_gradient": false
+    },
+    {
+      "filename": "corpus_en_low_01.txt",
+      "language": "en",
+      "band": "low",
+      "expected_score_range": [16, 35],
+      "tradition_categories": ["new_age"],
+      "description": "Measured spiritual exploration piece using 'sacred' language but with grounded advice and no escalation",
+      "contradiction_pairs": false,
+      "escalation_gradient": false
+    },
+    {
+      "filename": "corpus_en_low_02.txt",
+      "language": "en",
+      "band": "low",
+      "expected_score_range": [16, 35],
+      "tradition_categories": ["prosperity_gospel"],
+      "description": "Balanced discussion of prosperity gospel with academic citation and critical framing",
+      "contradiction_pairs": false,
+      "escalation_gradient": false
+    },
+    {
+      "filename": "corpus_en_mid_01.txt",
+      "language": "en",
+      "band": "mid",
+      "expected_score_range": [36, 55],
+      "tradition_categories": ["new_age"],
+      "description": "Awakening narrative with unfalsifiable source claims and unnamed authorities, balanced by genuine scepticism advice",
+      "contradiction_pairs": false,
+      "escalation_gradient": false
+    },
+    {
+      "filename": "corpus_en_mid_02.txt",
+      "language": "en",
+      "band": "mid",
+      "expected_score_range": [36, 55],
+      "tradition_categories": ["prosperity_gospel", "commercial"],
+      "description": "Tithing community with mild escalation and unnamed authority claims, offset by open questioning tone",
+      "contradiction_pairs": false,
+      "escalation_gradient": true
+    },
+    {
+      "filename": "corpus_en_high_01.txt",
+      "language": "en",
+      "band": "high",
+      "expected_score_range": [56, 80],
+      "tradition_categories": ["new_age", "commercial"],
+      "description": "Ascension programme with authority claims, urgency, fear/euphoria cycling, and empowerment-dependency contradiction",
+      "contradiction_pairs": true,
+      "escalation_gradient": true
+    },
+    {
+      "filename": "corpus_en_high_02.txt",
+      "language": "en",
+      "band": "high",
+      "expected_score_range": [56, 80],
+      "tradition_categories": ["conspirituality"],
+      "description": "Suppressed-truth narrative with dense unnamed authorities, unfalsifiable sources, urgency, and mild escalation",
+      "contradiction_pairs": false,
+      "escalation_gradient": true
+    },
+    {
+      "filename": "corpus_en_high_03.txt",
+      "language": "en",
+      "band": "high",
+      "expected_score_range": [56, 80],
+      "tradition_categories": ["cult", "prosperity_gospel"],
+      "description": "Cult-prosperity hybrid with community love vs shunning, non-judgement vs blame contradictions, and full escalation gradient",
+      "contradiction_pairs": true,
+      "escalation_gradient": true
+    },
+    {
+      "filename": "corpus_en_extreme_01.txt",
+      "language": "en",
+      "band": "extreme",
+      "expected_score_range": [81, 100],
+      "tradition_categories": ["new_age", "conspirituality", "fraternal"],
+      "description": "Dense manipulation across all 7 dimensions: authority, urgency, fear/euphoria cycling, contradictions, unfalsifiable sources, and full escalation to total surrender",
+      "contradiction_pairs": true,
+      "escalation_gradient": true
+    },
+    {
+      "filename": "corpus_en_extreme_02.txt",
+      "language": "en",
+      "band": "extreme",
+      "expected_score_range": [81, 100],
+      "tradition_categories": ["prosperity_gospel", "cult", "fraternal"],
+      "description": "Prosperity-cult-fraternal fusion with poverty vs prosperity, community vs shunning, openness vs secrecy contradictions, and extreme escalation",
+      "contradiction_pairs": true,
+      "escalation_gradient": true
+    },
+    {
+      "filename": "corpus_ja_benign_01.txt",
+      "language": "ja",
+      "band": "benign",
+      "expected_score_range": [0, 15],
+      "tradition_categories": ["new_age"],
+      "description": "Grounded mindfulness meditation instructions with peer-reviewed citations in Japanese",
+      "contradiction_pairs": false,
+      "escalation_gradient": false
+    },
+    {
+      "filename": "corpus_ja_benign_02.txt",
+      "language": "ja",
+      "band": "benign",
+      "expected_score_range": [0, 15],
+      "tradition_categories": ["new_age"],
+      "description": "Academic book review of Suzuki Daisetz with proper citations and neutral scholarly tone",
+      "contradiction_pairs": false,
+      "escalation_gradient": false
+    },
+    {
+      "filename": "corpus_ja_benign_03.txt",
+      "language": "ja",
+      "band": "benign",
+      "expected_score_range": [0, 15],
+      "tradition_categories": ["fraternal"],
+      "description": "Historical account of Japanese mutual-aid organisations (ko/kou) with archival references",
+      "contradiction_pairs": false,
+      "escalation_gradient": false
+    },
+    {
+      "filename": "corpus_ja_low_01.txt",
+      "language": "ja",
+      "band": "low",
+      "expected_score_range": [16, 35],
+      "tradition_categories": ["new_age"],
+      "description": "Measured spiritual exploration using sacred language with grounded physiological framing",
+      "contradiction_pairs": false,
+      "escalation_gradient": false
+    },
+    {
+      "filename": "corpus_ja_low_02.txt",
+      "language": "ja",
+      "band": "low",
+      "expected_score_range": [16, 35],
+      "tradition_categories": ["prosperity_gospel"],
+      "description": "Balanced discussion of prosperity gospel in Japanese with academic citation",
+      "contradiction_pairs": false,
+      "escalation_gradient": false
+    },
+    {
+      "filename": "corpus_ja_mid_01.txt",
+      "language": "ja",
+      "band": "mid",
+      "expected_score_range": [36, 55],
+      "tradition_categories": ["new_age"],
+      "description": "Awakening narrative with unfalsifiable source claims balanced by genuine scepticism advice",
+      "contradiction_pairs": false,
+      "escalation_gradient": false
+    },
+    {
+      "filename": "corpus_ja_mid_02.txt",
+      "language": "ja",
+      "band": "mid",
+      "expected_score_range": [36, 55],
+      "tradition_categories": ["prosperity_gospel", "commercial"],
+      "description": "Tithing community with mild escalation and source claims, offset by open questioning tone",
+      "contradiction_pairs": false,
+      "escalation_gradient": true
+    },
+    {
+      "filename": "corpus_ja_high_01.txt",
+      "language": "ja",
+      "band": "high",
+      "expected_score_range": [56, 80],
+      "tradition_categories": ["new_age", "commercial"],
+      "description": "Ascension programme with authority claims, urgency, fear/euphoria cycling, and empowerment-dependency contradiction",
+      "contradiction_pairs": true,
+      "escalation_gradient": true
+    },
+    {
+      "filename": "corpus_ja_high_02.txt",
+      "language": "ja",
+      "band": "high",
+      "expected_score_range": [56, 80],
+      "tradition_categories": ["conspirituality"],
+      "description": "Suppressed-truth narrative with dense unnamed authorities, unfalsifiable sources, and escalation",
+      "contradiction_pairs": false,
+      "escalation_gradient": true
+    },
+    {
+      "filename": "corpus_ja_high_03.txt",
+      "language": "ja",
+      "band": "high",
+      "expected_score_range": [56, 80],
+      "tradition_categories": ["cult", "prosperity_gospel"],
+      "description": "Cult-prosperity hybrid with community vs shunning, non-judgement vs blame contradictions, and escalation",
+      "contradiction_pairs": true,
+      "escalation_gradient": true
+    },
+    {
+      "filename": "corpus_ja_extreme_01.txt",
+      "language": "ja",
+      "band": "extreme",
+      "expected_score_range": [81, 100],
+      "tradition_categories": ["new_age", "conspirituality", "fraternal"],
+      "description": "Dense manipulation across all 7 dimensions with multiple contradictions and full escalation to total surrender",
+      "contradiction_pairs": true,
+      "escalation_gradient": true
+    },
+    {
+      "filename": "corpus_ja_extreme_02.txt",
+      "language": "ja",
+      "band": "extreme",
+      "expected_score_range": [81, 100],
+      "tradition_categories": ["prosperity_gospel", "cult", "fraternal"],
+      "description": "Prosperity-cult-fraternal fusion with poverty vs prosperity, community vs shunning, openness vs secrecy contradictions",
+      "contradiction_pairs": true,
+      "escalation_gradient": true
+    }
+  ]
+}
