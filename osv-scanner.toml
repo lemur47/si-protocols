@@ -6,3 +6,7 @@
 # [[IgnoredVulns]]
 # id = "GHSA-xxxx-yyyy-zzzz"
 # reason = "Not applicable because ..."
+
+[[IgnoredVulns]]
+id = "GHSA-5239-wwwm-4pmq"
+reason = "Low-severity pygments issue (CVSS 3.3), no fix available upstream"
