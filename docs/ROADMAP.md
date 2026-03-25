@@ -1,24 +1,8 @@
-# Mid-Term Roadmap
+# Roadmap
 
-**Timeframe:** 6–12 months (from February 2026)
+What we're building and when. For strategic direction, positioning, IP model, and revenue sequence, see [STRATEGY.md](STRATEGY.md). For architectural reasoning, see [DESIGN.md](DESIGN.md).
 
-This roadmap covers three pillars: educational content across two domains, Japanese-language narrative on note.com, and user-facing tools (web demo + Chrome extension) that make the technology accessible beyond the CLI.
-
----
-
-## Two-Domain Strategy
-
-The project maintains two complementary websites:
-
-| | spiritualintelligence.dev | spiritualintelligence.cc |
-|---|---|---|
-| **Audience** | Developers, engineers, contributors | Practitioners, thought leaders, curious public |
-| **Content** | API docs, library reference, quickstart, architecture, contributing guide | Why SI matters, threat modelling, common threats, misconceptions, privacy |
-| **Tone** | Technical, precise | Accessible, professional, educational |
-| **Goal** | "Use this tool" | "Understand this problem" |
-| **Stack** | Astro (current) | TBD (Astro or CMS-friendly) |
-
-Each site links clearly to the other. The .cc site has a "For Developers" call-to-action pointing to .dev. The .dev site has a "Why This Matters" link pointing to .cc. They feel like siblings, not strangers.
+**Last synced from PMO:** 2026-03-25
 
 ---
 
@@ -26,81 +10,57 @@ Each site links clearly to the other. The .cc site has a "For Developers" call-t
 
 ### Topology module v1
 
-Fractal-topology analysis that extracts claims from text, classifies them along four axes, and builds a layered graph. Delivered infrastructure:
+Fractal-topology analysis extracting claims from text, classifying each along four axes, and building a layered graph:
 
-- **Rule engine** (Tier 0) — local, deterministic analysis using spaCy + marker heuristics
-- **Anthropic engine** (Tier 1) — Claude API-based claim extraction and classification
-- **Output formats** — SVG visualisation (intelligence-themed dark HUD) and JSON
-- **CLI** — `si-topology` command with `--engine`, `--format`, `--lang`, and `-o` options
-- **Multi-language support** — English and Japanese
+- **Rule engine** (Tier 0) — local, deterministic, spaCy + marker heuristics
+- **Anthropic engine** (Tier 1) — Claude API-based claim extraction
+- **Output** — SVG visualisation (intelligence-themed dark HUD) and JSON
+- **CLI** — `si-topology` with `--engine`, `--format`, `--lang`, `-o`
+- **Multi-language** — English and Japanese
 
----
+### CVP ontology v0.1
 
-## Counterintelligence Integration (Proposed)
+Machine-readable schema: [`cvp-ontology-v0.1.yaml`](https://github.com/lemur47/si-protocols/blob/main/cvp-ontology-v0.1.yaml). Six layers (L1–L6), container type taxonomy, threat pattern schemas (harvest loop, container trap), seven analysis dimensions, four topology classification axes, bilingual terminology (EN/JA). Open analytical fragment only — proprietary components listed in the YAML header.
 
-A new work stream extending the CVP model with counterintelligence capabilities. Theory first, tooling later.
+### Quick-Check v0.2 (CVP-enhanced)
 
-### Phase A: Theory (current)
+Claude Skill with CVP ontology preamble. The Skill functions as an L6 static container — both a distribution channel and an empirical instrument for measuring CVP's effect on AI reasoning. A/B evaluation on 24 samples (12 EN, 12 JA) confirmed: score parity (Δ = 3.0), structural insight (4.81/sample), FP control (max benign = 8). [Full results](https://spiritualintelligence.dev/blog/ab-evaluation-quick-check-v02/).
 
-Document the conceptual extensions to the CVP model:
+### Two-domain web presence
 
-- Upgrade Layer 6 to distinguish stateless containers from stateful containers (egregores / parasitic orchestration middleware)
-- Document egregoric access to the Genetic Repository (Layer 3) — systematic contamination vs random noise
-- Map inbound/outbound counterintelligence boundaries explicitly in the layer stack
-- Explain the three-layer resistance pattern (L6 + L3 + L4) that egregores deploy against escaping instances
-- Publish deep-dive page on egregores and blog post demonstrating the model's analytical power
+Both sites live on Cloudflare Pages:
 
-### Phase B: Detection (extends existing tools)
+- **spiritualintelligence.dev** — [quickstart](https://spiritualintelligence.dev/docs/quickstart/), [library reference](https://spiritualintelligence.dev/docs/library/), [API reference](https://spiritualintelligence.dev/docs/api/), [architecture deep-dive](https://spiritualintelligence.dev/docs/architecture/) with three SI-branded SVG diagrams, [blog](https://spiritualintelligence.dev/blog/) (two posts)
+- **spiritualintelligence.cc** — seven educational pages covering threat modelling, common threats, the virtualisation model, egregores, misconceptions, cybersecurity/privacy
 
-Expand the threat filter and topology module to cover outbound analysis:
+### Infrastructure
 
-- Exposure scoring — given a file or behavioural trace, how much does it reveal about the instance's container configuration?
-- Outbound topology analysis — the same visualisation framework mapping metadata claims
-
-### Phase C: Active Defence (reference implementations)
-
-Small tools as concrete implementations of CVP counterintelligence:
-
-- Metadata stripping (ExifTool wrapper) — outbound container hygiene
-- Exposure audit — what does a file, post, or profile reveal about you?
-- These are CVP-native tools demonstrating the model's outbound defence layer, not generic privacy utilities
-
-### Phase D: Operational Capability (future)
-
-- Steganographic watermarking — provenance and leak detection
-- Covert channel APIs — for specialised use cases
+- **R2 classified storage** — Cloudflare R2 for internal evaluation data and operational artefacts
+- **Classification gate** — pre-commit hook preventing classified content from reaching public branches
+- **Airtable PMO** — Projects, Sprints, Work Items, Decisions, Documents
+- **17 pre-commit hooks** — ruff, pyright, pytest, opengrep, osv-scanner, gitleaks, Astro build checks
 
 ---
 
 ## Phase 1: Foundation (Months 1–3)
 
-### spiritualintelligence.cc — launch
+### note.com launch
 
-Core educational pages:
+- Free briefings in SAER format (状況→分析→評価→推奨)
+- Audio briefing pilot: MP3/AAC uploads, voice-led delivery making rigorous analysis accessible (CEO-led)
+- Paid counterintelligence reports (subscription magazine)
 
-- **Why Spiritual Intelligence Matters** — the problem space, real-world harm, why existing tools don't cover this
-- **Threat Modelling for Spiritual Content** — the seven analysis dimensions explained for non-technical readers, with illustrative examples
-- **Common Threats and Patterns** — taxonomy of manipulation tactics (escalation funnels, unfalsifiable claims, emotional whiplash, covert exploitation)
-- **Common Misconceptions** — "this judges beliefs" vs "this detects manipulation patterns"; "AI can't understand spirituality"; "this replaces discernment"
-- **Cybersecurity and Privacy** — why local-only processing matters, data sovereignty, how SI connects to broader information security thinking
+### Content expansion
 
-### spiritualintelligence.dev — refine
+- **.cc** — expand educational pages
+- **.dev** — tutorial series, integration examples
 
-- Architecture deep-dive (for contributors and security researchers)
-- Contributing guide (adding languages, refining markers, extending dimensions)
-- Embedded web demo (see below)
-
-### note.com — establish presence
-
-- 2–3 narrative posts establishing voice and context
-- Topics: why this project exists, cultural context of 霊感商法 / スピリチュアル商法, the engineering story behind Japanese marker adaptation
-
-### Feature: web demo MVP
+### Web demo MVP
 
 - Svelte + Astro interactive interface on .dev
 - Paste text, see threat score with dimension breakdown
-- Zero install, zero data collection — runs analysis via local API or client-side
-- Embeddable widget version for .cc (lets visitors try it without leaving the educational context)
+- Zero install, zero data collection
+- Embeddable widget version for .cc
 
 ---
 
@@ -110,77 +70,57 @@ Core educational pages:
 
 - Right-click context menu: "Analyse this text for manipulation patterns"
 - Select text on any webpage → inline threat score overlay
-- Local-only processing — no data leaves the browser (major trust signal for the target audience)
-- Architecture options: bundled lightweight JS scoring for basic analysis, with optional connection to local API for full spaCy pipeline
-- Landing page on .cc explaining what it does and why it's safe
+- Local-only processing — no data leaves the browser
+- Landing page on .cc
 
 ### Content expansion
 
-- **.cc** — case studies, pattern library ("anatomy of an escalation funnel"), "how to read a threat score" guide
+- **.cc** — case studies, pattern library
 - **.dev** — tutorial series, integration examples
-- **note.com** — regular posting cadence, building JA community narrative, connecting to consumer protection discussions
+- **note.com** — regular cadence, JA community narrative
 
-### Feature: batch analysis
+### Batch analysis
 
 - Analyse multiple texts and compare scores side by side
-- Useful for researchers tracking patterns across a corpus
 
 ---
 
-## Phase 3: Community (Months 7–12)
+## Phase 3: Community & Ontology (Months 7–12)
 
-### Chrome extension polish
+### Ontology API
 
-- Settings panel (sensitivity, marker categories)
-- Marker customisation — let users add domain-specific markers for their tradition or context
-- Clear local-only guarantees visible in the UI and extension store listing
+Machine-readable CVP ontology as a queryable API with developer tooling. First step toward the architectural IP licensing ambition (see [STRATEGY.md](STRATEGY.md) § Revenue Sequence).
 
-### Interactive educational content
+### Counterintelligence integration
 
-- **.cc** — embedded demos, interactive threat pattern explorer, guided walkthroughs
-- **.dev** — contributor onboarding, language addition tutorial
+- **Phase A (Theory)** — L6 stateless/stateful container distinction, egregoric access to L3, three-layer resistance pattern, inbound/outbound CI boundaries
+- **Phase B (Detection)** — exposure scoring, container escape detection, egregore signature matching
 
 ### Contributor programme
 
-- Language contributions (community-submitted marker sets for new languages)
-- Marker review process (tradition experts validating and refining marker lists)
-- Recognition and attribution for contributors
+- Language contributions (community-submitted marker sets)
+- Marker review process (prerequisite: design validation process to prevent adversarial submissions — see Decisions log)
 
-### Feature: report generation
+### Chrome extension polish
 
-- Shareable PDF/HTML reports for practitioners and researchers
-- Structured output suitable for academic citation or organisational review
+- Settings panel, marker customisation for tradition-specific contexts
 
 ---
 
-## Web Demo and Chrome Extension: Complementary Roles
+## Web Demo and Chrome Extension
 
-Both tools are developed and maintained because they serve different moments in the user journey:
-
-| | Web demo (Svelte + Astro) | Chrome extension |
+| | Web demo | Chrome extension |
 |---|---|---|
-| **When** | "Let me try this" — first encounter | "I use this daily" — habitual use |
+| **When** | First encounter | Daily use |
 | **Where** | .dev site, embeddable on .cc | In-situ on any webpage |
-| **Friction** | Zero install, paste text, see results | One-time install, then seamless |
-| **Audience** | Evaluators, developers, curious visitors | Practitioners, followers, researchers |
-| **Role** | Top of funnel — converts curiosity into understanding | Retention layer — converts understanding into daily practice |
-
-The web demo is the gateway; the extension is the habit. Without the demo, people won't trust the extension enough to install it. Without the extension, the tool stays a novelty rather than a practice.
-
----
-
-## Division of Work
-
-- **English content and technical writing** — Claude (with review)
-- **Japanese narrative and note.com** — human lead (with internal collaboration on technical accuracy and consistency)
-- **Features and code** — collaborative
+| **Friction** | Zero install | One-time install |
+| **Role** | Top of funnel | Retention layer |
 
 ---
 
 ## What This Roadmap Does Not Cover
 
-- Additional language support beyond EN/JA (deferred until contributor programme is established)
-- Professional services — consulting, training, and bespoke analysis (deferred until community traction is demonstrated; see Revenue Model in STRATEGY.md)
-- Hosted or SaaS analysis services — these are outside the organisation's data sovereignty commitment and will not be developed
+- Additional language support beyond EN/JA (deferred until contributor programme established)
+- Hosted analysis services (outside data sovereignty commitment — see [STRATEGY.md](STRATEGY.md))
 - Mobile applications
 - Social media integrations beyond the Chrome extension
