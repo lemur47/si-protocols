@@ -1,0 +1,161 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400" font-family="'Courier New','Lucida Console',monospace">
+  <defs>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <pattern id="scan" width="4" height="4" patternUnits="userSpaceOnUse">
+      <rect width="4" height="2" fill="#fff" opacity="0.015"/>
+    </pattern>
+    <linearGradient id="bar-track" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#1a1a28"/>
+      <stop offset="100%" stop-color="#12121a"/>
+    </linearGradient>
+    <marker id="arrow-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#00ffa3" opacity="0.8"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="400" fill="#0a0a0f"/>
+  <rect width="800" height="400" fill="url(#scan)"/>
+
+  <!-- HUD Frame corners -->
+  <path d="M 24 8 L 8 8 L 8 36" stroke="#00ffa3" stroke-width="1.5" fill="none" opacity="0.5"/>
+  <path d="M 776 8 L 792 8 L 792 36" stroke="#00ffa3" stroke-width="1.5" fill="none" opacity="0.5"/>
+  <path d="M 8 368 L 8 392 L 24 392" stroke="#00ffa3" stroke-width="1.5" fill="none" opacity="0.5"/>
+  <path d="M 792 368 L 792 392 L 776 392" stroke="#00ffa3" stroke-width="1.5" fill="none" opacity="0.5"/>
+  <rect x="4" y="4" width="792" height="392" rx="2" fill="none" stroke="#2a2a3a" stroke-width="0.5"/>
+
+  <!-- Title bar -->
+  <line x1="20" y1="44" x2="780" y2="44" stroke="#2a2a3a" stroke-width="0.5"/>
+  <text x="28" y="30" fill="#00ffa3" font-size="11" font-weight="bold" letter-spacing="2">SI-PROTOCOLS // THREAT FILTER PIPELINE</text>
+  <text x="772" y="30" fill="#8888a0" font-size="9" text-anchor="end" letter-spacing="1">7-DIMENSION SCORING</text>
+
+  <!-- ==================== SEVEN DIMENSIONS ==================== -->
+
+  <!-- Channel 1: VAGUENESS -->
+  <g transform="translate(28,58)">
+    <rect x="0" y="0" width="460" height="26" rx="2" fill="#12121a" stroke="#2a2a3a" stroke-width="0.4"/>
+    <text x="8" y="17" fill="#00ffa3" font-size="8" letter-spacing="1" font-weight="bold">VAGUENESS</text>
+    <text x="140" y="17" fill="#8888a0" font-size="7">adjective density</text>
+    <rect x="310" y="6" width="140" height="14" rx="1.5" fill="url(#bar-track)"/>
+    <rect x="310" y="6" width="24" height="14" rx="1.5" fill="#00ffa3" opacity="0.3"/>
+    <text x="442" y="17" fill="#00ffa3" font-size="8" text-anchor="end" font-weight="bold">17%</text>
+  </g>
+
+  <!-- Channel 2: AUTHORITY -->
+  <g transform="translate(28,90)">
+    <rect x="0" y="0" width="460" height="26" rx="2" fill="#12121a" stroke="#2a2a3a" stroke-width="0.4"/>
+    <text x="8" y="17" fill="#00ffa3" font-size="8" letter-spacing="1" font-weight="bold">AUTHORITY</text>
+    <text x="140" y="17" fill="#8888a0" font-size="7">phrase matching</text>
+    <rect x="310" y="6" width="140" height="14" rx="1.5" fill="url(#bar-track)"/>
+    <rect x="310" y="6" width="24" height="14" rx="1.5" fill="#00ffa3" opacity="0.3"/>
+    <text x="442" y="17" fill="#00ffa3" font-size="8" text-anchor="end" font-weight="bold">17%</text>
+  </g>
+
+  <!-- Channel 3: URGENCY/FEAR -->
+  <g transform="translate(28,122)">
+    <rect x="0" y="0" width="460" height="26" rx="2" fill="#12121a" stroke="#2a2a3a" stroke-width="0.4"/>
+    <text x="8" y="17" fill="#ffaa00" font-size="8" letter-spacing="1" font-weight="bold">URGENCY/FEAR</text>
+    <text x="140" y="17" fill="#8888a0" font-size="7">pattern matching</text>
+    <rect x="310" y="6" width="140" height="14" rx="1.5" fill="url(#bar-track)"/>
+    <rect x="310" y="6" width="18" height="14" rx="1.5" fill="#ffaa00" opacity="0.3"/>
+    <text x="442" y="17" fill="#ffaa00" font-size="8" text-anchor="end" font-weight="bold">13%</text>
+  </g>
+
+  <!-- Channel 4: EMOTIONAL -->
+  <g transform="translate(28,154)">
+    <rect x="0" y="0" width="460" height="26" rx="2" fill="#12121a" stroke="#2a2a3a" stroke-width="0.4"/>
+    <text x="8" y="17" fill="#ffaa00" font-size="8" letter-spacing="1" font-weight="bold">EMOTIONAL</text>
+    <text x="140" y="17" fill="#8888a0" font-size="7">fear/euphoria + contrast bonus</text>
+    <rect x="310" y="6" width="140" height="14" rx="1.5" fill="url(#bar-track)"/>
+    <rect x="310" y="6" width="18" height="14" rx="1.5" fill="#ffaa00" opacity="0.3"/>
+    <text x="442" y="17" fill="#ffaa00" font-size="8" text-anchor="end" font-weight="bold">13%</text>
+  </g>
+
+  <!-- Channel 5: CONTRADICTION -->
+  <g transform="translate(28,186)">
+    <rect x="0" y="0" width="460" height="26" rx="2" fill="#12121a" stroke="#2a2a3a" stroke-width="0.4"/>
+    <text x="8" y="17" fill="#ffaa00" font-size="8" letter-spacing="1" font-weight="bold">CONTRADICTION</text>
+    <text x="140" y="17" fill="#8888a0" font-size="7">bipolar claim detection</text>
+    <rect x="310" y="6" width="140" height="14" rx="1.5" fill="url(#bar-track)"/>
+    <rect x="310" y="6" width="18" height="14" rx="1.5" fill="#ffaa00" opacity="0.3"/>
+    <text x="442" y="17" fill="#ffaa00" font-size="8" text-anchor="end" font-weight="bold">13%</text>
+  </g>
+
+  <!-- Channel 6: SOURCE -->
+  <g transform="translate(28,218)">
+    <rect x="0" y="0" width="460" height="26" rx="2" fill="#12121a" stroke="#2a2a3a" stroke-width="0.4"/>
+    <text x="8" y="17" fill="#ffaa00" font-size="8" letter-spacing="1" font-weight="bold">SOURCE</text>
+    <text x="140" y="17" fill="#8888a0" font-size="7">unfalsifiable − verifiable offset</text>
+    <rect x="310" y="6" width="140" height="14" rx="1.5" fill="url(#bar-track)"/>
+    <rect x="310" y="6" width="18" height="14" rx="1.5" fill="#ffaa00" opacity="0.3"/>
+    <text x="442" y="17" fill="#ffaa00" font-size="8" text-anchor="end" font-weight="bold">13%</text>
+  </g>
+
+  <!-- Channel 7: ESCALATION -->
+  <g transform="translate(28,250)">
+    <rect x="0" y="0" width="460" height="26" rx="2" fill="#12121a" stroke="#2a2a3a" stroke-width="0.4"/>
+    <text x="8" y="17" fill="#ffaa00" font-size="8" letter-spacing="1" font-weight="bold">ESCALATION</text>
+    <text x="140" y="17" fill="#8888a0" font-size="7">thirds-based intensity gradient</text>
+    <rect x="310" y="6" width="140" height="14" rx="1.5" fill="url(#bar-track)"/>
+    <rect x="310" y="6" width="20" height="14" rx="1.5" fill="#ffaa00" opacity="0.3"/>
+    <text x="442" y="17" fill="#ffaa00" font-size="8" text-anchor="end" font-weight="bold">14%</text>
+  </g>
+
+  <!-- ==================== ARROW: CHANNELS → COMPOSITE ==================== -->
+  <g stroke="#00ffa3" stroke-width="1" opacity="0.35">
+    <line x1="498" y1="170" x2="540" y2="170" stroke-dasharray="4,3" marker-end="url(#arrow-green)"/>
+  </g>
+
+  <!-- ==================== COMPOSITE / HYBRID ==================== -->
+  <rect x="548" y="58" width="220" height="220" rx="4" fill="#12121a" stroke="#2a2a3a" stroke-width="0.8"/>
+  <rect x="548" y="58" width="220" height="20" rx="4" fill="#1a1a28"/>
+  <line x1="548" y1="78" x2="768" y2="78" stroke="#2a2a3a" stroke-width="0.5"/>
+  <text x="560" y="72" fill="#00ffa3" font-size="8" font-weight="bold" letter-spacing="1">HYBRID SCORING</text>
+
+  <!-- Tech contribution -->
+  <rect x="564" y="90" width="188" height="56" rx="3" fill="none" stroke="#00ffa3" stroke-width="0.6" opacity="0.5"/>
+  <text x="576" y="108" fill="#00ffa3" font-size="9" font-weight="bold">TECH LAYER</text>
+  <text x="740" y="108" fill="#00ffa3" font-size="9" text-anchor="end">60%</text>
+  <text x="576" y="126" fill="#8888a0" font-size="8">Deterministic · auditable</text>
+  <text x="576" y="138" fill="#8888a0" font-size="8">Weighted sum of 7 channels</text>
+
+  <!-- Heuristic contribution -->
+  <rect x="564" y="156" width="188" height="44" rx="3" fill="none" stroke="#8888a0" stroke-width="0.5" opacity="0.4"/>
+  <text x="576" y="174" fill="#8888a0" font-size="9">HEURISTIC LAYER</text>
+  <text x="740" y="174" fill="#8888a0" font-size="9" text-anchor="end">40%</text>
+  <text x="576" y="190" fill="#666680" font-size="8">Probabilistic · seeded RNG</text>
+
+  <!-- Divider -->
+  <line x1="564" y1="210" x2="752" y2="210" stroke="#2a2a3a" stroke-width="0.5"/>
+
+  <!-- Result -->
+  <text x="658" y="234" fill="#e0e0e8" font-size="10" text-anchor="middle" font-weight="bold">HYBRID SCORE</text>
+  <text x="658" y="252" fill="#00ffa3" font-size="14" text-anchor="middle" font-weight="bold" filter="url(#glow)">0 — 100</text>
+  <text x="658" y="270" fill="#8888a0" font-size="7" text-anchor="middle">FROZEN · IMMUTABLE · HASHABLE</text>
+
+  <!-- ==================== OUTPUT FORMATS ==================== -->
+  <line x1="658" y1="278" x2="658" y2="300" stroke="#00ffa3" stroke-width="1" opacity="0.4" marker-end="url(#arrow-green)"/>
+
+  <rect x="548" y="304" width="220" height="56" rx="3" fill="#12121a" stroke="#2a2a3a" stroke-width="0.5"/>
+  <text x="560" y="322" fill="#e0e0e8" font-size="8">ThreatResult</text>
+  <text x="560" y="338" fill="#8888a0" font-size="7">  .overall_threat_score</text>
+  <text x="560" y="350" fill="#8888a0" font-size="7">  .authority_hits  .emotion_hits  ...</text>
+
+  <!-- Tradition categories label -->
+  <rect x="28" y="290" width="460" height="36" rx="3" fill="#12121a" stroke="#2a2a3a" stroke-width="0.5"/>
+  <text x="40" y="306" fill="#8888a0" font-size="8" font-weight="bold">TRADITION CATEGORIES</text>
+  <text x="40" y="320" fill="#666680" font-size="7">New Age · Prosperity gospel · Conspirituality · Commercial · Cult · Fraternal</text>
+
+  <!-- Language support label -->
+  <rect x="28" y="336" width="460" height="28" rx="3" fill="#12121a" stroke="#2a2a3a" stroke-width="0.5"/>
+  <text x="40" y="354" fill="#8888a0" font-size="8" font-weight="bold">MULTI-LANGUAGE</text>
+  <text x="185" y="354" fill="#666680" font-size="7">markers.py (EN) · markers_ja.py (JA) · culturally adapted, not translated</text>
+
+  <!-- Classification badge -->
+  <rect x="28" y="380" width="64" height="12" rx="2" fill="none" stroke="#00ffa3" stroke-width="0.5" opacity="0.3"/>
+  <text x="60" y="389" fill="#00ffa3" font-size="7" text-anchor="middle" opacity="0.5">OPEN</text>
+  <text x="104" y="389" fill="#8888a0" font-size="7" opacity="0.4">SI Protocols · spiritualintelligence.dev</text>
+</svg>

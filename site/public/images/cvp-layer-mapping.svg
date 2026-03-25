@@ -1,0 +1,163 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 480" font-family="'Courier New','Lucida Console',monospace">
+  <defs>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <pattern id="scan" width="4" height="4" patternUnits="userSpaceOnUse">
+      <rect width="4" height="2" fill="#fff" opacity="0.015"/>
+    </pattern>
+    <marker id="arrow-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#00ffa3" opacity="0.8"/>
+    </marker>
+    <marker id="arrow-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#ff4444" opacity="0.8"/>
+    </marker>
+    <marker id="arrow-cyan" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#00d4ff" opacity="0.8"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="480" fill="#0a0a0f"/>
+  <rect width="800" height="480" fill="url(#scan)"/>
+
+  <!-- HUD Frame corners -->
+  <path d="M 24 8 L 8 8 L 8 36" stroke="#00ffa3" stroke-width="1.5" fill="none" opacity="0.5"/>
+  <path d="M 776 8 L 792 8 L 792 36" stroke="#00ffa3" stroke-width="1.5" fill="none" opacity="0.5"/>
+  <path d="M 8 448 L 8 472 L 24 472" stroke="#00ffa3" stroke-width="1.5" fill="none" opacity="0.5"/>
+  <path d="M 792 448 L 792 472 L 776 472" stroke="#00ffa3" stroke-width="1.5" fill="none" opacity="0.5"/>
+  <rect x="4" y="4" width="792" height="472" rx="2" fill="none" stroke="#2a2a3a" stroke-width="0.5"/>
+
+  <!-- Title bar -->
+  <line x1="20" y1="44" x2="780" y2="44" stroke="#2a2a3a" stroke-width="0.5"/>
+  <text x="28" y="30" fill="#00ffa3" font-size="11" font-weight="bold" letter-spacing="2">SI-PROTOCOLS // CVP LAYER MAPPING</text>
+  <text x="772" y="30" fill="#8888a0" font-size="9" text-anchor="end" letter-spacing="1">CONSCIOUSNESS → CODE</text>
+
+  <!-- ==================== LEFT: CVP LAYER STACK ==================== -->
+  <text x="180" y="66" fill="#a855f7" font-size="9" text-anchor="middle" font-weight="bold" letter-spacing="1">CVP LAYER STACK</text>
+
+  <!-- L6 — Containers (top) -->
+  <rect x="40" y="78" width="280" height="44" rx="3" fill="#12121a" stroke="#ff4444" stroke-width="0.8" opacity="0.8"/>
+  <text x="52" y="96" fill="#ff4444" font-size="9" font-weight="bold">L6  CONTAINERS</text>
+  <text x="52" y="112" fill="#8888a0" font-size="7">Social packaging · egregores · stateful/stateless</text>
+  <text x="308" y="96" fill="#666680" font-size="7" text-anchor="end">社会的コンテナ</text>
+
+  <!-- L5 — Mental Instance -->
+  <rect x="40" y="130" width="280" height="44" rx="3" fill="#12121a" stroke="#00ffa3" stroke-width="0.8" opacity="0.8"/>
+  <text x="52" y="148" fill="#00ffa3" font-size="9" font-weight="bold">L5  MENTAL INSTANCE (VM)</text>
+  <text x="52" y="164" fill="#8888a0" font-size="7">Conscious processing · weighted logic · decisions</text>
+  <text x="308" y="148" fill="#666680" font-size="7" text-anchor="end">自我 (エゴ)</text>
+
+  <!-- L4 — Environmental Switch -->
+  <rect x="40" y="182" width="280" height="44" rx="3" fill="#12121a" stroke="#ffaa00" stroke-width="0.8" opacity="0.8"/>
+  <text x="52" y="200" fill="#ffaa00" font-size="9" font-weight="bold">L4  ENVIRONMENTAL SWITCH</text>
+  <text x="52" y="216" fill="#8888a0" font-size="7">Signal router · IO fidelity · sensory modulation</text>
+  <text x="308" y="200" fill="#666680" font-size="7" text-anchor="end">環境スイッチ</text>
+
+  <!-- L3 — Genetic Repository -->
+  <rect x="40" y="234" width="280" height="44" rx="3" fill="#12121a" stroke="#a855f7" stroke-width="0.8" opacity="0.8"/>
+  <text x="52" y="252" fill="#a855f7" font-size="9" font-weight="bold">L3  GENETIC REPOSITORY</text>
+  <text x="52" y="268" fill="#8888a0" font-size="7">Deep patterns · thought templates · version-controlled</text>
+  <text x="308" y="252" fill="#666680" font-size="7" text-anchor="end">深層パターン</text>
+
+  <!-- L2 — Virtual Universe -->
+  <rect x="40" y="286" width="280" height="44" rx="3" fill="#12121a" stroke="#a855f7" stroke-width="0.8" opacity="0.6"/>
+  <text x="52" y="304" fill="#a855f7" font-size="9" font-weight="bold">L2  VIRTUAL UNIVERSE (SAN)</text>
+  <text x="52" y="320" fill="#8888a0" font-size="7">Shared storage · collective · read-write</text>
+  <text x="308" y="304" fill="#666680" font-size="7" text-anchor="end">集合的無意識</text>
+
+  <!-- L1 — Bare Metal -->
+  <rect x="40" y="338" width="280" height="44" rx="3" fill="#12121a" stroke="#666680" stroke-width="0.6" opacity="0.5"/>
+  <text x="52" y="356" fill="#666680" font-size="9" font-weight="bold">L1  BARE METAL</text>
+  <text x="52" y="372" fill="#555568" font-size="7">Physical substrate · body · planet</text>
+  <text x="308" y="356" fill="#555568" font-size="7" text-anchor="end">物理体</text>
+
+  <!-- ==================== CI BOUNDARY MARKERS ==================== -->
+
+  <!-- Inbound CI boundary (between L4 and L5) -->
+  <line x1="32" y1="178" x2="328" y2="178" stroke="#00ffa3" stroke-width="1.5" stroke-dasharray="6,3" opacity="0.6"/>
+  <rect x="104" y="170" width="152" height="14" rx="2" fill="#0a0a0f"/>
+  <text x="180" y="180" fill="#00ffa3" font-size="7" text-anchor="middle" font-weight="bold" letter-spacing="1">▲ INBOUND CI BOUNDARY</text>
+
+  <!-- Outbound CI boundary (between L5 and L6) -->
+  <line x1="32" y1="126" x2="328" y2="126" stroke="#ff4444" stroke-width="1.5" stroke-dasharray="6,3" opacity="0.5"/>
+  <rect x="100" y="118" width="160" height="14" rx="2" fill="#0a0a0f"/>
+  <text x="180" y="128" fill="#ff4444" font-size="7" text-anchor="middle" font-weight="bold" letter-spacing="1">▼ OUTBOUND CI BOUNDARY</text>
+
+  <!-- ==================== RIGHT: ANALYSIS MAPPING ==================== -->
+  <text x="600" y="66" fill="#00d4ff" font-size="9" text-anchor="middle" font-weight="bold" letter-spacing="1">ANALYSIS MAPPING</text>
+
+  <!-- Topology: Variable classification -->
+  <rect x="460" y="78" width="310" height="130" rx="4" fill="none" stroke="#00d4ff" stroke-width="0.8" stroke-dasharray="4,3" opacity="0.4"/>
+  <text x="472" y="94" fill="#00d4ff" font-size="9" font-weight="bold" letter-spacing="1">TOPOLOGY MODULE</text>
+  <text x="758" y="94" fill="#8888a0" font-size="7" text-anchor="end">LAYER DETECTORS</text>
+
+  <!-- Variable kinds -->
+  <rect x="476" y="102" width="136" height="28" rx="3" fill="#12121a" stroke="#a855f7" stroke-width="0.6"/>
+  <text x="544" y="120" fill="#a855f7" font-size="8" text-anchor="middle" font-weight="bold">TRUE (L2/L3)</text>
+
+  <rect x="620" y="102" width="136" height="28" rx="3" fill="#12121a" stroke="#00ffa3" stroke-width="0.6"/>
+  <text x="688" y="120" fill="#00ffa3" font-size="8" text-anchor="middle" font-weight="bold">INDETERMINATE (L5)</text>
+
+  <rect x="476" y="136" width="136" height="28" rx="3" fill="#12121a" stroke="#ff4444" stroke-width="0.6"/>
+  <text x="544" y="154" fill="#ff4444" font-size="8" text-anchor="middle" font-weight="bold">PSEUDO (L6)</text>
+
+  <rect x="620" y="136" width="136" height="28" rx="3" fill="#12121a" stroke="#2a2a3a" stroke-width="0.5"/>
+  <text x="688" y="150" fill="#8888a0" font-size="7" text-anchor="middle">4 classification axes</text>
+  <text x="688" y="160" fill="#666680" font-size="7" text-anchor="middle">= layer detectors</text>
+
+  <!-- 4 axes detail -->
+  <rect x="476" y="172" width="280" height="28" rx="3" fill="#12121a" stroke="#2a2a3a" stroke-width="0.4"/>
+  <text x="488" y="190" fill="#8888a0" font-size="7">falsifiability · verifiability · domain coherence · logical dependency</text>
+
+  <!-- Threat filter: CI implementation -->
+  <rect x="460" y="222" width="310" height="100" rx="4" fill="none" stroke="#00ffa3" stroke-width="0.8" stroke-dasharray="4,3" opacity="0.4"/>
+  <text x="472" y="238" fill="#00ffa3" font-size="9" font-weight="bold" letter-spacing="1">THREAT FILTER</text>
+  <text x="758" y="238" fill="#8888a0" font-size="7" text-anchor="end">INBOUND CI</text>
+
+  <rect x="476" y="246" width="280" height="28" rx="3" fill="#12121a" stroke="#00ffa3" stroke-width="0.5" opacity="0.6"/>
+  <text x="488" y="264" fill="#00ffa3" font-size="8">L4 → L5 firewall</text>
+  <text x="744" y="264" fill="#8888a0" font-size="7" text-anchor="end">7 scoring dimensions</text>
+
+  <rect x="476" y="280" width="280" height="28" rx="3" fill="#12121a" stroke="#ff4444" stroke-width="0.5" opacity="0.4"/>
+  <text x="488" y="298" fill="#ff4444" font-size="8" opacity="0.7">L5 → L6 boundary</text>
+  <text x="744" y="298" fill="#666680" font-size="7" text-anchor="end">outbound CI — future scope</text>
+
+  <!-- ==================== CONNECTING ARROWS ==================== -->
+
+  <!-- L6 → PSEUDO -->
+  <line x1="320" y1="100" x2="474" y2="150" stroke="#ff4444" stroke-width="0.8" opacity="0.35" stroke-dasharray="3,3" marker-end="url(#arrow-red)"/>
+
+  <!-- L2/L3 → TRUE -->
+  <line x1="320" y1="278" x2="474" y2="116" stroke="#a855f7" stroke-width="0.8" opacity="0.35" stroke-dasharray="3,3"/>
+  <line x1="320" y1="256" x2="474" y2="116" stroke="#a855f7" stroke-width="0.8" opacity="0.35" stroke-dasharray="3,3"/>
+
+  <!-- L5 → INDETERMINATE -->
+  <line x1="320" y1="152" x2="618" y2="116" stroke="#00ffa3" stroke-width="0.8" opacity="0.35" stroke-dasharray="3,3"/>
+
+  <!-- Inbound CI → Threat filter -->
+  <line x1="340" y1="178" x2="474" y2="260" stroke="#00ffa3" stroke-width="1" opacity="0.3" marker-end="url(#arrow-green)"/>
+
+  <!-- ==================== QUICK-CHECK CONNECTION ==================== -->
+  <rect x="460" y="338" width="310" height="56" rx="4" fill="#12121a" stroke="#a855f7" stroke-width="0.6" opacity="0.5"/>
+  <text x="472" y="356" fill="#a855f7" font-size="9" font-weight="bold">QUICK-CHECK v0.2 (CVP-ENHANCED)</text>
+  <text x="472" y="372" fill="#8888a0" font-size="7">Ontology preamble injects L1–L6 vocabulary into Claude</text>
+  <text x="472" y="384" fill="#666680" font-size="7">Score parity PASS (Δ=3.0) · Structural insight 4.81/sample</text>
+
+  <!-- Arrow: analysis → Quick-Check -->
+  <line x1="615" y1="322" x2="615" y2="336" stroke="#a855f7" stroke-width="0.8" opacity="0.3" marker-end="url(#arrow-cyan)"/>
+
+  <!-- ==================== LEGEND ==================== -->
+  <rect x="40" y="400" width="280" height="58" rx="3" fill="#12121a" stroke="#2a2a3a" stroke-width="0.4"/>
+  <text x="52" y="416" fill="#8888a0" font-size="8" font-weight="bold">KEY</text>
+  <line x1="52" y1="430" x2="80" y2="430" stroke="#00ffa3" stroke-width="1.5" stroke-dasharray="6,3"/>
+  <text x="88" y="434" fill="#8888a0" font-size="7">Inbound CI (threat filter operates here)</text>
+  <line x1="52" y1="446" x2="80" y2="446" stroke="#ff4444" stroke-width="1.5" stroke-dasharray="6,3"/>
+  <text x="88" y="450" fill="#8888a0" font-size="7">Outbound CI (future scope)</text>
+
+  <!-- Classification badge -->
+  <rect x="28" y="464" width="64" height="12" rx="2" fill="none" stroke="#00ffa3" stroke-width="0.5" opacity="0.3"/>
+  <text x="60" y="473" fill="#00ffa3" font-size="7" text-anchor="middle" opacity="0.5">OPEN</text>
+  <text x="104" y="473" fill="#8888a0" font-size="7" opacity="0.4">SI Protocols · spiritualintelligence.dev</text>
+</svg>
