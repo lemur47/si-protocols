@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://spiritualintelligence.dev/sitemap-index.xml
