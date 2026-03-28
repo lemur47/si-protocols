@@ -83,10 +83,6 @@ Marker definitions are static word/phrase lists (frozenset for adjectives, lists
 
    `TopologyResult` frozen dataclass fields: `nodes`, `edges`, `variables` (all `tuple`), `pseudo_count`, `true_count`, `indeterminate_count`, `lang`, `engine_name`, `message`.
 
-## Git workflow
-
-- **GitHub Flow** — always create a `feature/*` branch, push, and open a PR. Never commit directly to `main`.
-
 ## Key conventions
 
 - **British English** in all docs and comments (e.g. "analyse", "colour", "licence")
