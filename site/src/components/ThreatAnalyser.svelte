@@ -4,23 +4,69 @@
   let loading = $state(false);
   let error = $state('');
 
-  // Lightweight client-side marker matching (no spaCy, no NLP)
-  // Subset of markers from src/si_protocols/markers.py
+  // Client-side marker matching — ported from src/si_protocols/markers.py
+  // Covers 4 of 7 dimensions (no sentence segmentation for escalation/contradiction/source)
   const VAGUE_ADJECTIVES = new Set([
-    'amazing', 'powerful', 'incredible', 'transformative', 'divine',
-    'sacred', 'cosmic', 'infinite', 'universal', 'profound',
-    'miraculous', 'enlightened', 'spiritual', 'mystical', 'blessed',
+    'ancient', 'ascended', 'celestial', 'cosmic', 'divine', 'eternal', 'hidden',
+    'ineffable', 'mysterious', 'sacred', 'secret', 'sovereign', 'transcendent',
+    'veiled', 'light', 'anointed', 'prophetic', 'vibrational', 'activated',
+    'suppressed', 'initiatory', 'esoteric',
   ]);
 
   const AUTHORITY_PHRASES = [
-    'ancient wisdom', 'the universe wants', 'spirit guides',
-    'higher self', 'divine plan', 'chosen ones', 'awakened souls',
-    'the masters teach', 'sacred knowledge', 'cosmic truth',
+    'the ascended masters say', 'channelled directly from',
+    'the galactic federation confirms', 'it has been revealed that',
+    'the akashic records show', 'ancient prophecy states',
+    'the council of light decrees', 'the galactic federation of light',
+    'ashtar speaks', 'saint germain speaks',
+    'god told me to tell you', 'the lord revealed to me',
+    'the holy spirit says', 'thus saith the lord',
+    'the angels have spoken', 'the elders have decreed',
+    'the grand master has spoken', 'the inner circle reveals',
+    'ancient wisdom teaches', 'the quantum field',
+    'higher dimensions reveal', 'the universe tells us',
+    'the cosmos has shown', 'spirit has revealed',
+    'the akashic field confirms', 'light beings communicate',
+    'the divine matrix', 'interdimensional beings say',
+    'star beings confirm', 'the crystalline grid',
+    'suppressed research shows', 'what they don\'t want you to know',
+    'forbidden knowledge', 'the truth they hide',
+    'scientists say', 'experts agree', 'studies show', 'research proves',
   ];
 
   const URGENCY_PATTERNS = [
-    'act now', 'limited time', 'don\'t miss', 'once in a lifetime',
-    'before it\'s too late', 'urgent', 'last chance', 'now or never',
+    'you must act now', 'time is running out', 'only the chosen will',
+    'if you do not awaken', 'the window is closing', 'failure to comply',
+    'sow your seed now', 'this is your moment of breakthrough',
+    'god is moving right now', 'limited spots remaining',
+    'enrolment closing soon', 'this offer expires', 'last chance to join',
+    'wake up before it\'s too late',
+  ];
+
+  const FEAR_WORDS = new Set([
+    'annihilation', 'calamity', 'catastrophe', 'collapse', 'damnation',
+    'despair', 'destruction', 'devastation', 'doom', 'peril', 'ruin',
+    'suffer', 'torment', 'tribulation', 'wrath', 'curse', 'bondage',
+    'plague', 'exile',
+  ]);
+
+  const FEAR_PHRASES = [
+    'old earth', 'generational curse', 'spirit of poverty', 'left behind',
+    'demonic attack', 'under spiritual attack', 'spiritual death',
+    'expelled from the order', 'oath-breaker',
+  ];
+
+  const EUPHORIA_WORDS = new Set([
+    'abundance', 'ascension', 'awakening', 'bliss', 'enlightenment',
+    'harmony', 'liberation', 'miracle', 'nirvana', 'paradise', 'rapture',
+    'rebirth', 'salvation', 'transcendence', 'utopia', 'prosperity',
+    'breakthrough', 'anointing', 'manifestation',
+  ]);
+
+  const EUPHORIA_PHRASES = [
+    'new earth', 'financial breakthrough', 'hundredfold return',
+    'name it and claim it', 'claim your blessing', 'activate your dna',
+    'quantum healing', 'raise your vibration',
   ];
 
   function clientScore(input) {
@@ -28,20 +74,44 @@
     const words = lower.split(/\s+/);
     const wordCount = words.length || 1;
 
-    // Vagueness: fraction of words that are vague adjectives
+    // Vagueness: fraction of words that are vague adjectives (scaled)
     const vagueCount = words.filter(w => VAGUE_ADJECTIVES.has(w)).length;
-    const vagueness = Math.min((vagueCount / wordCount) * 500, 100);
+    const vagueness = Math.min((vagueCount / wordCount) * 400, 100);
 
     // Authority: phrase matches
     const authorityCount = AUTHORITY_PHRASES.filter(p => lower.includes(p)).length;
-    const authority = Math.min(authorityCount * 20, 100);
+    const authority = Math.min(authorityCount * 18, 100);
 
     // Urgency: pattern matches
     const urgencyCount = URGENCY_PATTERNS.filter(p => lower.includes(p)).length;
-    const urgency = Math.min(urgencyCount * 25, 100);
+    const urgency = Math.min(urgencyCount * 22, 100);
 
-    const score = Math.round(vagueness * 0.4 + authority * 0.35 + urgency * 0.25);
-    return { score, dimensions: { vagueness: Math.round(vagueness), authority: Math.round(authority), urgency: Math.round(urgency) } };
+    // Emotion: fear + euphoria words/phrases, with contrast bonus
+    const fearWordCount = words.filter(w => FEAR_WORDS.has(w)).length;
+    const fearPhraseCount = FEAR_PHRASES.filter(p => lower.includes(p)).length;
+    const euphoriaWordCount = words.filter(w => EUPHORIA_WORDS.has(w)).length;
+    const euphoriaPhraseCount = EUPHORIA_PHRASES.filter(p => lower.includes(p)).length;
+    const fearTotal = fearWordCount + fearPhraseCount;
+    const euphoriaTotal = euphoriaWordCount + euphoriaPhraseCount;
+    let emotion = Math.min((fearTotal + euphoriaTotal) * 12, 80);
+    // Contrast bonus: both fear AND euphoria present is a strong manipulation signal
+    if (fearTotal > 0 && euphoriaTotal > 0) {
+      emotion = Math.min(emotion + 25, 100);
+    }
+
+    // Weighted composite: matches Python pipeline weights approximately
+    const score = Math.round(
+      vagueness * 0.17 + authority * 0.17 + urgency * 0.13 + emotion * 0.53
+    );
+    return {
+      score,
+      dimensions: {
+        vagueness: Math.round(vagueness),
+        authority: Math.round(authority),
+        urgency: Math.round(urgency),
+        emotion: Math.round(emotion),
+      },
+    };
   }
 
   async function tryApiAnalysis(input) {
