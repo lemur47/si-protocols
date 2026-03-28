@@ -9,6 +9,23 @@ interface Props {
 }
 
 const { title, description = 'Spiritual Intelligence — understanding why critical thinking matters in metaphysical and spiritual spaces.' } = Astro.props;
+
+const organizationSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'SI Protocols',
+  url: 'https://spiritualintelligence.cc',
+  sameAs: ['https://spiritualintelligence.dev'],
+  description: 'Understanding why critical thinking matters in metaphysical and spiritual spaces.',
+};
+
+const webSiteSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'Spiritual Intelligence',
+  url: 'https://spiritualintelligence.cc',
+  description,
+};
 ---
 
 <!doctype html>
@@ -19,6 +36,9 @@ const { title, description = 'Spiritual Intelligence — understanding why criti
     <meta name="description" content={description} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>{title} | Spiritual Intelligence</title>
+    <script type="application/ld+json" set:html={JSON.stringify(organizationSchema)} />
+    <script type="application/ld+json" set:html={JSON.stringify(webSiteSchema)} />
+    <slot name="head" />
   </head>
   <body>
     <Header />

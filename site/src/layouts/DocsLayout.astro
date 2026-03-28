@@ -11,9 +11,23 @@ const { title, description } = Astro.props;
 
 const allDocs = await getCollection('docs');
 const sortedDocs = allDocs.sort((a, b) => (a.data.order ?? 99) - (b.data.order ?? 99));
+
+const techArticleSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'TechArticle',
+  headline: title,
+  ...(description && { description }),
+  publisher: {
+    '@type': 'Organization',
+    name: 'SI Protocols',
+    url: 'https://spiritualintelligence.dev',
+  },
+  url: `https://spiritualintelligence.dev${Astro.url.pathname}`,
+};
 ---
 
 <BaseLayout title={title} description={description}>
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(techArticleSchema)} />
   <div class="docs-grid">
     <aside>
       <h3>Documentation</h3>

@@ -15,9 +15,25 @@ const formattedDate = date.toLocaleDateString('en-GB', {
   month: 'long',
   day: 'numeric',
 });
+
+const articleSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: title,
+  ...(description && { description }),
+  datePublished: date.toISOString(),
+  publisher: {
+    '@type': 'Organization',
+    name: 'SI Protocols',
+    url: 'https://spiritualintelligence.dev',
+  },
+  url: `https://spiritualintelligence.dev${Astro.url.pathname}`,
+  ...(tags.length > 0 && { keywords: tags.join(', ') }),
+};
 ---
 
 <BaseLayout title={title} description={description}>
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
   <article class="blog-post">
     <header class="post-header">
       <h1>{title}</h1>

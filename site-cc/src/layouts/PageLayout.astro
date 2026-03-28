@@ -9,9 +9,23 @@ interface Props {
 }
 
 const { title, description, prev, next } = Astro.props;
+
+const webPageSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: title,
+  ...(description && { description }),
+  publisher: {
+    '@type': 'Organization',
+    name: 'SI Protocols',
+    url: 'https://spiritualintelligence.cc',
+  },
+  url: `https://spiritualintelligence.cc${Astro.url.pathname}`,
+};
 ---
 
 <BaseLayout title={title} description={description}>
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(webPageSchema)} />
   <article class="page">
     <header class="page-header">
       <h1>{title}</h1>
