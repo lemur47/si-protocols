@@ -9,6 +9,23 @@ interface Props {
 }
 
 const { title, description = 'Cybersecurity for the soul — open-source tools to detect disinformation in spiritual content.' } = Astro.props;
+
+const organizationSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'SI Protocols',
+  url: 'https://spiritualintelligence.dev',
+  sameAs: ['https://spiritualintelligence.cc'],
+  description: 'Open-source tools to detect disinformation in spiritual content.',
+};
+
+const webSiteSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'Spiritual Intelligence',
+  url: 'https://spiritualintelligence.dev',
+  description,
+};
 ---
 
 <!doctype html>
@@ -19,6 +36,9 @@ const { title, description = 'Cybersecurity for the soul — open-source tools t
     <meta name="description" content={description} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>{title} | Spiritual Intelligence</title>
+    <script type="application/ld+json" set:html={JSON.stringify(organizationSchema)} />
+    <script type="application/ld+json" set:html={JSON.stringify(webSiteSchema)} />
+    <slot name="head" />
   </head>
   <body>
     <Header />
