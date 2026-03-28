@@ -1,0 +1,45 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ThreatAnalyser from '../components/ThreatAnalyser.svelte';
+---
+
+<BaseLayout title="Demo" description="Try the SI threat analysis in your browser — no install, no data collection.">
+  <div class="demo-page">
+    <h1>Threat Analysis Demo</h1>
+    <p class="intro">
+      Paste any spiritual or metaphysical text below to scan for manipulation patterns.
+      Analysis runs entirely in your browser — <strong>no data leaves your machine</strong>.
+    </p>
+    <p class="hint">
+      If you have <code>si-protocols</code> running locally on port 8000, the demo
+      will automatically use the full NLP pipeline instead of the lightweight browser scorer.
+    </p>
+    <ThreatAnalyser client:visible />
+  </div>
+</BaseLayout>
+
+<style>
+  .demo-page {
+    max-width: 720px;
+  }
+
+  .intro {
+    margin-bottom: 0.5rem;
+    color: var(--colour-text-muted);
+    font-size: 0.95rem;
+  }
+
+  .hint {
+    margin-bottom: 2rem;
+    font-size: 0.8rem;
+    color: var(--colour-text-muted);
+    opacity: 0.7;
+  }
+
+  .hint code {
+    background: var(--colour-surface-alt);
+    padding: 0.1em 0.3em;
+    border-radius: var(--radius);
+    font-size: 0.85em;
+  }
+</style>
