@@ -1,0 +1,40 @@
+version: 2
+updates:
+  # Python (uv.lock)
+  - package-ecosystem: pip
+    directory: /
+    schedule:
+      interval: weekly
+    assignees:
+      - lemur47
+    groups:
+      minor-and-patch:
+        update-types:
+          - minor
+          - patch
+
+  # npm — site/
+  - package-ecosystem: npm
+    directory: /site
+    schedule:
+      interval: weekly
+    assignees:
+      - lemur47
+    groups:
+      minor-and-patch:
+        update-types:
+          - minor
+          - patch
+
+  # npm — site-cc/
+  - package-ecosystem: npm
+    directory: /site-cc
+    schedule:
+      interval: weekly
+    assignees:
+      - lemur47
+    groups:
+      minor-and-patch:
+        update-types:
+          - minor
+          - patch

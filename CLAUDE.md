@@ -12,6 +12,7 @@ Hybrid tech-psychic protocols for **Spiritual Intelligence** — open-source too
 uv sync --all-extras                          # Install all deps
 uv pip install en_core_web_sm@https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.8.0/en_core_web_sm-3.8.0-py3-none-any.whl  # Required English NLP model
 uv pip install ja_core_news_sm@https://github.com/explosion/spacy-models/releases/download/ja_core_news_sm-3.8.0/ja_core_news_sm-3.8.0-py3-none-any.whl  # Required Japanese NLP model
+bash scripts/post-sync.sh                     # Reinstall spaCy models after uv sync --upgrade
 uv run pytest                                 # Run all tests
 uv run pytest tests/test_markers.py           # Run a single test file
 uv run pytest -k "test_deterministic"         # Run tests matching a name
