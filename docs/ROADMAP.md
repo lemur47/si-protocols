@@ -2,7 +2,8 @@
 
 What we're building and when. For strategic direction, positioning, IP model, and revenue sequence, see [STRATEGY.md](STRATEGY.md). For architectural reasoning, see [DESIGN.md](DESIGN.md).
 
-**Last synced from PMO:** 2026-03-25
+**Last synced from PMO:** 2026-03-28
+**Sprint cadence:** 1 week
 
 ---
 
@@ -28,10 +29,17 @@ Claude Skill with CVP ontology preamble. The Skill functions as an L6 static con
 
 ### Two-domain web presence
 
-Both sites live on Cloudflare Pages:
+Both sites live on Cloudflare Pages, deployed from the GitHub monorepo (`site/` and `site-cc/`):
 
-- **spiritualintelligence.dev** — [quickstart](https://spiritualintelligence.dev/docs/quickstart/), [library reference](https://spiritualintelligence.dev/docs/library/), [API reference](https://spiritualintelligence.dev/docs/api/), [architecture deep-dive](https://spiritualintelligence.dev/docs/architecture/) with three SI-branded SVG diagrams, [blog](https://spiritualintelligence.dev/blog/) (two posts)
-- **spiritualintelligence.cc** — seven educational pages covering threat modelling, common threats, the virtualisation model, egregores, misconceptions, cybersecurity/privacy
+- **spiritualintelligence.dev** — [quickstart](https://spiritualintelligence.dev/docs/quickstart/), [library reference](https://spiritualintelligence.dev/docs/library/), [API reference](https://spiritualintelligence.dev/docs/api/), [architecture deep-dive](https://spiritualintelligence.dev/docs/architecture/) with three SI-branded SVG diagrams, [blog](https://spiritualintelligence.dev/blog/) (five posts including [A/B evaluation](https://spiritualintelligence.dev/blog/ab-evaluation-quick-check-v02/))
+- **spiritualintelligence.cc** — eight educational pages covering threat modelling, common threats, the virtualisation model, egregores, misconceptions, cybersecurity/privacy, mapping claims and patterns, why SI matters
+- **Cross-site linking** — both sites link to each other with `sameAs` JSON-LD cross-references
+- **JSON-LD structured data** — Organization, WebSite, Article, TechArticle, and WebPage schemas across both sites
+
+### note.com presence
+
+- Two notes published; target cadence 2–3 notes/month
+- Japanese-language briefings in SAER format (状況→分析→評価→推奨)
 
 ### Infrastructure
 
@@ -39,28 +47,21 @@ Both sites live on Cloudflare Pages:
 - **Classification gate** — pre-commit hook preventing classified content from reaching public branches
 - **Airtable PMO** — Projects, Sprints, Work Items, Decisions, Documents
 - **17 pre-commit hooks** — ruff, pyright, pytest, opengrep, osv-scanner, gitleaks, Astro build checks
+- **Dependabot** — weekly automated dependency PRs for pip and npm (site/ and site-cc/)
 
 ---
 
 ## Phase 1: Foundation (Months 1–3)
 
-### note.com launch
+### In progress
 
-- Free briefings in SAER format (状況→分析→評価→推奨)
-- Audio briefing pilot: MP3/AAC uploads, voice-led delivery making rigorous analysis accessible (CEO-led)
-- Paid counterintelligence reports (subscription magazine)
+- **Web demo MVP** — architecture spike underway (Svelte + Astro integration path). Svelte interactive interface on .dev; paste text, see threat score with dimension breakdown; zero install, zero data collection; embeddable widget version for .cc
+- **note.com expansion** — audio briefing pilot: MP3/AAC uploads, voice-led delivery (CEO-led); paid counterintelligence reports (subscription magazine)
 
-### Content expansion
+### Remaining
 
-- **.cc** — expand educational pages
+- **.cc** — expand educational pages beyond initial eight
 - **.dev** — tutorial series, integration examples
-
-### Web demo MVP
-
-- Svelte + Astro interactive interface on .dev
-- Paste text, see threat score with dimension breakdown
-- Zero install, zero data collection
-- Embeddable widget version for .cc
 
 ---
 
@@ -77,7 +78,7 @@ Both sites live on Cloudflare Pages:
 
 - **.cc** — case studies, pattern library
 - **.dev** — tutorial series, integration examples
-- **note.com** — regular cadence, JA community narrative
+- **note.com** — maintain 2–3 notes/month cadence, expand JA community narrative
 
 ### Batch analysis
 
