@@ -83,10 +83,6 @@ Marker definitions are static word/phrase lists (frozenset for adjectives, lists
 
    `TopologyResult` frozen dataclass fields: `nodes`, `edges`, `variables` (all `tuple`), `pseudo_count`, `true_count`, `indeterminate_count`, `lang`, `engine_name`, `message`.
 
-## Git workflow
-
-- **GitHub Flow** — always create a `feature/*` branch, push, and open a PR. Never commit directly to `main`.
-
 ## Key conventions
 
 - **British English** in all docs and comments (e.g. "analyse", "colour", "licence")
@@ -102,3 +98,86 @@ Marker definitions are static word/phrase lists (frozenset for adjectives, lists
 - Topology types are frozen dataclasses with `tuple` (not `list`) for full immutability and hashability
 - `AnthropicEngine` requires the `anthropic` optional extra (`uv sync --extra anthropic`) and an `ANTHROPIC_API_KEY` environment variable
 - **Skills** live in `skills/` — standalone prompt files that encode the detection methodology for use in Claude Projects (claude.ai) without installing the Python toolkit. Each `.md` file has an installation header followed by a system prompt payload.
+
+## Airtable PMO Protocol
+
+### Connection details
+
+- **Base ID**: `appbBt8uBq6rpqvij` (workspace: `prog-si`)
+- **Work Items table**: `tbl5O0MvdYI90jvMO`
+- **Sprints table**: `tbl9xcHOPbryPcHj9`
+- **Decisions table**: `tblalYnSThlQIW1YP`
+- **Projects table**: `tbl6XzIi9qCrc4Unv`
+- **Documents table**: `tblItAfneSmUxHEhm`
+
+### Session boot sequence
+
+At the start of every session, check the Work Items table for items assigned to you:
+
+1. Query Work Items where **Status = "Spec Ready"** and **Assignee = "Claude Code"**
+2. Read the `## Spec` section in the **Notes** field for context, acceptance criteria, and constraints
+3. Check the **Attachments (Open only)** field for any files that accompany the spec (SVGs, markdown drafts, patches)
+4. Check **Priority** — work Critical items first, then High, then Medium, then Low
+5. Check **Blocked By** — skip items whose blockers are not yet Done
+
+### Execution workflow
+
+```
+Backlog → Spec Ready → In Progress → Review → Done
+                                 ↑              |
+                                 └── Rework ←───┘
+```
+
+When picking up a Spec Ready item:
+
+1. Set Status to **"In Progress"**
+2. Execute the work as described in `## Spec`
+3. Write results into `## Execution Log` in the Notes field — include PR numbers, test results, issues, and open questions
+4. When done, set Status to **"Review"**
+5. The CTO will review and write `## Review`. If changes are needed, Status goes to "Rework" (treat as Spec Ready with updated instructions). If accepted, Status goes to "Done"
+
+### Structured Notes Protocol
+
+The Notes field on every Work Item uses a three-section convention:
+
+```
+## Spec (CTO → Team)
+[Objective, acceptance criteria, constraints, classification gate reminders]
+
+## Execution Log (Team → CTO)
+[What was done, PR numbers, test results, issues, open questions]
+
+## Review (CTO)
+[Feedback, approval status, follow-up items]
+```
+
+Read `## Spec`. Write `## Execution Log`. Never modify `## Spec` or `## Review`.
+
+### Classification gate (CRITICAL)
+
+Internal/Classified documents must NEVER be pushed to remote branches. The `si-protocols` repo is public. ALL remote branches — including `feature/*` branches — are publicly visible and trigger Cloudflare Pages preview deployments.
+
+Rules:
+- Only **Open**-classified code and content goes to the public repo
+- Audit reports, strategy docs, and operational intelligence stay **local-only** (never `git push`)
+- Use `tmp/` (gitignored) for classified working files and handoffs
+- Long-term classified storage: R2 bucket `si-classified` (reference R2 keys in Notes, never upload classified content to Airtable)
+- The **Attachments (Open only)** field on Work Items is for Open-classified files only — Airtable stores attachments on its infrastructure, outside our data sovereignty boundary
+- The `scripts/classification-gate.py` pre-commit hook enforces this. Never bypass it.
+
+### Logging decisions
+
+If during execution you make a significant technical or architectural decision, log it in the **Decisions table** (`tblalYnSThlQIW1YP`) with:
+- **Title**: concise decision statement
+- **Status**: "Proposed" (CTO will accept/reject)
+- **Context**: why the decision was needed
+- **Decision**: what was decided and why
+- **Classification**: "Open" unless it reveals internal structure
+- **Sprint** and **Project** links
+
+### Git workflow reminder
+
+- Always create a `feature/*` branch. Never commit directly to `main`
+- Open a PR for review
+- All pre-commit hooks must pass before pushing
+- Include PR number in `## Execution Log`
