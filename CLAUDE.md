@@ -43,11 +43,20 @@ The topology CLI supports:
 ### Site (Astro)
 
 ```bash
-cd site && npm run dev           # Local dev server (.dev domain)
-cd site && npm run build         # Production build (.dev domain)
-cd site-cc && npm run dev        # Local dev server (.cc domain, port 3001)
-cd site-cc && npm run build      # Production build (.cc domain)
+cd site && npm ci && npm run dev           # Local dev server (.dev domain)
+cd site && npm ci && npm run build         # Production build (.dev domain)
+cd site-cc && npm ci && npm run dev        # Local dev server (.cc domain, port 3001)
+cd site-cc && npm ci && npm run build      # Production build (.cc domain)
 ```
+
+**npm supply-chain hardening** — Both `site/` and `site-cc/` include `.npmrc` with:
+- `save-exact=true` — pins exact versions, no floating `^`/`~` ranges
+- `ignore-scripts=true` — blocks postinstall hook attacks (the primary RAT delivery vector)
+- `package-lock=true` — enforces deterministic lockfile-based installs
+- `min-release-age=3` — 72-hour quarantine on newly published packages
+- `audit-level=moderate` — flags known CVEs at install time
+
+Always use `npm ci` (not `npm install`) to install from the lockfile exactly. If a new dependency requires lifecycle scripts (e.g. `sharp` native bindings), run `npm rebuild <package>` explicitly after install.
 
 ## Architecture
 
