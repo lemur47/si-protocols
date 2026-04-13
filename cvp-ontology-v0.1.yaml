@@ -2,7 +2,7 @@
 # CVP Ontology — Consciousness Virtualisation Platform
 # ===========================================================================
 #
-# Version:    0.1.0
+# Version:    0.1.1
 # Licence:    MIT
 # Scope:      Analytical (open fragment)
 # Maintainer: SI Protocols <https://spiritualintelligence.dev>
@@ -13,7 +13,7 @@
 # and structured analysis of spiritual/metaphysical content.
 #
 # WHAT IS INCLUDED:
-#   - Layer definitions (L1–L6) with infrastructure analogues
+#   - Layer definitions (L0–L6) with infrastructure analogues
 #   - Container type taxonomy (stateless vs stateful)
 #   - Threat pattern schemas (harvest loop, container trap)
 #   - Seven analysis dimensions with weights
@@ -35,14 +35,14 @@
 # ===========================================================================
 
 metadata:
-  version: "0.1.0"
+  version: "0.1.1"
   licence: "MIT"
   scope: "analytical"
   language: ["en", "ja"]
   maintained_by: "SI Protocols"
   canonical_url: "https://spiritualintelligence.dev/ontology/v0.1"
   repository: "https://github.com/lemur47/si-protocols"
-  last_updated: "2026-03-18"
+  last_updated: "2026-04-13"
 
 # ---------------------------------------------------------------------------
 # 1. LAYER ARCHITECTURE
@@ -54,6 +54,19 @@ metadata:
 # ---------------------------------------------------------------------------
 
 layers:
+  L0:
+    name: "Active Substrate"
+    name_ja: "真宇宙"
+    infrastructure_analogue: "Hypervisor / cloud provider"
+    description: >
+      The meta-universe from which the orchestrator was deliberately
+      instantiated. Read-only from the perspective of L1–L6. This is
+      the consciousness layer — distinct from the mind stack (L1–L6).
+      Kojiki mapping: 高天原 (Takamagahara). Sephiroth mapping: above Keter.
+    failure_modes:
+      - "Not applicable — L0 is not modifiable from within the stack"
+    access: "read-only"
+
   L1:
     name: "Bare Metal"
     name_ja: "物理体"
