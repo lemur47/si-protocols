@@ -30,7 +30,7 @@ dev = [
     "ruff>=0.9",
 
     "pre-commit>=4.0",
-    "httpx>=0.28",
+    "httpx>=0.28.1",
 ]
 api = [
     "fastapi>=0.115",
