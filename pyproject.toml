@@ -34,7 +34,7 @@ dev = [
 ]
 api = [
     "fastapi>=0.135.3",
-    "uvicorn[standard]>=0.34",
+    "uvicorn[standard]>=0.44.0",
 ]
 anthropic = [
     "anthropic>=0.40",
