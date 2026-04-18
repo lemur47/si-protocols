@@ -54,6 +54,7 @@ site-cc/.astro/
 
 # Claude Code
 .claude/settings.local.json
+CLAUDE-internal.md
 
 # OS files
 .DS_Store
