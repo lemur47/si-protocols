@@ -10,8 +10,3 @@
 [[IgnoredVulns]]
 id = "GHSA-5239-wwwm-4pmq"
 reason = "Low-severity pygments issue (CVSS 3.3), no fix available upstream"
-
-[[IgnoredVulns]]
-id = "GHSA-6w46-j5rx-g56g"
-ignoreUntil = 2026-04-21
-reason = "Temporary ignore — pytest 9.0.2 → 9.0.3 handled in companion PR B (feature/pytest-cve-bump). PR A (chore/uv-lock-refresh) cannot bump pytest without reintroducing the 4-package constraint-satisfaction drift. PR B removes this entry. CTO-approved sequence (Pre-Sprint 4 pytest CVE WI, 18 Apr)."
