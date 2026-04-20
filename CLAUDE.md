@@ -4,190 +4,114 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What is this?
 
-Hybrid tech-psychic protocols for **Spiritual Intelligence** — open-source tools to detect disinformation in metaphysical/spiritual content. Think "cybersecurity for the soul". Local-only tool; never host/collect/analyse third-party content.
+Hybrid tech-psychic protocols for **Spiritual Intelligence** — open-source tools to detect disinformation in metaphysical and spiritual content. Think "cybersecurity for the soul". Local-only tool; never host, collect, or analyse third-party content.
 
 ## Dev commands
 
 ```bash
-uv sync --all-extras                          # Install all deps
-uv pip install en_core_web_sm@https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.8.0/en_core_web_sm-3.8.0-py3-none-any.whl  # Required English NLP model
-uv pip install ja_core_news_sm@https://github.com/explosion/spacy-models/releases/download/ja_core_news_sm-3.8.0/ja_core_news_sm-3.8.0-py3-none-any.whl  # Required Japanese NLP model
-bash scripts/post-sync.sh                     # Reinstall spaCy models after uv sync --upgrade
-uv run pytest                                 # Run all tests
-uv run pytest tests/test_markers.py           # Run a single test file
-uv run pytest -k "test_deterministic"         # Run tests matching a name
-uv run pytest -m "not slow"                   # Skip slow tests (spaCy-dependent)
-uv run ruff check src/ tests/ app/             # Lint (CI also lints tests/)
-uv run ruff format src/ tests/ app/           # Format
-uv run pyright                                # Type check
-opengrep scan --config auto --error src/ app/  # SAST scan
-osv-scanner scan source --config=osv-scanner.toml --recursive .  # Dependency vulnerability scan
-pre-commit run --all-files                    # Run all hooks (lint, format, gitleaks, opengrep, osv-scanner, pytest)
-uvicorn app.main:app --host 127.0.0.1 --port 8000  # Run API server (local-only)
+uv sync --all-extras                                # Install all deps
+bash scripts/post-sync.sh                           # (Re)install required spaCy models
+uv run pytest                                       # Run all tests
+uv run pytest tests/test_markers.py                 # Run a single test file
+uv run pytest -k "test_deterministic"               # Run tests matching a name
+uv run pytest -m "not slow"                         # Skip slow tests (spaCy-dependent)
+uv run ruff check src/ tests/ app/                  # Lint
+uv run ruff format src/ tests/ app/                 # Format
+uv run pyright                                      # Type check
+opengrep scan --config auto --error src/ app/       # SAST scan
+osv-scanner scan source --config=osv-scanner.toml --recursive .  # Dep vuln scan
+pre-commit run --all-files                          # Run all hooks
+uvicorn app.main:app --host 127.0.0.1 --port 8000   # Local API server
 ```
 
-CLI entry point: `uv run si-threat-filter examples/synthetic_suspicious.txt`
+### CLI entry points
 
-The CLI supports:
-- `--format rich` (default, colour-coded) and `--format json` (machine-readable). Rich output respects the `NO_COLOR` env var automatically.
-- `--lang en` (default) or `--lang ja` for Japanese language analysis.
+- `uv run si-threat-filter examples/synthetic_suspicious.txt` — threat filter. Flags: `--format rich|json`, `--lang en|ja`.
+- `uv run si-topology examples/synthetic_topology_suspicious.txt` — topology analysis. Flags: `--engine rule|anthropic`, `--format svg|json`, `--lang en|ja`, `-o OUTPUT`.
 
-Topology CLI entry point: `uv run si-topology examples/synthetic_topology_suspicious.txt`
+Rich output respects the `NO_COLOR` env var. `AnthropicEngine` requires the `anthropic` optional extra (`uv sync --extra anthropic`) and an `ANTHROPIC_API_KEY` environment variable.
 
-The topology CLI supports:
-- `--engine rule` (default, local spaCy) or `--engine anthropic` (Claude API, requires `anthropic` extra and `ANTHROPIC_API_KEY`)
-- `--format svg` (default) or `--format json`
-- `--lang en` (default) or `--lang ja`
-- `-o OUTPUT` to specify output file path (default: `<input>.topology.svg` for SVG, stdout for JSON)
-
-### Site (Astro)
+### Astro sites
 
 ```bash
-cd site && npm ci && npm run dev           # Local dev server (.dev domain)
-cd site && npm ci && npm run build         # Production build (.dev domain)
-cd site-cc && npm ci && npm run dev        # Local dev server (.cc domain, port 3001)
-cd site-cc && npm ci && npm run build      # Production build (.cc domain)
+cd site && npm run dev       # .dev domain local dev
+cd site && npm run build     # .dev production build
+cd site-cc && npm run dev    # .cc domain local dev (port 3001)
+cd site-cc && npm run build  # .cc production build
 ```
-
-**npm supply-chain hardening** — Both `site/` and `site-cc/` include `.npmrc` with:
-- `save-exact=true` — pins exact versions, no floating `^`/`~` ranges
-- `ignore-scripts=true` — blocks postinstall hook attacks (the primary RAT delivery vector)
-- `package-lock=true` — enforces deterministic lockfile-based installs
-- `min-release-age=3` — 72-hour quarantine on newly published packages
-- `audit-level=moderate` — flags known CVEs at install time
-
-Always use `npm ci` (not `npm install`) to install from the lockfile exactly. If a new dependency requires lifecycle scripts (e.g. `sharp` native bindings), run `npm rebuild <package>` explicitly after install.
 
 ## Architecture
 
-The threat filter produces a 0–100 score by combining two analysis layers. The pipeline is **multi-language**: a `lang` parameter (`"en"` | `"ja"`, default `"en"`) flows through the CLI, API, and core library. Each language has its own spaCy model and marker set.
+The threat filter produces a 0–100 score combining two analysis layers:
 
-### Multi-language support
+1. **Tech layer** (60%) — NLP marker matching in `src/si_protocols/threat_filter.py` using spaCy pipelines.
+2. **Heuristic layer** (40%) — probabilistic dissonance scanner (placeholder for future biofeedback integration).
 
-- **Marker registry** (`marker_registry.py`) — `MarkerSet` frozen dataclass bundles all 12 marker categories. `get_markers(lang)` dispatches to the correct language module with lazy loading and caching.
-- **English markers** (`markers.py`) — original marker definitions (unchanged).
-- **Japanese markers** (`markers_ja.py`) — culturally adapted markers for Japanese spiritual contexts (スピリチュアル, 霊感商法, カルト, etc.).
-- **NLP models** — `_nlp_cache` dict in `threat_filter.py` lazily loads the appropriate spaCy model per language: `en_core_web_sm` for English, `ja_core_news_sm` for Japanese.
+Core entry point: `hybrid_score(text, lang="en")` returning a `ThreatResult` frozen dataclass. spaCy models are lazy-loaded via `_get_nlp(lang)` to avoid import-time side effects in tests; NLP-exercising tests are marked `@pytest.mark.slow`.
 
-### Analysis pipeline
+The topology module (`src/si_protocols/topology/`) extracts claims, classifies them along four axes (falsifiability, verifiability, domain coherence, logical dependency), and builds a layered graph. Claims are assigned a `VariableKind` (`PSEUDO`, `TRUE`, `INDETERMINATE`) and placed at one of three `TopologyLevel`s (`MACRO`, `MESO`, `MICRO`). Three engine tiers implement the `AnalysisEngine` protocol:
 
-1. **Tech layer** (`threat_filter.py:tech_analysis`) — spaCy NLP pipeline that scores text across seven dimensions: vagueness (adjective density against `markers.vague_adjectives`), authority claims (phrase matching against `markers.authority_phrases`), urgency/fear patterns (`markers.urgency_patterns`), emotional manipulation (lemma-based matching against `markers.fear_words` and `markers.euphoria_words` with a contrast bonus when both polarities appear), logical contradictions (detecting when both poles of `markers.contradiction_pairs` appear in the same text — e.g. empowerment alongside dependency), source attribution analysis (detecting unfalsifiable sources via `markers.unfalsifiable_source_phrases`, unnamed authorities via `markers.unnamed_authority_phrases`, offset by verifiable citations via `markers.verifiable_citation_markers`), and commitment escalation (detecting foot-in-the-door progression via `markers.commitment_escalation_markers` — splits text into thirds using spaCy sentence boundaries and measures whether tiered commitment intensity increases from early to late segments). Weighted composite: 17% vagueness + 17% authority + 13% urgency + 13% emotion + 13% contradiction + 13% source attribution + 14% escalation.
+- **Tier 0 `RuleEngine`** — deterministic, local spaCy + markers
+- **Tier 1 `AnthropicEngine`** — Claude API-based extraction
+- **Tier 2 `OllamaEngine`** — stub for future local-LLM integration
 
-2. **Heuristic layer** (`threat_filter.py:psychic_heuristic`) — probabilistic dissonance scanner using `random.Random` (intentional — placeholder for future biofeedback integration). Accepts a `seed` param for deterministic testing.
+Output: `TopologyResult` frozen dataclass. `render_svg(result)` / `save_svg(result, path)` produce intelligence-themed SVGs; `render_topology_json(result)` serialises to JSON.
 
-3. **Hybrid scoring** (`threat_filter.py:hybrid_score`) — combines the two: 60% tech + 40% heuristic. Returns a `ThreatResult` frozen dataclass. Accepts `lang` keyword-only param.
+For full architectural reasoning, see [`docs/DESIGN.md`](docs/DESIGN.md).
 
-The spaCy models are lazy-loaded via `_get_nlp(lang)` to avoid import-time side effects in tests. Tests that exercise the NLP pipeline are marked `@pytest.mark.slow`.
+## Project layout
 
-4. **Output formatting** (`output.py`) — `render_rich()` produces colour-coded terminal output (green/yellow/red by threat level) with Rich panels and tables; `render_json()` emits `dataclasses.asdict()` as indented JSON. The `_threat_style()` helper maps score bands: 0-33 green, 34-66 yellow, 67-100 red bold. Output is language-agnostic — it renders whatever strings are in the ThreatResult.
-
-`ThreatResult` frozen dataclass fields: `overall_threat_score`, `tech_contribution`, `intuition_contribution`, `detected_entities`, `authority_hits`, `urgency_hits`, `emotion_hits`, `contradiction_hits`, `source_attribution_hits`, `escalation_hits`, `message`.
-
-5. **REST API** (`app/main.py`) — FastAPI application providing `POST /analyse` (wraps `hybrid_score()`) and `GET /health`. The `app/` package is a dev/deployment artifact separate from the core library — it is not included in the wheel. Pydantic request/response schemas live in `app/schemas.py`. The `/analyse` endpoint accepts a `lang` field (`"en"` | `"ja"`, default `"en"`). The endpoint is a sync `def` so FastAPI runs CPU-bound spaCy work in a thread pool. Run with `uvicorn app.main:app` on `127.0.0.1:8000` (local-only).
-
-Marker definitions are static word/phrase lists (frozenset for adjectives, lists for phrases/patterns). English markers must be lowercase; Japanese markers use standard full-width forms. Markers span tradition-specific categories: generic New Age / スピリチュアル, prosperity gospel / 繁栄の福音, conspirituality / 陰謀論スピ, commercial exploitation / 霊感商法, high-demand group (cult) / カルト, and fraternal/secret society / 秘密結社 traditions.
-
-6. **Topology module** (`topology/`) — fractal-topology analysis that extracts claims from text, classifies them along four axes, and builds a layered graph. Variables (claims) are classified by `VariableClassification`: `falsifiability` (0.0 testable → 1.0 unfalsifiable), `verifiability` (0.0 has sources → 1.0 no checkable sources), `domain_coherence` (0.0 stays in domain → 1.0 crosses domains), and `logical_dependency` (0.0 load-bearing → 1.0 decorative/emotive). Each variable is then assigned a `VariableKind`: `PSEUDO` (mean ≥ 0.4 or single axis ≥ 0.5), `TRUE` (mean ≤ 0.15), or `INDETERMINATE`. Variables are placed at three `TopologyLevel`s: `MACRO` (whole-text summary), `MESO` (kind-group summaries), and `MICRO` (individual claims).
-
-   Three engine tiers implement the `AnalysisEngine` protocol: **Tier 0 `RuleEngine`** — local, deterministic, uses spaCy + marker heuristics; **Tier 1 `AnthropicEngine`** — Claude API-based extraction (requires `anthropic` optional extra and `ANTHROPIC_API_KEY`); **Tier 2 `OllamaEngine`** — stub for future local-LLM integration. Key functions: `engine.extract_variables(text, lang=...)` extracts and classifies variables; `build_topology(variables, lang=..., engine_name=...)` constructs the layered graph with nodes, edges, and layout coordinates; `render_svg(result)` / `save_svg(result, path)` produce intelligence-themed SVG visualisations; `render_topology_json(result)` serialises to JSON.
-
-   `TopologyResult` frozen dataclass fields: `nodes`, `edges`, `variables` (all `tuple`), `pseudo_count`, `true_count`, `indeterminate_count`, `lang`, `engine_name`, `message`.
+```
+src/si_protocols/
+  threat_filter.py    # Hybrid NLP + heuristic scorer
+  markers.py          # Disinformation marker definitions
+  marker_registry.py  # Multi-language marker loader
+  output.py           # Rich and JSON output formatting
+  topology/           # Fractal-topology claim analysis
+app/
+  main.py             # FastAPI REST API (POST /analyse, GET /health)
+  schemas.py          # Pydantic request/response models
+skills/               # Claude Project skills (zero-install analysis)
+site/                 # Astro docs (.dev)
+site-cc/              # Astro docs (.cc)
+scripts/              # Ops scripts incl. classification-gate.py
+tests/                # pytest suite
+examples/             # Synthetic sample texts (never real material)
+docs/                 # STRATEGY.md, DESIGN.md, STACK.md, ROADMAP.md
+```
 
 ## Key conventions
 
 - **British English** in all docs and comments (e.g. "analyse", "colour", "licence")
 - **src layout** — all library code under `src/si_protocols/`
-- **`requires-python = ">=3.12"`** — dev on 3.13, CI tests 3.12 + 3.13. spaCy does not yet support 3.14
+- **`requires-python = ">=3.12"`** — dev on 3.13, CI tests 3.12 + 3.13. spaCy does not yet support 3.14.
 - **Synthetic examples only** — no real channelled material in repo
 - `random` usage in heuristic layer is intentional — `S311` suppressed in ruff config
-- Ruff line length: 99. Ruff rules include isort (`I`), pyupgrade (`UP`), bugbear (`B`), bandit (`S`)
-- Pre-commit hooks run ruff, gitleaks, opengrep, osv-scanner, and pytest on every commit
-- Coverage threshold: 70% (`fail_under` in pyproject.toml)
-- Adding a new language requires: a `markers_<lang>.py` file, a loader in `marker_registry.py`, a model entry in `_LANG_MODELS`, and the `SupportedLang` Literal updated
-- Topology module lives in `src/si_protocols/topology/` with its own NLP cache (independent from `threat_filter.py`)
+- Ruff line length: 99. Rules include isort (`I`), pyupgrade (`UP`), bugbear (`B`), bandit (`S`)
+- Pre-commit hooks: ruff, gitleaks, opengrep, osv-scanner, classification-gate.py, pytest
+- Coverage threshold: 70% (`fail_under` in `pyproject.toml`)
 - Topology types are frozen dataclasses with `tuple` (not `list`) for full immutability and hashability
-- `AnthropicEngine` requires the `anthropic` optional extra (`uv sync --extra anthropic`) and an `ANTHROPIC_API_KEY` environment variable
-- **Skills** live in `skills/` — standalone prompt files that encode the detection methodology for use in Claude Projects (claude.ai) without installing the Python toolkit. Each `.md` file has an installation header followed by a system prompt payload.
+- Adding a new language: a `markers_<lang>.py` file, a loader in `marker_registry.py`, a model entry in `_LANG_MODELS`, and the `SupportedLang` Literal updated
+- Skills in `skills/` are standalone prompt files encoding the detection methodology for use in Claude Projects (claude.ai) without installing the Python toolkit
 
-## Airtable PMO Protocol
+## Classification & git workflow
 
-### Connection details
+The `si-protocols` repo is **public**. All remote branches (including `feature/*`) are publicly visible and trigger Cloudflare Pages preview deployments.
 
-- **Base ID**: `appbBt8uBq6rpqvij` (workspace: `prog-si`)
-- **Work Items table**: `tbl5O0MvdYI90jvMO`
-- **Sprints table**: `tbl9xcHOPbryPcHj9`
-- **Decisions table**: `tblalYnSThlQIW1YP`
-- **Projects table**: `tbl6XzIi9qCrc4Unv`
-- **Documents table**: `tblItAfneSmUxHEhm`
+- Only **Open**-classified content goes to remote. Internal and Classified docs stay local — never `git push`.
+- Use `tmp/` (gitignored) for classified working files and handoffs.
+- The `scripts/classification-gate.py` pre-commit hook enforces this — never bypass it.
+- Always work on a `feature/*` branch; open a PR for review; all pre-commit hooks must pass before pushing.
 
-### Session boot sequence
+**PMO operations** (Airtable protocol, sprints, work items, firing pin drills, capacity anchor reviews, decision logging, trust-boundary config) live in `CLAUDE-internal.md` — operator-local, gitignored, populated from CTO handoff.
 
-At the start of every session, check the Work Items table for items assigned to you:
+## Docs map
 
-1. Query Work Items where **Status = "Spec Ready"** and **Assignee = "Claude Code"**
-2. Read the `## Spec` section in the **Notes** field for context, acceptance criteria, and constraints
-3. Check the **Attachments (Open only)** field for any files that accompany the spec (SVGs, markdown drafts, patches)
-4. Check **Priority** — work Critical items first, then High, then Medium, then Low
-5. Check **Blocked By** — skip items whose blockers are not yet Done
+- [`docs/STRATEGY.md`](docs/STRATEGY.md) — strategic *why*
+- [`docs/DESIGN.md`](docs/DESIGN.md) — architectural *why*
+- [`docs/STACK.md`](docs/STACK.md) — technical *what*
+- [`docs/ROADMAP.md`](docs/ROADMAP.md) — *when* things land
 
-### Execution workflow
+## Licence
 
-```
-Backlog → Spec Ready → In Progress → Review → Done
-                                 ↑              |
-                                 └── Rework ←───┘
-```
-
-When picking up a Spec Ready item:
-
-1. Set Status to **"In Progress"**
-2. Execute the work as described in `## Spec`
-3. Write results into `## Execution Log` in the Notes field — include PR numbers, test results, issues, and open questions
-4. When done, set Status to **"Review"**
-5. The CTO will review and write `## Review`. If changes are needed, Status goes to "Rework" (treat as Spec Ready with updated instructions). If accepted, Status goes to "Done"
-
-### Structured Notes Protocol
-
-The Notes field on every Work Item uses a three-section convention:
-
-```
-## Spec (CTO → Team)
-[Objective, acceptance criteria, constraints, classification gate reminders]
-
-## Execution Log (Team → CTO)
-[What was done, PR numbers, test results, issues, open questions]
-
-## Review (CTO)
-[Feedback, approval status, follow-up items]
-```
-
-Read `## Spec`. Write `## Execution Log`. Never modify `## Spec` or `## Review`.
-
-### Classification gate (CRITICAL)
-
-Internal/Classified documents must NEVER be pushed to remote branches. The `si-protocols` repo is public. ALL remote branches — including `feature/*` branches — are publicly visible and trigger Cloudflare Pages preview deployments.
-
-Rules:
-- Only **Open**-classified code and content goes to the public repo
-- Audit reports, strategy docs, and operational intelligence stay **local-only** (never `git push`)
-- Use `tmp/` (gitignored) for classified working files and handoffs
-- Long-term classified storage: R2 bucket `si-classified` (reference R2 keys in Notes, never upload classified content to Airtable)
-- The **Attachments (Open only)** field on Work Items is for Open-classified files only — Airtable stores attachments on its infrastructure, outside our data sovereignty boundary
-- The `scripts/classification-gate.py` pre-commit hook enforces this. Never bypass it.
-
-### Logging decisions
-
-If during execution you make a significant technical or architectural decision, log it in the **Decisions table** (`tblalYnSThlQIW1YP`) with:
-- **Title**: concise decision statement
-- **Status**: "Proposed" (CTO will accept/reject)
-- **Context**: why the decision was needed
-- **Decision**: what was decided and why
-- **Classification**: "Open" unless it reveals internal structure
-- **Sprint** and **Project** links
-
-### Git workflow reminder
-
-- Always create a `feature/*` branch. Never commit directly to `main`
-- Open a PR for review
-- All pre-commit hooks must pass before pushing
-- Include PR number in `## Execution Log`
+MIT

@@ -35,6 +35,25 @@ CLASSIFICATION_MARKERS: list[re.Pattern[str]] = [
     re.compile(r"分類:\s*(内部|機密)", re.IGNORECASE),  # Japanese equivalents
 ]
 
+# Airtable identifier patterns — 3-char prefix + 14 alphanumerics.
+# These belong in CLAUDE-internal.md (gitignored) or R2, never the public repo.
+AIRTABLE_ID_PATTERNS: list[re.Pattern[str]] = [
+    re.compile(r"\bapp[A-Za-z0-9]{14}\b"),
+    re.compile(r"\btbl[A-Za-z0-9]{14}\b"),
+    re.compile(r"\brec[A-Za-z0-9]{14}\b"),
+    re.compile(r"\bfld[A-Za-z0-9]{14}\b"),
+]
+
+# Directories exempted from the Airtable ID content check.
+# tmp/ is gitignored; the others are blocked outright by SENSITIVE_DIR_PATTERNS
+# but are listed here for defence-in-depth and documentation clarity.
+AIRTABLE_ID_ALLOWLISTED_DIRS: tuple[str, ...] = (
+    "tmp/",
+    "local-only/",
+    "classified/",
+    ".secrets/",
+)
+
 # Filename patterns that should never appear in the public repo
 SENSITIVE_FILENAME_PATTERNS: list[re.Pattern[str]] = [
     re.compile(r"audit[-_]report", re.IGNORECASE),
@@ -126,6 +145,36 @@ def check_content(filepath: str) -> str | None:
     return None
 
 
+def check_airtable_ids(filepath: str) -> str | None:
+    """Scan for Airtable identifier leakage in public-path files."""
+    for allowed in AIRTABLE_ID_ALLOWLISTED_DIRS:
+        if filepath.startswith(allowed):
+            return None
+
+    path = Path(filepath)
+
+    if path.suffix.lower() not in SCANNABLE_EXTENSIONS:
+        return None
+
+    if not path.exists():
+        return None
+
+    if path.stat().st_size > MAX_SCAN_SIZE:
+        return None
+
+    try:
+        content = path.read_text(encoding="utf-8")
+    except (UnicodeDecodeError, OSError):
+        return None
+
+    for pattern in AIRTABLE_ID_PATTERNS:
+        match = pattern.search(content)
+        if match:
+            return f"Airtable identifier leaked: {match.group(0)}"
+
+    return None
+
+
 def main() -> int:
     """Run the classification gate. Returns 0 if clear, 1 if blocked."""
     staged = get_staged_files()
@@ -148,8 +197,14 @@ def main() -> int:
             violations.append((filepath, reason))
             continue
 
-        # Check content
+        # Check content for classification markers
         reason = check_content(filepath)
+        if reason:
+            violations.append((filepath, reason))
+            continue
+
+        # Check for Airtable identifier leakage (scoped to public paths)
+        reason = check_airtable_ids(filepath)
         if reason:
             violations.append((filepath, reason))
 
