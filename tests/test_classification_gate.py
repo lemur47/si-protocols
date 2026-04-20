@@ -120,11 +120,11 @@ class TestAirtableIdDetection:
     def test_angle_bracket_placeholders_not_blocked(
         self, gate: ModuleType, tmp_path: Path, monkeypatch: pytest.MonkeyPatch
     ) -> None:
-        """Template placeholders like ``app<14-char-id>`` must pass through."""
+        """Angle-bracket placeholders like ``app<14-char-id>`` must pass through."""
         monkeypatch.chdir(tmp_path)
         body = "Base ID: `app<14-char-id>` Work Items: `tbl<14-char-id>`\n"
-        _write(tmp_path / "CLAUDE-internal.md.template", body)
-        assert gate.check_airtable_ids("CLAUDE-internal.md.template") is None
+        _write(tmp_path / "placeholders.md", body)
+        assert gate.check_airtable_ids("placeholders.md") is None
 
     def test_non_scannable_extension_skipped(
         self, gate: ModuleType, tmp_path: Path, monkeypatch: pytest.MonkeyPatch
