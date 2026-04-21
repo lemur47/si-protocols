@@ -83,6 +83,8 @@ osv-scanner scan source --config=osv-scanner.toml --recursive .  # Dependency vu
 
 - [`CLAUDE.md`](CLAUDE.md) — Commands, architecture details, code style conventions
 - [`docs/STRATEGY.md`](docs/STRATEGY.md) — Mission, audience, two-domain and two-channel strategy, roadmap overview
+- [`docs/DESIGN.md`](docs/DESIGN.md) — Architectural reasoning: design philosophy, CVP layer model, engine and topology architecture
+- [`docs/STACK.md`](docs/STACK.md) — Technical map: runtime, infrastructure, AI/LLM layer, CI & security, content distribution
 - [`docs/ROADMAP.md`](docs/ROADMAP.md) — Mid-term plan: topology roadmap, two-domain web presence, web demo, Chrome extension, note.com launch
 
 ## Disclaimer
