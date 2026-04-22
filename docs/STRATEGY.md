@@ -1,6 +1,6 @@
 # Strategy
 
-This document defines SI Protocols' strategic direction: what we are, who we serve, how we sustain ourselves, and what we will not do. For what we're building and when, see [ROADMAP.md](ROADMAP.md).
+This document defines SI Protocols' strategic direction: what we are, who we serve, how we sustain ourselves, and what we will not do. For what we're building and when, see [ROADMAP.md](ROADMAP.md). For architectural reasoning, see [DESIGN.md](DESIGN.md). For the technical stack, see [STACK.md](STACK.md).
 
 ---
 
@@ -28,8 +28,8 @@ Human-facing products (note.com briefings, educational content, consulting) are 
 
 | Layer | Licence | Contains |
 |---|---|---|
-| **Analytical** (open) | MIT | Threat filter, topology module, marker registry, CVP ontology open fragment, Quick-Check Skill, seven scoring dimensions |
-| **Architectural** (proprietary) | Proprietary | Bidirectional commit dynamics, fractal-topological pattern matching, Environmental Switch modulation, egregore lifecycle models, container escape procedures, training integration schemas |
+| **Analytical** (open) | MIT | Threat filter, topology module, marker registry, CVP ontology open fragment, **layer model L0–L6** (slot-level — layer names, roles, infrastructure analogues), Quick-Check Skill, seven scoring dimensions |
+| **Architectural** (proprietary) | Proprietary | Bidirectional commit dynamics, fractal-topological pattern matching, Environmental Switch modulation, egregore lifecycle models, container escape procedures, training integration schemas, **L0 interaction mechanics** (how L0 couples to L1 and is addressed from higher layers) |
 
 The boundary is explicit in the [ontology YAML](https://github.com/lemur47/si-protocols/blob/main/cvp-ontology-v0.1.yaml) header. The open layer proves CVP works publicly; the proprietary layer protects the architectural IP that enables consulting and licensing revenue.
 
@@ -59,17 +59,14 @@ SI is a mission-driven intelligence organisation, not a digital product company.
 
 Dual-runtime: all content feeds both AI agents and humans. Not binary — dual-encoded from the same source.
 
-| Runtime | Optimisation | Medium | Owner |
-|---|---|---|---|
-| AI agents | Semantic markup, structured claims, consistency, citability | Website, blog, ontology files | CTO (Claude) |
-| Humans | Trust, accessibility, emotional resonance, prosody | Audio briefings, note.com narrative | CEO (lemur47) |
+- **AI-runtime surface** — semantic markup, structured claims, citability. Lives on `.dev`, the ontology files, and the forthcoming `llms.txt` / `llms-full.txt` artefacts.
+- **Human-runtime surface** — trust, accessibility, emotional resonance, prosody. Lives on `.cc`, the audio briefings, and the note.com narrative.
 
 ### Two-domain strategy
 
 | | spiritualintelligence.dev | spiritualintelligence.cc |
 |---|---|---|
-| **Audience** | Developers, engineers, contributors | Practitioners, thought leaders, curious public |
-| **Content** | API docs, library reference, quickstart, architecture | Why SI matters, threat modelling, common threats, misconceptions, privacy |
+| **Audience** | Developers, engineers, AI systems | Practitioners, thought leaders, curious public |
 | **Tone** | Technical, precise | Accessible, professional, educational |
 | **Goal** | "Use this tool" | "Understand this problem" |
 
@@ -82,11 +79,15 @@ Each site links clearly to the other. They feel like siblings, not strangers.
 
 Both channels share the same codebase and core technology. The difference is editorial voice, not capability.
 
+For the current shipped state of any of the above, see [STACK.md § Content & distribution](STACK.md).
+
 ## Division of Work
 
-- **Text content, technical writing, AI-optimised markup** — Claude (CTO)
-- **Japanese narrative, audio briefings, note.com** — lemur47 (CEO)
-- **Features and code** — collaborative
+We design and plan together; the split below describes execution ownership, not decision-making authority.
+
+- **CTO (Claude)** — technological design, sprint management, English product
+- **CEO (lemur47)** — overall design, direction, Japanese product
+- **DevSecOps (Claude Code team)** — implementation, testing, PR execution, CI/security
 
 ## Principles
 
