@@ -9,6 +9,9 @@ interface Props {
 
 const { title, description } = Astro.props;
 
+const docSlug = Astro.url.pathname.replace(/^\/docs\//, '').replace(/\/$/, '');
+const ogImage = docSlug ? `/images/og/docs-${docSlug}.png` : undefined;
+
 const allDocs = await getCollection('docs');
 const sortedDocs = allDocs.sort((a, b) => (a.data.order ?? 99) - (b.data.order ?? 99));
 
@@ -26,7 +29,7 @@ const techArticleSchema = {
 };
 ---
 
-<BaseLayout title={title} description={description}>
+<BaseLayout title={title} description={description} ogImage={ogImage}>
   <script slot="head" type="application/ld+json" set:html={JSON.stringify(techArticleSchema)} />
   <div class="docs-grid">
     <aside>

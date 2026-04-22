@@ -39,6 +39,9 @@ api = [
 anthropic = [
     "anthropic>=0.40",
 ]
+og = [
+    "pillow>=11.0",
+]
 
 [project.scripts]
 si-threat-filter = "si_protocols.threat_filter:main"
