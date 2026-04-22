@@ -6,10 +6,12 @@ import '../styles/global.css';
 interface Props {
   title: string;
   description?: string;
+  ogImage?: string;
 }
 
-const { title, description = 'Spiritual Intelligence — understanding why critical thinking matters in metaphysical and spiritual spaces.' } = Astro.props;
+const { title, description = 'Spiritual Intelligence — understanding why critical thinking matters in metaphysical and spiritual spaces.', ogImage = '/images/og/default.png' } = Astro.props;
 const canonicalUrl = new URL(Astro.url.pathname, 'https://spiritualintelligence.cc').href;
+const ogImageUrl = new URL(ogImage, 'https://spiritualintelligence.cc').href;
 const fullTitle = `${title} | Spiritual Intelligence`;
 
 const organizationSchema = {
@@ -42,10 +44,12 @@ const webSiteSchema = {
     <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={ogImageUrl} />
     <meta property="og:site_name" content="Spiritual Intelligence" />
-    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={fullTitle} />
     <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageUrl} />
     <title>{fullTitle}</title>
     <script type="application/ld+json" set:html={JSON.stringify(organizationSchema)} />
     <script type="application/ld+json" set:html={JSON.stringify(webSiteSchema)} />

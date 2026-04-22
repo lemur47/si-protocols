@@ -32,7 +32,7 @@ const articleSchema = {
 };
 ---
 
-<BaseLayout title={title} description={description}>
+<BaseLayout title={title} description={description} ogImage="/images/og/blog-default.png">
   <script slot="head" type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
   <article class="blog-post">
     <header class="post-header">

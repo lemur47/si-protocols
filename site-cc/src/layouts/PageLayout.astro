@@ -10,6 +10,9 @@ interface Props {
 
 const { title, description, prev, next } = Astro.props;
 
+const pageSlug = Astro.url.pathname.replace(/^\//, '').replace(/\/$/, '');
+const ogImage = pageSlug ? `/images/og/${pageSlug}.png` : undefined;
+
 const webPageSchema = {
   '@context': 'https://schema.org',
   '@type': 'WebPage',
@@ -24,7 +27,7 @@ const webPageSchema = {
 };
 ---
 
-<BaseLayout title={title} description={description}>
+<BaseLayout title={title} description={description} ogImage={ogImage}>
   <script slot="head" type="application/ld+json" set:html={JSON.stringify(webPageSchema)} />
   <article class="page">
     <header class="page-header">
