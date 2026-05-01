@@ -25,12 +25,6 @@ updates:
         update-types:
           - minor
           - patch
-    ignore:
-      # Pinned to v7 alongside Astro v5 — see Sprint 4 Decision
-      # "Defer @astrojs/svelte v8 / Astro v6 major bump" (2026-04-20).
-      # Lift when executing the Sprint 5 Astro v6 coordinated-upgrade WI.
-      - dependency-name: "@astrojs/svelte"
-        update-types: ["version-update:semver-major"]
 
   # npm — site-cc/
   - package-ecosystem: npm
@@ -44,9 +38,3 @@ updates:
         update-types:
           - minor
           - patch
-    ignore:
-      # Pinned to v7 alongside Astro v5 — see Sprint 4 Decision
-      # "Defer @astrojs/svelte v8 / Astro v6 major bump" (2026-04-20).
-      # Lift when executing the Sprint 5 Astro v6 coordinated-upgrade WI.
-      - dependency-name: "@astrojs/svelte"
-        update-types: ["version-update:semver-major"]
