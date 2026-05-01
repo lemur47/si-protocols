@@ -10,8 +10,8 @@
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.2",
-    "@astrojs/svelte": "^7.2.5",
-    "astro": "^5.18.0",
+    "@astrojs/svelte": "^8.1.0",
+    "astro": "^6.1.10",
     "svelte": "^5.55.5"
   },
   "overrides": {
