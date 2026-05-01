@@ -10,7 +10,3 @@
 [[IgnoredVulns]]
 id = "GHSA-5239-wwwm-4pmq"
 reason = "Low-severity pygments issue (CVSS 3.3), no fix available upstream"
-
-[[IgnoredVulns]]
-id = "GHSA-j687-52p2-xcff"
-reason = "Astro 5.18.1 advisory (CVSS 6.1); fix requires Astro 6.1.6. Tracked by the 'Astro v6 coordinated upgrade (site/ + site-cc/)' work item in Sprint 5 backlog. Remove this entry when that upgrade lands."
