@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.2",
-    "astro": "^5.18.0"
+    "astro": "^6.1.10"
   },
   "overrides": {
     "postcss": "^8.5.10"
