@@ -15,6 +15,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: astral-sh/setup-uv@v5
+      - name: Verify uv.lock is in sync with pyproject.toml
+        run: uv lock --locked
       - run: uv sync --all-extras
       - run: uv run ruff check src/ tests/ app/
       - run: uv run ruff format --check src/ tests/ app/

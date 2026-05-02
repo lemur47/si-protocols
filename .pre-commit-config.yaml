@@ -37,6 +37,16 @@ repos:
         always_run: true
         stages: [pre-commit]
 
+  # --- uv lockfile drift check ---
+  - repo: local
+    hooks:
+      - id: uv-lock-check
+        name: uv lock --locked
+        entry: uv lock --locked
+        language: system
+        pass_filenames: false
+        files: ^(pyproject\.toml|uv\.lock)$
+
   # --- Pyright: type checking ---
   - repo: local
     hooks:
