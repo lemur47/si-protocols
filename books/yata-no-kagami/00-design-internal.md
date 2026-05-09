@@ -31,7 +31,7 @@ Foundational axiom: Consciousness ≠ mind. Mind is technology (a modular stack,
 - AI developers and researchers
 - Mind designers and next-gen innovators (so-called starseed envoys)
 
-### Convensions
+### Conventions
 
 - All content should be in British English
 - Avoid esoteric, tech-snobbish and philosophically (meaninglessly) long descriptions
