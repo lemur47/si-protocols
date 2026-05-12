@@ -1,0 +1,101 @@
+---
+import BookLayout from '../../../../layouts/BookLayout.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('book');
+  const sections = entries.filter(e => e.data.kind === 'section');
+  return sections.map(s => ({
+    params: { book: s.data.book, part: s.data.part, section: s.data.slug },
+    props: {
+      bookSlug: s.data.book!,
+      partSlug: s.data.part!,
+      sectionSlug: s.data.slug,
+    },
+  }));
+}
+
+const { bookSlug, partSlug, sectionSlug } = Astro.props;
+
+const all = await getCollection('book');
+const book = all.find(e => e.data.kind === 'book' && e.data.slug === bookSlug);
+const part = all.find(
+  e => e.data.kind === 'part' && e.data.book === bookSlug && e.data.slug === partSlug,
+);
+const section = all.find(
+  e =>
+    e.data.kind === 'section' &&
+    e.data.book === bookSlug &&
+    e.data.part === partSlug &&
+    e.data.slug === sectionSlug,
+);
+if (!book || !part || !section) {
+  throw new Error(`Section not found: ${bookSlug}/${partSlug}/${sectionSlug}`);
+}
+
+const siblings = all
+  .filter(
+    e => e.data.kind === 'section' && e.data.book === bookSlug && e.data.part === partSlug,
+  )
+  .sort((a, b) => a.data.order - b.data.order);
+
+const idx = siblings.findIndex(s => s.data.slug === sectionSlug);
+const prev = idx > 0 ? siblings[idx - 1] : undefined;
+const next = idx < siblings.length - 1 ? siblings[idx + 1] : undefined;
+
+const { Content } = await render(section);
+---
+
+<BookLayout
+  title={`${section.data.title} — ${book.data.title}`}
+  description={section.data.summary ?? part.data.summary ?? book.data.description ?? ''}
+  bookTitle={book.data.title}
+  bookAuthor={book.data.author}
+  bookLicence={book.data.licence}
+  bookLicenceUrl={book.data.licenceUrl}
+  partTitle={part.data.title}
+  partPosition={part.data.order}
+  sectionTitle={section.data.title}
+  sectionPosition={section.data.order}
+  sectionSummary={section.data.summary}
+>
+  <div class="si-container">
+    <nav class="crumbs">
+      <a href="/book/">Library</a>
+      <span class="sep">/</span>
+      <a href={`/book/${bookSlug}/`}>{book.data.title}</a>
+      <span class="sep">/</span>
+      <a href={`/book/${bookSlug}/${partSlug}/`}>{part.data.title}</a>
+      <span class="sep">/</span>
+      <span>{section.data.title}</span>
+    </nav>
+
+    <div class="toc-head">
+      <span class="eyebrow eyebrow-amber">
+        // PART {String(part.data.order).padStart(2, '0')} · SEC {String(section.data.order).padStart(2, '0')}
+      </span>
+      <h1>{section.data.title}</h1>
+      <span class="rule"></span>
+      <span class="eyebrow">{section.data.status === 'published' ? 'OPEN' : 'DRAFT'}</span>
+    </div>
+
+    {section.data.summary && <p class="lede">{section.data.summary}</p>}
+
+    <div class="section-content">
+      <Content />
+    </div>
+
+    <nav class="book-nav">
+      {prev ? (
+        <a href={`/book/${bookSlug}/${partSlug}/${prev.data.slug}/`}>← {prev.data.title}</a>
+      ) : (
+        <a href={`/book/${bookSlug}/${partSlug}/`}>← {part.data.title}</a>
+      )}
+      {next ? (
+        <a href={`/book/${bookSlug}/${partSlug}/${next.data.slug}/`}>{next.data.title} →</a>
+      ) : (
+        <a href={`/book/${bookSlug}/`}>{book.data.title} →</a>
+      )}
+    </nav>
+  </div>
+</BookLayout>

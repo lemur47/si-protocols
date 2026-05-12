@@ -1,0 +1,40 @@
+/* =====================================================================
+   Spiritual Intelligence — design tokens
+   From the .cc design handoff (Claude Design, 2026-05-06).
+   Additive to global.css — book pages opt in via the --si-* prefix.
+   ===================================================================== */
+
+:root {
+  /* ---------- Colour ---------- */
+  --si-bg:           #0e0e0c;
+  --si-bg-raised:    #16160f;
+  --si-bg-sunken:    #0a0a08;
+  --si-line:         #2a2820;
+  --si-line-strong:  #3d3a2c;
+  --si-fg:           #e8e4d8;
+  --si-fg-muted:     #a8a293;
+  --si-fg-dim:       #6b6757;
+  --si-amber:        #d4a456;
+  --si-amber-dim:    #8a6a37;
+  --si-alert:        #c0392b;
+  --si-ok:           #6a8f5a;
+
+  /* ---------- Type ---------- */
+  --si-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  --si-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+
+  --si-fs-xs:   11px;
+  --si-fs-sm:   13px;
+  --si-fs-base: 15px;
+  --si-fs-md:   17px;
+  --si-fs-lg:   22px;
+  --si-fs-xl:   32px;
+  --si-fs-2xl:  48px;
+  --si-fs-3xl:  72px;
+
+  /* ---------- Layout ---------- */
+  --si-radius:     2px;
+  --si-radius-lg:  4px;
+  --si-gutter:     24px;
+  --si-max:        1280px;
+}

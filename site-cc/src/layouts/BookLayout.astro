@@ -1,0 +1,333 @@
+---
+import BaseLayout from './BaseLayout.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+  bookTitle: string;
+  bookAuthor?: string;
+  bookLicence?: string;
+  bookLicenceUrl?: string;
+  partTitle?: string;
+  partPosition?: number;
+  sectionTitle?: string;
+  sectionPosition?: number;
+  sectionSummary?: string;
+}
+
+const {
+  title,
+  description,
+  bookTitle,
+  bookAuthor,
+  bookLicence,
+  bookLicenceUrl,
+  partTitle,
+  partPosition,
+  sectionTitle,
+  sectionPosition,
+  sectionSummary,
+} = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, 'https://spiritualintelligence.cc').href;
+
+const bookSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Book',
+  name: bookTitle,
+  ...(bookAuthor && { author: { '@type': 'Person', name: bookAuthor } }),
+  ...(bookLicenceUrl && { license: bookLicenceUrl }),
+  ...(bookLicence && { copyrightNotice: bookLicence }),
+  inLanguage: 'en-GB',
+  url: new URL(`/book/`, 'https://spiritualintelligence.cc').href,
+};
+
+let pageSchema: Record<string, unknown> | null = null;
+
+if (sectionTitle) {
+  pageSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Chapter',
+    headline: sectionTitle,
+    ...(sectionSummary && { abstract: sectionSummary }),
+    ...(sectionPosition !== undefined && { position: sectionPosition }),
+    isPartOf: {
+      '@type': 'Book',
+      name: bookTitle,
+      ...(partTitle && {
+        hasPart: {
+          '@type': 'Chapter',
+          name: partTitle,
+          ...(partPosition !== undefined && { position: partPosition }),
+        },
+      }),
+    },
+    url: canonical,
+    inLanguage: 'en-GB',
+    ...(bookLicenceUrl && { license: bookLicenceUrl }),
+  };
+} else if (partTitle) {
+  pageSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Chapter',
+    headline: partTitle,
+    ...(partPosition !== undefined && { position: partPosition }),
+    isPartOf: {
+      '@type': 'Book',
+      name: bookTitle,
+    },
+    url: canonical,
+    inLanguage: 'en-GB',
+    ...(bookLicenceUrl && { license: bookLicenceUrl }),
+  };
+}
+---
+
+<BaseLayout title={title} description={description}>
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(bookSchema)} />
+  {pageSchema && (
+    <script slot="head" type="application/ld+json" set:html={JSON.stringify(pageSchema)} />
+  )}
+  <div class="book-shell">
+    <slot />
+  </div>
+</BaseLayout>
+
+<style is:global>
+  .book-shell {
+    font-family: var(--si-sans);
+    color: var(--si-fg);
+    background: var(--si-bg);
+    margin: -2rem -1.5rem;
+    padding: 0;
+    min-height: calc(100dvh - 4rem);
+  }
+
+  .book-shell .si-container {
+    max-width: var(--si-max);
+    margin: 0 auto;
+    padding: 0 var(--si-gutter);
+  }
+
+  .book-shell h1,
+  .book-shell h2,
+  .book-shell h3 {
+    font-family: var(--si-mono);
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    color: var(--si-fg);
+  }
+
+  .book-shell .eyebrow {
+    font-family: var(--si-mono);
+    font-size: var(--si-fs-xs);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--si-fg-muted);
+  }
+
+  .book-shell .eyebrow-amber {
+    color: var(--si-amber);
+  }
+
+  .book-shell .rule {
+    height: 1px;
+    flex: 1;
+    background: var(--si-line);
+  }
+
+  .book-shell a {
+    color: var(--si-fg);
+    text-decoration: none;
+  }
+
+  .book-shell a:hover {
+    color: var(--si-amber);
+  }
+
+  .book-shell .toc-head {
+    display: flex;
+    align-items: baseline;
+    gap: 18px;
+    margin-bottom: 24px;
+    padding-top: 56px;
+  }
+
+  .book-shell .toc-head h1 {
+    font-size: var(--si-fs-2xl);
+    margin: 0;
+    line-height: 1.05;
+  }
+
+  .book-shell .toc-head h2 {
+    font-size: var(--si-fs-lg);
+    margin: 0;
+  }
+
+  .book-shell .toc-list {
+    border-top: 1px solid var(--si-line);
+  }
+
+  .book-shell .toc-card {
+    display: block;
+    padding: 24px 24px 22px;
+    border-bottom: 1px solid var(--si-line);
+    transition: background 0.15s;
+  }
+
+  .book-shell .toc-card:hover {
+    background: var(--si-bg-raised);
+  }
+
+  .book-shell .toc-card:hover .open {
+    color: var(--si-amber);
+  }
+
+  .book-shell .toc-meta {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    margin-bottom: 14px;
+    font-family: var(--si-mono);
+    font-size: 12px;
+    letter-spacing: 0.08em;
+  }
+
+  .book-shell .toc-meta .file {
+    color: var(--si-amber);
+    font-size: 16px;
+    font-weight: 500;
+  }
+
+  .book-shell .toc-meta .tag {
+    padding: 2px 8px;
+    border: 1px solid currentColor;
+    border-radius: 1px;
+    font-size: 10px;
+    text-transform: uppercase;
+    color: var(--si-fg-muted);
+  }
+
+  .book-shell .toc-meta .spacer { flex: 1; }
+
+  .book-shell .toc-meta .open {
+    color: var(--si-fg-dim);
+    transition: color 0.15s;
+  }
+
+  .book-shell .toc-card h3 {
+    font-family: var(--si-mono);
+    font-weight: 500;
+    font-size: var(--si-fs-lg);
+    margin: 0 0 10px;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+  }
+
+  .book-shell .toc-card p {
+    margin: 0;
+    color: var(--si-fg-muted);
+    font-size: 14px;
+    line-height: 1.55;
+    max-width: 720px;
+  }
+
+  .book-shell .lede {
+    font-family: var(--si-sans);
+    font-size: 19px;
+    line-height: 1.55;
+    color: var(--si-fg-muted);
+    max-width: 720px;
+    margin: 0 0 36px;
+  }
+
+  .book-shell .empty {
+    padding: 48px 24px;
+    border: 1px dashed var(--si-line-strong);
+    color: var(--si-fg-dim);
+    font-family: var(--si-mono);
+    font-size: var(--si-fs-sm);
+    text-align: center;
+    margin: 16px 0 64px;
+  }
+
+  .book-shell .section-content {
+    font-family: var(--si-sans);
+    font-size: var(--si-fs-md);
+    line-height: 1.7;
+    color: var(--si-fg);
+    max-width: 720px;
+    padding: 32px 0 64px;
+  }
+
+  .book-shell .section-content h2 {
+    font-family: var(--si-mono);
+    font-size: var(--si-fs-lg);
+    margin: 2.5rem 0 1rem;
+  }
+
+  .book-shell .section-content h3 {
+    font-family: var(--si-mono);
+    font-size: var(--si-fs-md);
+    margin: 2rem 0 0.75rem;
+  }
+
+  .book-shell .section-content p {
+    margin: 0 0 1.25rem;
+  }
+
+  .book-shell .section-content ul,
+  .book-shell .section-content ol {
+    margin: 0 0 1.25rem;
+    padding-left: 1.5rem;
+  }
+
+  .book-shell .section-content li {
+    margin-bottom: 0.4rem;
+  }
+
+  .book-shell .section-content a {
+    color: var(--si-amber);
+    border-bottom: 1px solid var(--si-amber-dim);
+  }
+
+  .book-shell .book-nav {
+    display: flex;
+    justify-content: space-between;
+    padding: 32px 0 64px;
+    border-top: 1px solid var(--si-line);
+    margin-top: 32px;
+    font-family: var(--si-mono);
+    font-size: var(--si-fs-sm);
+  }
+
+  .book-shell .book-nav a {
+    color: var(--si-fg-muted);
+  }
+
+  .book-shell .book-nav a:hover {
+    color: var(--si-amber);
+  }
+
+  .book-shell .crumbs {
+    font-family: var(--si-mono);
+    font-size: var(--si-fs-xs);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--si-fg-muted);
+    padding-top: 32px;
+  }
+
+  .book-shell .crumbs a {
+    color: var(--si-fg-muted);
+  }
+
+  .book-shell .crumbs a:hover {
+    color: var(--si-amber);
+  }
+
+  .book-shell .crumbs .sep {
+    color: var(--si-fg-dim);
+    margin: 0 8px;
+  }
+</style>

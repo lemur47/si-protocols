@@ -1,0 +1,46 @@
+---
+import BookLayout from '../../layouts/BookLayout.astro';
+import { getCollection } from 'astro:content';
+
+const all = await getCollection('book');
+const books = all
+  .filter(e => e.data.kind === 'book')
+  .sort((a, b) => a.data.order - b.data.order);
+---
+
+<BookLayout
+  title="Book"
+  description="Books published progressively on Spiritual Intelligence."
+  bookTitle="Spiritual Intelligence — Library"
+>
+  <div class="si-container">
+    <div class="toc-head">
+      <span class="eyebrow eyebrow-amber">// LIB 001</span>
+      <h1>Library</h1>
+      <span class="rule"></span>
+      <span class="eyebrow">{books.length} VOLUMES</span>
+    </div>
+
+    <p class="lede">
+      Books in progress, published section by section. Each section has a stable URL and structured metadata for citation.
+    </p>
+
+    <div class="toc-list">
+      {books.length === 0 && (
+        <div class="empty">no volumes yet</div>
+      )}
+      {books.map((b, i) => (
+        <a class="toc-card" href={`/book/${b.data.slug}/`}>
+          <div class="toc-meta">
+            <span class="file">VOL-{String(i + 1).padStart(2, '0')}</span>
+            <span class="tag">BOOK</span>
+            <span class="spacer"></span>
+            <span class="open">OPEN ▸</span>
+          </div>
+          <h3>{b.data.title}</h3>
+          <p>{b.data.description ?? b.data.summary ?? b.data.subtitle ?? ''}</p>
+        </a>
+      ))}
+    </div>
+  </div>
+</BookLayout>

@@ -1,0 +1,82 @@
+---
+import BookLayout from '../../../../layouts/BookLayout.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('book');
+  const parts = entries.filter(e => e.data.kind === 'part');
+  return parts.map(p => ({
+    params: { book: p.data.book, part: p.data.slug },
+    props: { bookSlug: p.data.book!, partSlug: p.data.slug },
+  }));
+}
+
+const { bookSlug, partSlug } = Astro.props;
+
+const all = await getCollection('book');
+const book = all.find(e => e.data.kind === 'book' && e.data.slug === bookSlug);
+const part = all.find(
+  e => e.data.kind === 'part' && e.data.book === bookSlug && e.data.slug === partSlug,
+);
+if (!book || !part) throw new Error(`Part not found: ${bookSlug}/${partSlug}`);
+
+const sections = all
+  .filter(
+    e => e.data.kind === 'section' && e.data.book === bookSlug && e.data.part === partSlug,
+  )
+  .sort((a, b) => a.data.order - b.data.order);
+
+const { Content } = await render(part);
+---
+
+<BookLayout
+  title={`${part.data.title} — ${book.data.title}`}
+  description={part.data.summary ?? book.data.description ?? ''}
+  bookTitle={book.data.title}
+  bookAuthor={book.data.author}
+  bookLicence={book.data.licence}
+  bookLicenceUrl={book.data.licenceUrl}
+  partTitle={part.data.title}
+  partPosition={part.data.order}
+>
+  <div class="si-container">
+    <nav class="crumbs">
+      <a href="/book/">Library</a>
+      <span class="sep">/</span>
+      <a href={`/book/${bookSlug}/`}>{book.data.title}</a>
+      <span class="sep">/</span>
+      <span>Part {part.data.order}</span>
+    </nav>
+
+    <div class="toc-head">
+      <span class="eyebrow eyebrow-amber">// PART {String(part.data.order).padStart(2, '0')}</span>
+      <h1>{part.data.title}</h1>
+      <span class="rule"></span>
+      <span class="eyebrow">{sections.length} SECTIONS</span>
+    </div>
+
+    {part.data.summary && <p class="lede">{part.data.summary}</p>}
+
+    <div class="section-content">
+      <Content />
+    </div>
+
+    <div class="toc-list">
+      {sections.length === 0 && (
+        <div class="empty">sections forthcoming</div>
+      )}
+      {sections.map(s => (
+        <a class="toc-card" href={`/book/${bookSlug}/${partSlug}/${s.data.slug}/`}>
+          <div class="toc-meta">
+            <span class="file">SEC-{String(s.data.order).padStart(2, '0')}</span>
+            <span class="tag">{s.data.status === 'published' ? 'OPEN' : 'DRAFT'}</span>
+            <span class="spacer"></span>
+            <span class="open">OPEN ▸</span>
+          </div>
+          <h3>{s.data.title}</h3>
+          {s.data.summary && <p>{s.data.summary}</p>}
+        </a>
+      ))}
+    </div>
+  </div>
+</BookLayout>

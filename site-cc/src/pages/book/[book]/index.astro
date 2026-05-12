@@ -1,0 +1,68 @@
+---
+import BookLayout from '../../../layouts/BookLayout.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('book');
+  const books = entries.filter(e => e.data.kind === 'book');
+  return books.map(b => ({
+    params: { book: b.data.slug },
+    props: { bookSlug: b.data.slug },
+  }));
+}
+
+const { bookSlug } = Astro.props;
+
+const all = await getCollection('book');
+const book = all.find(e => e.data.kind === 'book' && e.data.slug === bookSlug);
+if (!book) throw new Error(`Book not found: ${bookSlug}`);
+
+const parts = all
+  .filter(e => e.data.kind === 'part' && e.data.book === bookSlug)
+  .sort((a, b) => a.data.order - b.data.order);
+---
+
+<BookLayout
+  title={book.data.title}
+  description={book.data.description ?? book.data.subtitle ?? ''}
+  bookTitle={book.data.title}
+  bookAuthor={book.data.author}
+  bookLicence={book.data.licence}
+  bookLicenceUrl={book.data.licenceUrl}
+>
+  <div class="si-container">
+    <nav class="crumbs">
+      <a href="/book/">Library</a>
+      <span class="sep">/</span>
+      <span>{book.data.title}</span>
+    </nav>
+
+    <div class="toc-head">
+      <span class="eyebrow eyebrow-amber">// VOL {book.data.slug.toUpperCase()}</span>
+      <h1>{book.data.title}</h1>
+      <span class="rule"></span>
+      <span class="eyebrow">{parts.length} PARTS</span>
+    </div>
+
+    {book.data.subtitle && <p class="lede">{book.data.subtitle}</p>}
+    {book.data.description && !book.data.subtitle && <p class="lede">{book.data.description}</p>}
+
+    <div class="toc-list">
+      {parts.length === 0 && (
+        <div class="empty">no parts yet</div>
+      )}
+      {parts.map(p => (
+        <a class="toc-card" href={`/book/${bookSlug}/${p.data.slug}/`}>
+          <div class="toc-meta">
+            <span class="file">PART-{String(p.data.order).padStart(2, '0')}</span>
+            <span class="tag">{p.data.status === 'published' ? 'OPEN' : 'DRAFT'}</span>
+            <span class="spacer"></span>
+            <span class="open">OPEN ▸</span>
+          </div>
+          <h3>{p.data.title}</h3>
+          {p.data.summary && <p>{p.data.summary}</p>}
+        </a>
+      ))}
+    </div>
+  </div>
+</BookLayout>
