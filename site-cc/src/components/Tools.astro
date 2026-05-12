@@ -1,0 +1,173 @@
+---
+type Status = 'stable' | 'beta' | 'alpha';
+interface Tool {
+  name: string;
+  version: string;
+  status: Status;
+  desc: string;
+  lang: string;
+  repo: string;
+}
+
+const tools: Tool[] = [
+  { name: 'si-protocols',   version: '0.7.0', status: 'stable', lang: 'Python',     repo: 'lemur47/si-protocols',   desc: 'Reference toolkit: marker definitions, scoring weights, claim-topology engine, and the threat-modelling vocabulary.' },
+];
+
+const STATUS_COLOUR: Record<Status, string> = {
+  stable: 'var(--si-ok)',
+  beta:   'var(--si-amber)',
+  alpha:  'var(--si-fg-muted)',
+};
+---
+
+<section class="wrap">
+  <div class="container">
+    <div class="head">
+      <span class="eyebrow amber">// LIB 004</span>
+      <h2>Field Tools</h2>
+      <span class="rule"></span>
+      <a class="eyebrow amber" href="https://spiritualintelligence.dev" target="_blank" rel="noopener">OPEN REGISTRY ↗</a>
+    </div>
+
+    <p class="lede">
+      Open-source utilities used by the project. Every marker, every scoring weight,
+      every algorithm is public and auditable. Tools run locally; no content is transmitted.
+    </p>
+
+    <div class="grid">
+      {tools.map(t => (
+        <article class="card">
+          <div class="meta">
+            <span class="status" style={`color: ${STATUS_COLOUR[t.status]};`}>
+              <span class="dot" style={`background: ${STATUS_COLOUR[t.status]};`}></span>
+              {t.status}
+            </span>
+            <span class="dim">·</span>
+            <span class="muted">{t.lang}</span>
+            <span class="spacer"></span>
+            <span class="version">v{t.version}</span>
+          </div>
+          <h3>{t.name}</h3>
+          <p class="desc">{t.desc}</p>
+          <div class="foot">
+            <span>github.com/{t.repo}</span>
+            <a href={`https://github.com/${t.repo}`} target="_blank" rel="noopener">clone ▸</a>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .wrap {
+    border-bottom: 1px solid var(--si-line);
+    padding: 64px 0;
+    background: var(--si-bg-sunken);
+  }
+  .container {
+    max-width: var(--si-max);
+    margin: 0 auto;
+    padding: 0 var(--si-gutter);
+  }
+  .head {
+    display: flex;
+    align-items: baseline;
+    gap: 18px;
+    margin-bottom: 28px;
+  }
+  .eyebrow {
+    font-family: var(--si-mono);
+    font-size: var(--si-fs-xs);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--si-fg-muted);
+  }
+  .eyebrow.amber { color: var(--si-amber); }
+  .rule { height: 1px; flex: 1; background: var(--si-line); }
+  h2 {
+    font-family: var(--si-mono);
+    font-weight: 500;
+    font-size: var(--si-fs-lg);
+    margin: 0;
+    letter-spacing: -0.01em;
+  }
+
+  .lede {
+    max-width: 640px;
+    color: var(--si-fg-muted);
+    margin: 0 0 32px;
+    font-size: 15px;
+  }
+
+  .grid {
+    display: grid;
+    gap: 16px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  @media (max-width: 760px) {
+    .grid { grid-template-columns: 1fr; }
+  }
+
+  .card {
+    background: var(--si-bg-raised);
+    border: 1px solid var(--si-line);
+    border-radius: var(--si-radius);
+    padding: 22px 22px 20px;
+    transition: border-color 0.15s;
+  }
+  .card:hover { border-color: var(--si-line-strong); }
+
+  .meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+    font-family: var(--si-mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .status { display: inline-flex; align-items: center; gap: 6px; }
+  .dot { width: 6px; height: 6px; border-radius: 50%; display: inline-block; }
+  .dim { color: var(--si-fg-dim); }
+  .muted { color: var(--si-fg-muted); }
+  .spacer { flex: 1; }
+  .version {
+    color: var(--si-amber);
+    padding: 2px 8px;
+    border: 1px solid var(--si-amber-dim);
+    border-radius: 1px;
+    font-size: 10px;
+  }
+
+  h3 {
+    font-family: var(--si-mono);
+    font-weight: 500;
+    font-size: 20px;
+    margin: 0 0 10px;
+    letter-spacing: -0.01em;
+  }
+  .desc {
+    margin: 0 0 18px;
+    color: var(--si-fg-muted);
+    font-size: 14px;
+    line-height: 1.55;
+  }
+
+  .foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 14px;
+    border-top: 1px dashed var(--si-line);
+    font-family: var(--si-mono);
+    font-size: 12px;
+    color: var(--si-fg-dim);
+  }
+  .foot a {
+    color: var(--si-fg-muted);
+    transition: color 0.15s;
+  }
+  .foot a:hover { color: var(--si-amber); }
+</style>

@@ -54,30 +54,60 @@ const webPageSchema = {
 </BaseLayout>
 
 <style>
+  .page {
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 56px var(--si-gutter) 80px;
+  }
+
   .page-header {
-    margin-bottom: 2rem;
-    padding-bottom: 1rem;
-    border-bottom: 1px solid var(--colour-border);
+    margin-bottom: 2.5rem;
+    padding-bottom: 1.25rem;
+    border-bottom: 1px solid var(--si-line);
+  }
+
+  .page-header h1 {
+    font-size: var(--si-fs-2xl);
+    line-height: 1.1;
+    margin: 0;
   }
 
   .page-content {
     margin-bottom: 3rem;
+    font-family: var(--si-sans);
+    font-size: var(--si-fs-md);
+    line-height: 1.7;
+    max-width: 720px;
+  }
+
+  .page-content :global(h2) {
+    margin-top: 2.5rem;
+  }
+
+  .page-content :global(a) {
+    color: var(--si-amber);
+    border-bottom: 1px solid var(--si-amber-dim);
+  }
+
+  .page-content :global(a:hover) {
+    color: var(--si-fg);
   }
 
   .page-nav {
     display: flex;
     justify-content: space-between;
     padding-top: 1.5rem;
-    border-top: 1px solid var(--colour-border);
+    border-top: 1px solid var(--si-line);
+    font-family: var(--si-mono);
+    font-size: var(--si-fs-sm);
   }
 
   .nav-link {
-    font-size: 0.85rem;
-    color: var(--colour-text-muted);
+    color: var(--si-fg-muted);
   }
 
   .nav-link:hover {
-    color: var(--colour-primary);
+    color: var(--si-amber);
   }
 
   .nav-link.next {

@@ -1,0 +1,127 @@
+---
+type Sev = 'high' | 'med' | 'low';
+interface Entry {
+  ts: string;
+  id: string;
+  severity: Sev;
+  region: string;
+  headline: string;
+  summary: string;
+}
+
+// Empty by default — public counterintel log launches with real entries.
+// Pass entries via slot or prop when the log goes live.
+const entries: Entry[] = [];
+---
+
+<section class="wrap">
+  <div class="container">
+    <div class="head">
+      <span class="eyebrow alert">// COUNTER 005</span>
+      <h2>Counterintelligence Log</h2>
+      <span class="rule"></span>
+      <span class="eyebrow">PUBLIC FEED · LAUNCHING</span>
+    </div>
+
+    <p class="lede">
+      A running, public log of disinformation patterns observed in metaphysical and
+      spiritual content. Entries will describe the pattern, not the people — we name
+      techniques; not targets.
+    </p>
+
+    {entries.length === 0 ? (
+      <div class="empty">
+        <p>The log is in pre-launch. Methodology and reproduction format are being finalised so each entry can be locally verified before publication.</p>
+        <p class="meta">Watch this section, or subscribe upstream via the project's GitHub.</p>
+      </div>
+    ) : (
+      <div class="list">
+        {entries.map(e => (
+          <div class="entry">
+            <div class="row">
+              <span class="ts">{e.ts}</span>
+              <span class="id">{e.id}</span>
+              <span class="sev">{e.severity.toUpperCase()}</span>
+              <span class="hl">{e.headline}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+    )}
+  </div>
+</section>
+
+<style>
+  .wrap {
+    border-bottom: 1px solid var(--si-line);
+    padding: 64px 0;
+  }
+  .container {
+    max-width: var(--si-max);
+    margin: 0 auto;
+    padding: 0 var(--si-gutter);
+  }
+  .head {
+    display: flex;
+    align-items: baseline;
+    gap: 18px;
+    margin-bottom: 28px;
+  }
+  .eyebrow {
+    font-family: var(--si-mono);
+    font-size: var(--si-fs-xs);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--si-fg-muted);
+  }
+  .eyebrow.alert { color: var(--si-alert); }
+  .rule { height: 1px; flex: 1; background: var(--si-line); }
+  h2 {
+    font-family: var(--si-mono);
+    font-weight: 500;
+    font-size: var(--si-fs-lg);
+    margin: 0;
+    letter-spacing: -0.01em;
+  }
+  .lede {
+    max-width: 720px;
+    color: var(--si-fg-muted);
+    margin: 0 0 24px;
+    font-size: 15px;
+  }
+
+  .empty {
+    border: 1px dashed var(--si-line-strong);
+    border-radius: var(--si-radius);
+    padding: 32px;
+    color: var(--si-fg-muted);
+    font-size: 14px;
+    line-height: 1.6;
+    max-width: 720px;
+  }
+  .empty p { margin: 0 0 12px; }
+  .empty p:last-child { margin-bottom: 0; }
+  .empty .meta {
+    font-family: var(--si-mono);
+    font-size: 12px;
+    color: var(--si-fg-dim);
+    letter-spacing: 0.04em;
+  }
+
+  .entry { border-top: 1px solid var(--si-line); }
+  .row {
+    display: grid;
+    grid-template-columns: 180px 90px 90px 1fr;
+    gap: 18px;
+    padding: 16px 0;
+    align-items: center;
+  }
+  .ts { font-family: var(--si-mono); font-size: 12px; color: var(--si-fg-dim); }
+  .id { font-family: var(--si-mono); font-size: 12px; color: var(--si-fg-muted); }
+  .sev {
+    font-family: var(--si-mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+  }
+  .hl { font-size: 15px; color: var(--si-fg); }
+</style>

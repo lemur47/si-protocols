@@ -1,0 +1,156 @@
+---
+import { getCollection } from 'astro:content';
+
+type Tag = 'PRIMER' | 'METHOD' | 'FIELD' | 'OPSEC' | 'MODEL';
+
+const ENRICH: Record<string, { tag: Tag; reads: string }> = {
+  'why-spiritual-intelligence-matters': { tag: 'PRIMER', reads: '12 min' },
+  'threat-modelling':                   { tag: 'METHOD', reads: '18 min' },
+  'common-threats':                     { tag: 'FIELD',  reads: '22 min' },
+  'common-misconceptions':              { tag: 'PRIMER', reads: '9 min' },
+  'cybersecurity-and-privacy':          { tag: 'OPSEC',  reads: '14 min' },
+  'mapping-claims-and-patterns':        { tag: 'METHOD', reads: '20 min' },
+  'the-virtualisation-model':           { tag: 'MODEL',  reads: '26 min' },
+  'egregores':                          { tag: 'MODEL',  reads: '24 min' },
+};
+
+const TAG_COLOUR: Record<Tag, string> = {
+  PRIMER: 'var(--si-fg-muted)',
+  METHOD: 'var(--si-amber)',
+  FIELD:  'var(--si-alert)',
+  OPSEC:  'var(--si-ok)',
+  MODEL:  'var(--si-amber)',
+};
+
+const all = await getCollection('pages');
+const dossiers = all
+  .sort((a, b) => a.data.order - b.data.order)
+  .map((p, i) => ({
+    id: String(i + 1).padStart(2, '0'),
+    title: p.data.title,
+    desc: p.data.description ?? '',
+    href: `/${p.id}/`,
+    tag: ENRICH[p.id]?.tag ?? 'PRIMER',
+    reads: ENRICH[p.id]?.reads ?? '',
+  }));
+---
+
+<section class="wrap">
+  <div class="container">
+    <div class="head">
+      <span class="eyebrow amber">// IDX 003</span>
+      <h2>Dossier Index</h2>
+      <span class="rule"></span>
+      <span class="eyebrow">{dossiers.length} FILES</span>
+    </div>
+
+    <div class="list">
+      {dossiers.map(d => (
+        <a class="card" href={d.href}>
+          <div class="meta">
+            <span class="file">FILE-{d.id}</span>
+            <span
+              class="tag"
+              style={`color: ${TAG_COLOUR[d.tag]}; border-color: ${TAG_COLOUR[d.tag]};`}
+            >{d.tag}</span>
+            {d.reads && <span class="dim">· {d.reads}</span>}
+            <span class="spacer"></span>
+            <span class="open">OPEN ▸</span>
+          </div>
+          <h3>{d.title}</h3>
+          <p>{d.desc}</p>
+        </a>
+      ))}
+      <div class="end-rule"></div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .wrap {
+    border-bottom: 1px solid var(--si-line);
+    padding: 64px 0 8px;
+  }
+  .container {
+    max-width: var(--si-max);
+    margin: 0 auto;
+    padding: 0 var(--si-gutter);
+  }
+  .head {
+    display: flex;
+    align-items: baseline;
+    gap: 18px;
+    margin-bottom: 24px;
+  }
+  .eyebrow {
+    font-family: var(--si-mono);
+    font-size: var(--si-fs-xs);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--si-fg-muted);
+  }
+  .eyebrow.amber { color: var(--si-amber); }
+  .rule { height: 1px; flex: 1; background: var(--si-line); }
+  h2 {
+    font-family: var(--si-mono);
+    font-weight: 500;
+    font-size: var(--si-fs-lg);
+    margin: 0;
+    letter-spacing: -0.01em;
+  }
+
+  .card {
+    display: block;
+    padding: 24px 24px 22px;
+    border-top: 1px solid var(--si-line);
+    color: inherit;
+    transition: background 0.15s;
+  }
+  .card:hover { background: var(--si-bg-raised); color: inherit; }
+  .card:hover .open { color: var(--si-amber); }
+
+  .meta {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    margin-bottom: 14px;
+    font-family: var(--si-mono);
+    font-size: 12px;
+    letter-spacing: 0.08em;
+  }
+  .file {
+    color: var(--si-amber);
+    font-size: 16px;
+    font-weight: 500;
+  }
+  .tag {
+    padding: 2px 8px;
+    border: 1px solid currentColor;
+    border-radius: 1px;
+    font-size: 10px;
+    text-transform: uppercase;
+  }
+  .dim { color: var(--si-fg-dim); }
+  .spacer { flex: 1; }
+  .open {
+    color: var(--si-fg-dim);
+    transition: color 0.15s;
+  }
+
+  h3 {
+    font-family: var(--si-mono);
+    font-weight: 500;
+    font-size: var(--si-fs-lg);
+    margin: 0 0 10px;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+  }
+  p {
+    margin: 0;
+    color: var(--si-fg-muted);
+    font-size: 14px;
+    line-height: 1.55;
+    max-width: 720px;
+  }
+  .end-rule { border-top: 1px solid var(--si-line); }
+</style>

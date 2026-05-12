@@ -1,73 +1,112 @@
 ---
-const links = [
-  { href: '/', label: 'Home' },
-  { href: '/why-spiritual-intelligence-matters/', label: 'Why It Matters' },
-  { href: '/common-threats/', label: 'Common Threats' },
-  { href: '/the-virtualisation-model/', label: 'The Model' },
-  { href: '/book/', label: 'Book' },
-  { href: 'https://spiritualintelligence.dev', label: 'For Developers', external: true },
+import ClassificationBar from './ClassificationBar.astro';
+
+const NAV = [
+  { label: 'Home',           href: '/' },
+  { label: 'Why It Matters', href: '/why-spiritual-intelligence-matters/' },
+  { label: 'Common Threats', href: '/common-threats/' },
+  { label: 'The Model',      href: '/the-virtualisation-model/' },
+  { label: 'Book',           href: '/book/' },
+  { label: 'Counterintel',   href: '/counterintelligence/' },
+  { label: 'Tools ↗',   href: 'https://spiritualintelligence.dev', external: true },
 ];
+
 const currentPath = Astro.url.pathname;
 ---
 
 <header>
-  <nav>
-    <a href="/" class="logo glow">[SI]</a>
-    <button class="menu-toggle" aria-label="Toggle navigation" aria-expanded="false">
-      <span class="bar"></span>
-      <span class="bar"></span>
-      <span class="bar"></span>
-    </button>
-    <ul>
-      {links.map(link => (
-        <li>
+  <ClassificationBar />
+  <div class="strip">
+    <div class="container">
+      <a class="brand" href="/">
+        <span class="logo">[SI]</span>
+        <span class="wordmark">spiritual-intelligence</span>
+      </a>
+      <button class="menu-toggle" aria-label="Toggle navigation" aria-expanded="false">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </button>
+      <nav>
+        {NAV.map(n => (
           <a
-            href={link.href}
-            class:list={[{ active: currentPath.startsWith(link.href) && link.href !== '/' || currentPath === link.href && link.href === '/' }]}
-            {...(link.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+            href={n.href}
+            class:list={[
+              {
+                active:
+                  (n.href === '/' && currentPath === '/') ||
+                  (n.href !== '/' && currentPath.startsWith(n.href)),
+              },
+            ]}
+            {...(n.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
           >
-            {link.label}{link.external ? ' \u2197' : ''}
+            {n.label}
           </a>
-        </li>
-      ))}
-    </ul>
-  </nav>
+        ))}
+      </nav>
+    </div>
+  </div>
 </header>
 
 <script>
   const toggle = document.querySelector('.menu-toggle');
-  const ul = toggle?.closest('nav')?.querySelector('ul');
+  const nav = toggle?.closest('.container')?.querySelector('nav');
   toggle?.addEventListener('click', () => {
     const expanded = toggle.getAttribute('aria-expanded') === 'true';
     toggle.setAttribute('aria-expanded', String(!expanded));
-    ul?.classList.toggle('open');
+    nav?.classList.toggle('open');
   });
 </script>
 
 <style>
-  header {
-    border-bottom: 1px solid var(--colour-border);
-    background: var(--colour-surface);
+  .strip {
+    border-bottom: 1px solid var(--si-line);
+    background: var(--si-bg);
   }
-
-  nav {
-    max-width: var(--max-width);
+  .container {
+    max-width: var(--si-max);
     margin: 0 auto;
-    padding: 0.75rem 1.5rem;
+    padding: 0 var(--si-gutter);
+    height: 64px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    flex-wrap: wrap;
+    gap: 32px;
   }
-
+  .brand {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 10px;
+    color: inherit;
+  }
+  .brand:hover { color: inherit; }
   .logo {
-    font-size: 1.25rem;
-    font-weight: 700;
-    color: var(--colour-primary);
+    font-family: var(--si-mono);
+    font-size: 18px;
+    letter-spacing: 0.04em;
+    color: var(--si-amber);
   }
-
-  .logo:hover {
-    color: var(--colour-primary);
+  .wordmark {
+    font-family: var(--si-mono);
+    font-size: 13px;
+    color: var(--si-fg-muted);
+    letter-spacing: 0.08em;
+  }
+  nav {
+    display: flex;
+    gap: 24px;
+    align-items: center;
+  }
+  nav a {
+    font-family: var(--si-mono);
+    font-size: 13px;
+    color: var(--si-fg-muted);
+    letter-spacing: 0.04em;
+    transition: color 0.15s;
+  }
+  nav a:hover,
+  nav a.active {
+    color: var(--si-amber);
   }
 
   .menu-toggle {
@@ -75,70 +114,40 @@ const currentPath = Astro.url.pathname;
     flex-direction: column;
     gap: 4px;
     background: none;
-    border: none;
+    border: 0;
     cursor: pointer;
     padding: 4px;
   }
-
-  .bar {
+  .menu-toggle .bar {
     display: block;
     width: 20px;
     height: 2px;
-    background: var(--colour-text-muted);
+    background: var(--si-fg-muted);
     border-radius: 1px;
     transition: transform 0.2s, opacity 0.2s;
   }
-
-  .menu-toggle[aria-expanded="true"] .bar:nth-child(1) {
+  .menu-toggle[aria-expanded='true'] .bar:nth-child(1) {
     transform: translateY(6px) rotate(45deg);
   }
-  .menu-toggle[aria-expanded="true"] .bar:nth-child(2) {
-    opacity: 0;
-  }
-  .menu-toggle[aria-expanded="true"] .bar:nth-child(3) {
+  .menu-toggle[aria-expanded='true'] .bar:nth-child(2) { opacity: 0; }
+  .menu-toggle[aria-expanded='true'] .bar:nth-child(3) {
     transform: translateY(-6px) rotate(-45deg);
   }
 
-  ul {
-    display: flex;
-    list-style: none;
-    gap: 1.5rem;
-    padding: 0;
-    margin: 0;
-  }
-
-  li { margin: 0; }
-
-  a {
-    color: var(--colour-text-muted);
-    font-size: 0.85rem;
-  }
-
-  a:hover,
-  a.active {
-    color: var(--colour-primary);
-  }
-
-  @media (max-width: 640px) {
-    .menu-toggle {
-      display: flex;
-    }
-
-    ul {
+  @media (max-width: 760px) {
+    .container { flex-wrap: wrap; height: auto; min-height: 56px; padding: 12px var(--si-gutter); }
+    .menu-toggle { display: flex; order: 2; }
+    nav {
+      order: 3;
+      width: 100%;
       display: none;
       flex-direction: column;
-      width: 100%;
       gap: 0;
-      padding-top: 0.75rem;
+      padding-top: 8px;
+      border-top: 1px solid var(--si-line);
+      margin-top: 12px;
     }
-
-    ul.open {
-      display: flex;
-    }
-
-    li a {
-      display: block;
-      padding: 0.5rem 0;
-    }
+    nav.open { display: flex; }
+    nav a { display: block; padding: 10px 0; }
   }
 </style>

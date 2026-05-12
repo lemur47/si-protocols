@@ -1,29 +1,141 @@
 ---
+const COLS = [
+  {
+    h: 'BRIEFINGS',
+    links: [
+      ['Why It Matters',  '/why-spiritual-intelligence-matters/'],
+      ['Common Threats',  '/common-threats/'],
+      ['Misconceptions',  '/common-misconceptions/'],
+      ['The Model',       '/the-virtualisation-model/'],
+    ],
+  },
+  {
+    h: 'BOOK',
+    links: [
+      ['Library',         '/book/'],
+      ['Yata no Kagami',  '/book/yata-no-kagami/'],
+      ['llms.txt',        '/llms.txt'],
+    ],
+  },
+  {
+    h: 'PROJECT',
+    links: [
+      ['Source ↗',        'https://github.com/lemur47/si-protocols'],
+      ['Developer site ↗','https://spiritualintelligence.dev'],
+    ],
+  },
+];
+
 const year = new Date().getFullYear();
 ---
 
 <footer>
-  <p>
-    &copy; {year} lemur47 &middot; MIT Licence &middot;
-    <a href="https://spiritualintelligence.dev" target="_blank" rel="noopener noreferrer">Developer Site</a> &middot;
-    <a href="https://github.com/lemur47/si-protocols" target="_blank" rel="noopener noreferrer">Source</a>
-  </p>
+  <div class="container">
+    <div class="grid">
+      <div>
+        <div class="logo">[SI]</div>
+        <p class="blurb">
+          An indie counter-intelligence project for metaphysical and spiritual spaces.
+          Open-source. Privacy-first. No telemetry.
+        </p>
+      </div>
+      {COLS.map(col => (
+        <div>
+          <div class="eyebrow">{col.h}</div>
+          <ul>
+            {col.links.map(([label, href]) => (
+              <li>
+                <a
+                  href={href}
+                  {...(href.startsWith('http') ? { target: '_blank', rel: 'noopener' } : {})}
+                >{label}</a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+
+    <div class="line">
+      <span>© {year} LEMUR47 · MIT LICENCE (CODE) · CC-BY-4.0 (BOOK)</span>
+      <span>BUILT LOCAL · NO TELEMETRY · OPEN SOURCE</span>
+      <span>spiritualintelligence.cc</span>
+    </div>
+  </div>
 </footer>
 
 <style>
   footer {
-    border-top: 1px solid var(--colour-border);
-    padding: 1.5rem;
-    text-align: center;
-    font-size: 0.8rem;
-    color: var(--colour-text-muted);
+    background: var(--si-bg-sunken);
+    border-top: 1px solid var(--si-line);
+  }
+  .container {
+    max-width: var(--si-max);
+    margin: 0 auto;
+    padding: 48px var(--si-gutter) 28px;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr 1fr;
+    gap: 32px;
+  }
+  @media (max-width: 760px) {
+    .grid { grid-template-columns: 1fr 1fr; gap: 24px; }
   }
 
-  a {
-    color: var(--colour-text-muted);
+  .logo {
+    font-family: var(--si-mono);
+    color: var(--si-amber);
+    margin-bottom: 12px;
+  }
+  .blurb {
+    color: var(--si-fg-muted);
+    font-size: 14px;
+    line-height: 1.6;
+    max-width: 320px;
+    margin: 0;
   }
 
-  a:hover {
-    color: var(--colour-primary);
+  .eyebrow {
+    font-family: var(--si-mono);
+    font-size: var(--si-fs-xs);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--si-fg-muted);
+    margin-bottom: 14px;
+  }
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  ul a {
+    font-family: var(--si-mono);
+    font-size: 13px;
+    color: var(--si-fg-muted);
+  }
+  ul a:hover { color: var(--si-amber); }
+
+  .line {
+    margin-top: 40px;
+    padding-top: 22px;
+    border-top: 1px solid var(--si-line);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: var(--si-mono);
+    font-size: 12px;
+    color: var(--si-fg-dim);
+    letter-spacing: 0.06em;
+  }
+  @media (max-width: 760px) {
+    .line {
+      flex-direction: column;
+      gap: 8px;
+      align-items: flex-start;
+    }
   }
 </style>

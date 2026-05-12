@@ -1,0 +1,190 @@
+---
+type Status = 'nominal' | 'elevated' | 'alert';
+interface Channel {
+  id: string;
+  name: string;
+  score: number;
+  status: Status;
+  uptime?: string;
+}
+
+const channels: Channel[] = [
+  { id: '01', name: 'Urgency Pressure',   score: 0.12, status: 'nominal' },
+  { id: '02', name: 'False Authority',    score: 0.34, status: 'nominal' },
+  { id: '03', name: 'Emotional Cycling',  score: 0.71, status: 'elevated' },
+  { id: '04', name: 'Container Capture',  score: 0.22, status: 'nominal' },
+  { id: '05', name: 'Claim Topology',     score: 0.48, status: 'nominal' },
+  { id: '06', name: 'Linguistic Drift',   score: 0.18, status: 'nominal' },
+  { id: '07', name: 'Boundary Erosion',   score: 0.83, status: 'alert' },
+];
+
+const colourFor = (s: Status) =>
+  s === 'alert' ? 'var(--si-alert)' :
+  s === 'elevated' ? 'var(--si-amber)' : 'var(--si-ok)';
+---
+
+<section class="wrap">
+  <div class="container">
+    <div class="head">
+      <span class="eyebrow amber">// SYS 002</span>
+      <h2>Detection Channels</h2>
+      <span class="rule"></span>
+      <span class="eyebrow">{channels.length} ACTIVE · LOCAL</span>
+    </div>
+
+    <div class="table">
+      <div class="row head-row">
+        <span>CH</span>
+        <span>CHANNEL</span>
+        <span>SAMPLE READING</span>
+        <span>STATUS</span>
+        <span class="r">UPTIME</span>
+      </div>
+      {channels.map((c, i) => (
+        <div class:list={['row', { last: i === channels.length - 1 }]}>
+          <span class="dim mono">CH-{c.id}</span>
+          <span>{c.name}</span>
+          <span class="bar">
+            <span class="track">
+              <span
+                class="fill"
+                style={`width: ${c.score * 100}%; background: ${colourFor(c.status)};`}
+              ></span>
+            </span>
+            <span class="num">{c.score.toFixed(2)}</span>
+          </span>
+          <span class="status" style={`color: ${colourFor(c.status)};`}>
+            <span class="dot" style={`background: ${colourFor(c.status)};`}></span>
+            {c.status}
+          </span>
+          <span class="dim mono r">{c.uptime ?? '99.9%'}</span>
+        </div>
+      ))}
+    </div>
+
+    <p class="footnote">
+      ┊ Sample readout. Channels execute locally; no telemetry is transmitted.
+      Weights are public ·
+      <a href="https://github.com/lemur47/si-protocols" target="_blank" rel="noopener">github.com/lemur47/si-protocols</a>
+    </p>
+  </div>
+</section>
+
+<style>
+  .wrap {
+    border-bottom: 1px solid var(--si-line);
+    padding: 56px 0;
+  }
+  .container {
+    max-width: var(--si-max);
+    margin: 0 auto;
+    padding: 0 var(--si-gutter);
+  }
+  .head {
+    display: flex;
+    align-items: baseline;
+    gap: 18px;
+    margin-bottom: 28px;
+  }
+  .eyebrow {
+    font-family: var(--si-mono);
+    font-size: var(--si-fs-xs);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--si-fg-muted);
+  }
+  .eyebrow.amber { color: var(--si-amber); }
+  .rule { height: 1px; flex: 1; background: var(--si-line); }
+  h2 {
+    font-family: var(--si-mono);
+    font-weight: 500;
+    font-size: var(--si-fs-lg);
+    margin: 0;
+    letter-spacing: -0.01em;
+  }
+
+  .table {
+    border: 1px solid var(--si-line);
+    border-radius: var(--si-radius);
+    background: var(--si-bg-raised);
+  }
+  .row {
+    display: grid;
+    grid-template-columns: 60px 1fr 220px 140px 100px;
+    gap: 16px;
+    padding: 14px 18px;
+    border-bottom: 1px solid var(--si-line);
+    align-items: center;
+  }
+  .row.last { border-bottom: none; }
+  .row.head-row {
+    padding: 10px 18px;
+    font-family: var(--si-mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--si-fg-dim);
+  }
+  .mono { font-family: var(--si-mono); font-size: 13px; }
+  .dim { color: var(--si-fg-dim); }
+  .r   { text-align: right; }
+
+  .bar { display: inline-flex; align-items: center; gap: 10px; }
+  .track {
+    flex: 1;
+    height: 4px;
+    min-width: 130px;
+    background: var(--si-bg-sunken);
+    overflow: hidden;
+    display: inline-block;
+  }
+  .fill { display: block; height: 100%; }
+  .num {
+    font-family: var(--si-mono);
+    font-size: 12px;
+    color: var(--si-fg-muted);
+    width: 36px;
+    text-align: right;
+  }
+
+  .status {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--si-mono);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+
+  .footnote {
+    margin-top: 18px;
+    font-family: var(--si-mono);
+    font-size: 12px;
+    color: var(--si-fg-dim);
+    letter-spacing: 0.04em;
+  }
+  .footnote a {
+    color: var(--si-amber);
+    border-bottom: 1px dotted currentColor;
+  }
+
+  @media (max-width: 900px) {
+    .row {
+      grid-template-columns: 50px 1fr 100px;
+      gap: 12px;
+    }
+    .row .bar,
+    .row .r,
+    .row.head-row > :nth-child(3),
+    .row.head-row > :nth-child(5) {
+      display: none;
+    }
+  }
+</style>

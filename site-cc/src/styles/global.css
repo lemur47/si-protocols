@@ -1,19 +1,25 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
 @import './tokens.css';
 
+/*
+ * Site-wide palette derives from the handoff tokens (--si-*).
+ * The --colour-* names below are kept as aliases so existing pages and
+ * components don't need a rewrite — they inherit the new palette
+ * automatically. New code should reference --si-* directly.
+ */
 :root {
-  --colour-bg: #0a0a0f;
-  --colour-surface: #12121a;
-  --colour-surface-alt: #1a1a28;
-  --colour-border: #2a2a3a;
-  --colour-text: #e0e0e8;
-  --colour-text-muted: #8888a0;
-  --colour-primary: #00ffa3;
-  --colour-secondary: #00d4ff;
-  --colour-accent: #a855f7;
-  --font-mono: 'JetBrains Mono', ui-monospace, 'Cascadia Code', 'Fira Code', monospace;
-  --max-width: 960px;
-  --radius: 6px;
+  --colour-bg:           var(--si-bg);
+  --colour-surface:      var(--si-bg-raised);
+  --colour-surface-alt:  var(--si-bg-raised);
+  --colour-border:       var(--si-line);
+  --colour-text:         var(--si-fg);
+  --colour-text-muted:   var(--si-fg-muted);
+  --colour-primary:      var(--si-amber);
+  --colour-secondary:    var(--si-amber-dim);
+  --colour-accent:       var(--si-amber);
+  --font-mono:           var(--si-mono);
+  --max-width:           var(--si-max);
+  --radius:              var(--si-radius-lg);
 }
 
 *,
@@ -29,44 +35,44 @@ html {
 }
 
 body {
-  font-family: var(--font-mono);
-  font-size: 15px;
-  line-height: 1.7;
-  color: var(--colour-text);
-  background-color: var(--colour-bg);
+  font-family: var(--si-sans);
+  font-size: var(--si-fs-base);
+  line-height: 1.6;
+  color: var(--si-fg);
+  background-color: var(--si-bg);
   min-height: 100dvh;
   display: flex;
   flex-direction: column;
   -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
 main {
   flex: 1;
   width: 100%;
-  max-width: var(--max-width);
-  margin: 0 auto;
-  padding: 2rem 1.5rem;
 }
 
 a {
-  color: var(--colour-primary);
+  color: var(--si-amber);
   text-decoration: none;
-  transition: color 0.2s;
+  transition: color 0.15s;
 }
 
 a:hover {
-  color: var(--colour-secondary);
+  color: var(--si-fg);
 }
 
 h1, h2, h3, h4 {
-  font-weight: 700;
+  font-family: var(--si-mono);
+  font-weight: 500;
   line-height: 1.3;
-  color: var(--colour-text);
+  color: var(--si-fg);
+  letter-spacing: -0.01em;
 }
 
-h1 { font-size: 2rem; margin-bottom: 1rem; }
-h2 { font-size: 1.5rem; margin: 2rem 0 0.75rem; }
-h3 { font-size: 1.2rem; margin: 1.5rem 0 0.5rem; }
+h1 { font-size: var(--si-fs-xl); margin-bottom: 1rem; }
+h2 { font-size: var(--si-fs-lg); margin: 2rem 0 0.75rem; }
+h3 { font-size: var(--si-fs-md); margin: 1.5rem 0 0.5rem; }
 
 p { margin-bottom: 1rem; }
 
@@ -78,17 +84,18 @@ ul, ol {
 li { margin-bottom: 0.25rem; }
 
 code {
-  font-family: var(--font-mono);
+  font-family: var(--si-mono);
   font-size: 0.9em;
-  background: var(--colour-surface-alt);
+  background: var(--si-bg-raised);
   padding: 0.15em 0.4em;
-  border-radius: var(--radius);
+  border-radius: var(--si-radius);
+  color: var(--si-amber);
 }
 
 pre {
-  background: var(--colour-surface);
-  border: 1px solid var(--colour-border);
-  border-radius: var(--radius);
+  background: var(--si-bg-sunken);
+  border: 1px solid var(--si-line);
+  border-radius: var(--si-radius);
   padding: 1.25rem;
   overflow-x: auto;
   margin-bottom: 1.5rem;
@@ -98,6 +105,7 @@ pre code {
   background: none;
   padding: 0;
   font-size: 0.85em;
+  color: var(--si-fg);
 }
 
 table {
@@ -111,25 +119,27 @@ table {
 
 th, td {
   padding: 0.5rem 0.75rem;
-  border: 1px solid var(--colour-border);
+  border: 1px solid var(--si-line);
   text-align: left;
 }
 
 th {
-  background: var(--colour-surface-alt);
-  font-weight: 700;
+  background: var(--si-bg-raised);
+  font-family: var(--si-mono);
+  font-weight: 500;
   font-size: 0.85em;
+  letter-spacing: 0.04em;
 }
 
 td {
-  font-size: 0.85em;
+  font-size: 0.9em;
 }
 
 blockquote {
-  border-left: 3px solid var(--colour-primary);
+  border-left: 2px solid var(--si-amber);
   padding-left: 1rem;
   margin-bottom: 1rem;
-  color: var(--colour-text-muted);
+  color: var(--si-fg-muted);
 }
 
 img {
@@ -137,15 +147,18 @@ img {
   height: auto;
   display: block;
   margin: 1.5rem auto;
-  border-radius: var(--radius);
+  border-radius: var(--si-radius);
 }
 
 hr {
   border: none;
-  border-top: 1px solid var(--colour-border);
+  border-top: 1px solid var(--si-line);
   margin: 2rem 0;
 }
 
-.glow {
-  text-shadow: 0 0 10px var(--colour-primary), 0 0 40px rgba(0, 255, 163, 0.15);
-}
+/*
+ * .glow is retained as a no-op alias so legacy markup that uses it
+ * (e.g. the old logo) doesn't break. The handoff palette is matte —
+ * no neon glow — so this class is intentionally empty.
+ */
+.glow { }

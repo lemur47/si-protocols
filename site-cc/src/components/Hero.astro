@@ -1,0 +1,207 @@
+---
+const lines = [
+  { kind: 'cmd',  text: 'spiritual-intelligence --init', argMuted: true },
+  { kind: 'log',  text: 'loading threat model …',          ok: true, delay: 600 },
+  { kind: 'log',  text: 'mounting 7 detection channels …', ok: true, delay: 1400 },
+  { kind: 'log',  text: 'verifying local-only pipeline …', ok: true, delay: 2100 },
+  { kind: 'cmd',  text: 'ready.',                          muted: true, delay: 3000, cursor: true },
+];
+---
+
+<section class="hero">
+  <div class="container grid">
+    <div>
+      <div class="eyebrow-row">
+        <span class="eyebrow amber">// FILE 0001</span>
+        <span class="rule"></span>
+        <span class="eyebrow">PUBLIC INDEX</span>
+      </div>
+      <h1>
+        Critical thinking,<br />
+        <span class="muted">for metaphysical spaces.</span>
+      </h1>
+      <p class="lede">
+        An indie counter-intelligence project. We surface manipulation patterns
+        in spiritual content — making them visible, measurable, and locally
+        auditable. Your content never leaves your machine.
+      </p>
+      <div class="actions">
+        <a class="btn primary" href="/why-spiritual-intelligence-matters/">▸ Begin Briefing</a>
+        <a class="btn" href="https://spiritualintelligence.dev" target="_blank" rel="noopener">Field Tools ↗</a>
+      </div>
+    </div>
+
+    <div class="terminal">
+      <div class="term-head">
+        <div class="row gap">
+          <span class="led"></span>
+          <span class="led"></span>
+          <span class="led on"></span>
+          <span class="path">~/si — local shell</span>
+        </div>
+        <span>PID 0001</span>
+      </div>
+      <div class="term-body">
+        <div class="line stage-0"><span class="amber">$</span> spiritual-intelligence <span class="muted">--init</span></div>
+        <div class="line stage-1 muted">→ loading threat model … <span class="ok">ok</span></div>
+        <div class="line stage-2 muted">→ mounting 7 detection channels … <span class="ok">ok</span></div>
+        <div class="line stage-3 muted">→ verifying local-only pipeline … <span class="ok">ok</span></div>
+        <div class="line stage-4"><span class="amber">$</span> <span class="muted">ready.</span><span class="cursor"></span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    border-bottom: 1px solid var(--si-line);
+    padding: 72px 0 88px;
+  }
+  .container {
+    max-width: var(--si-max);
+    margin: 0 auto;
+    padding: 0 var(--si-gutter);
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 64px;
+    align-items: end;
+  }
+  @media (max-width: 880px) {
+    .grid { grid-template-columns: 1fr; gap: 40px; }
+  }
+
+  .eyebrow-row {
+    display: flex;
+    gap: 18px;
+    align-items: center;
+    margin-bottom: 28px;
+  }
+  .eyebrow {
+    font-family: var(--si-mono);
+    font-size: var(--si-fs-xs);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--si-fg-muted);
+  }
+  .eyebrow.amber { color: var(--si-amber); }
+  .rule { height: 1px; flex: 1; background: var(--si-line); }
+
+  h1 {
+    font-family: var(--si-mono);
+    font-weight: 500;
+    font-size: var(--si-fs-3xl);
+    line-height: 1.02;
+    letter-spacing: -0.02em;
+    margin: 0 0 28px;
+    text-wrap: pretty;
+  }
+  @media (max-width: 720px) {
+    h1 { font-size: var(--si-fs-2xl); }
+  }
+  .muted { color: var(--si-fg-muted); }
+
+  .lede {
+    font-family: var(--si-sans);
+    font-size: 19px;
+    line-height: 1.55;
+    color: var(--si-fg-muted);
+    max-width: 560px;
+    margin: 0 0 36px;
+  }
+
+  .actions {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .btn {
+    font-family: var(--si-mono);
+    font-size: 13px;
+    letter-spacing: 0.06em;
+    padding: 12px 18px;
+    border-radius: var(--si-radius);
+    text-transform: uppercase;
+    border: 1px solid var(--si-line-strong);
+    color: var(--si-fg-muted);
+    transition: color 0.15s, border-color 0.15s;
+  }
+  .btn:hover { color: var(--si-fg); }
+  .btn.primary {
+    border-color: var(--si-amber);
+    color: var(--si-amber);
+  }
+  .btn.primary:hover {
+    color: var(--si-fg);
+    border-color: var(--si-fg);
+  }
+
+  .terminal {
+    background: var(--si-bg-sunken);
+    border: 1px solid var(--si-line);
+    border-radius: var(--si-radius);
+    font-family: var(--si-mono);
+    font-size: 13px;
+    line-height: 1.7;
+    overflow: hidden;
+  }
+  .term-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 14px;
+    border-bottom: 1px solid var(--si-line);
+    color: var(--si-fg-dim);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  .row.gap {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+  .led {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--si-line-strong);
+  }
+  .led.on { background: var(--si-amber-dim); }
+  .path { margin-left: 12px; }
+  .term-body { padding: 18px 18px 22px; }
+  .term-body .amber { color: var(--si-amber); }
+  .term-body .muted { color: var(--si-fg-muted); }
+  .term-body .ok    { color: var(--si-ok); }
+
+  .line {
+    opacity: 0;
+    animation: si-reveal 0.4s ease-out forwards;
+  }
+  .line.stage-0 { animation-delay:   0ms; }
+  .line.stage-1 { animation-delay: 600ms; }
+  .line.stage-2 { animation-delay: 1400ms; }
+  .line.stage-3 { animation-delay: 2100ms; }
+  .line.stage-4 { animation-delay: 3000ms; }
+
+  @keyframes si-reveal {
+    from { opacity: 0; transform: translateY(2px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .line { opacity: 1; animation: none; }
+  }
+
+  .cursor {
+    display: inline-block;
+    width: 8px;
+    height: 14px;
+    background: var(--si-amber);
+    vertical-align: -2px;
+    margin-left: 2px;
+    animation: si-blink 1s steps(2) infinite;
+  }
+  @keyframes si-blink { 50% { opacity: 0; } }
+</style>
