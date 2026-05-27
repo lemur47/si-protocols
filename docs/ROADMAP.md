@@ -10,7 +10,7 @@ What we're building and when. For strategic direction, see [STRATEGY.md](STRATEG
 
 - **Topology module v1** — fractal-topology claim analysis; rule and Anthropic engines; SVG/JSON output; English and Japanese support
 - **CVP ontology v0.1** — [machine-readable schema](https://github.com/lemur47/si-protocols/blob/main/cvp-ontology-v0.1.yaml); open analytical fragment covering the layer model L0 through L6, container taxonomy, threat pattern schemas, seven analysis dimensions, four classification axes
-- **Quick-Check v0.2** — CVP-enhanced Claude Skill; A/B validated on 24 samples ([results](https://spiritualintelligence.dev/blog/ab-evaluation-quick-check-v02/))
+- **Quick-Check v0.3** — CVP-enhanced Claude Skill, restructured to Anthropic's official Agent Skill format (`SKILL.md`); A/B validation from v0.2 carries forward unchanged, as v0.3 is a behaviour-preserving format migration ([results](https://spiritualintelligence.dev/blog/ab-evaluation-quick-check-v02/))
 - **Two-domain web presence** — [spiritualintelligence.dev](https://spiritualintelligence.dev) and [spiritualintelligence.cc](https://spiritualintelligence.cc) live on Cloudflare Pages; cross-linked via JSON-LD
 - **AI-readable surface** — JSON-LD plus structured markdown as the canonical machine-addressable format; per-page metadata, cross-site `sameAs` links
 - **note.com presence** — two notes published in SAER format (状況→分析→評価→推奨)
@@ -24,7 +24,6 @@ For the current state of any of these, see [STACK.md](STACK.md).
 
 What the strategy needs shipped to start working in the market.
 
-- **Quick-Check v0.3** — restructured per Anthropic Skill format; backwards-compatible with v0.2 evaluations
 - **Spiritual counterintelligence product surface** — Skills, Plugins, MCP server, and CLI as the intelligence-product distribution surface; local-only and zero-install where the channel supports it
 - **`.cc` website renewal** — parked draft PR deferred pending Book Part 0 publication; the book content will shape what the `.cc` deployment actually needs to communicate
 - **Dual-track content cadence** — Track 1 (R&D → Blog → Briefing) and Track 2 (Book → Blog → Briefing); note.com is the briefing publication channel for both tracks
