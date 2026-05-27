@@ -13,7 +13,7 @@ the body.
 
 | Skill | What it does |
 |-------|--------------|
-| [`quick-check/`](quick-check/SKILL.md) | Detects manipulation patterns in spiritual, metaphysical, and self-help text across seven dimensions plus a CVP consciousness-topology assessment. Auto-detects English or Japanese. Returns an approximate 0–100 threat score, a per-dimension table, quoted signals, and a structural assessment. **v0.3** (CVP-enhanced). |
+| [`si-quick-check/`](si-quick-check/SKILL.md) | Detects manipulation patterns in spiritual, metaphysical, and self-help text across seven dimensions plus a CVP consciousness-topology assessment. Auto-detects English or Japanese. Returns an approximate 0–100 threat score, a per-dimension table, quoted signals, and a structural assessment. **v0.3** (CVP-enhanced). |
 
 > The skills are a lightweight companion to the full
 > [SI Protocols toolkit](https://spiritualintelligence.dev) — an open-source NLP
@@ -28,7 +28,7 @@ the body.
 
 1. Open [claude.ai](https://claude.ai) and create a new **Project**.
 2. Click **Add content** and upload the skill's `SKILL.md` (e.g.
-   `quick-check/SKILL.md`).
+   `si-quick-check/SKILL.md`).
 3. Paste any text into the chat to analyse it.
 
 ### claude.ai — paste into custom instructions
@@ -45,7 +45,7 @@ Copy the skill folder into `.claude/skills/` (project) or `~/.claude/skills/`
 (personal):
 
 ```bash
-cp -r skills/quick-check ~/.claude/skills/
+cp -r skills/si-quick-check ~/.claude/skills/
 ```
 
 Claude Code discovers it automatically; the frontmatter `description` decides

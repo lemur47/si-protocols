@@ -27,7 +27,7 @@ uv run pytest
 
 ## Quick-check (no install)
 
-Don't want to install Python? Upload [`skills/quick-check/SKILL.md`](skills/quick-check/SKILL.md) to a [Claude Project](https://claude.ai) and paste any text — you'll get an instant structured analysis across all seven dimensions. See [`skills/README.md`](skills/README.md) for setup instructions (claude.ai, Claude Code, or API).
+Don't want to install Python? Upload [`skills/si-quick-check/SKILL.md`](skills/si-quick-check/SKILL.md) to a [Claude Project](https://claude.ai) and paste any text — you'll get an instant structured analysis across all seven dimensions. See [`skills/README.md`](skills/README.md) for setup instructions (claude.ai, Claude Code, or API).
 
 ## What this does
 

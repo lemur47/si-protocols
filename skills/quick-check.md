@@ -4,7 +4,7 @@
 official [Agent Skill](https://platform.claude.com/docs/en/agents-and-tools/agent-skills/overview)
 folder layout:
 
-> **[`skills/quick-check/SKILL.md`](quick-check/SKILL.md)**
+> **[`skills/si-quick-check/SKILL.md`](si-quick-check/SKILL.md)**
 
 See [`skills/README.md`](README.md) for what the skill does and how to install
 it (claude.ai Project upload, Claude Code, or the API).

@@ -1,5 +1,5 @@
 ---
-name: quick-check
+name: si-quick-check
 description: Detect manipulation and disinformation patterns in spiritual, metaphysical, New Age, guru, channelled, prosperity-gospel, conspirituality, or self-help text, scoring seven dimensions plus a CVP consciousness-topology layer. Use whenever the user asks to quick-check, screen, vet, or analyse a passage for manipulation markers, coercion, red flags, or undue influence — e.g. "quick-check this", "analyse this text for manipulation", "is this spiritual content manipulative?", "run a threat check on this channelled message", "スピリチュアルのテキストを分析して", "この文章を診断", "操作のパターンをチェック". Auto-detects English or Japanese (日本語) input. Produces an approximate 0–100 threat score, a per-dimension table, quoted signals, matched tradition categories, and a CVP structural assessment. Heuristic pattern analysis for human judgement, not a verdict on truth or harm.
 ---
 
