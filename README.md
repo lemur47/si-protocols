@@ -71,13 +71,15 @@ Local-only FastAPI server with `POST /analyse` and `GET /health`. Interactive do
 
 ```bash
 uv sync --all-extras
-pre-commit install
+pre-commit install            # wires both the pre-commit and commit-msg stage hooks
 uv run pytest                 # Tests
 uv run ruff check src/        # Lint
 uv run pyright                # Type check
 opengrep scan --config auto --error src/ app/  # SAST scan
 osv-scanner scan source --config=osv-scanner.toml --recursive .  # Dependency vulnerability scan
 ```
+
+A plain `pre-commit install` is sufficient — `default_install_hook_types` in `.pre-commit-config.yaml` installs both the `pre-commit` and `commit-msg` stage hooks, so no separate `--hook-type commit-msg` step is needed.
 
 ## Docs
 

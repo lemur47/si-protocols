@@ -84,7 +84,7 @@ ignore = [
 ]
 
 [tool.ruff.lint.per-file-ignores]
-"tests/**/*.py" = ["S101", "S314"]  # assert + xml.etree on our own SVG output
+"tests/**/*.py" = ["S101", "S314", "S603"]  # assert, xml.etree on our SVG output, subprocess in guard tests
 
 [tool.ruff.lint.isort]
 known-first-party = ["si_protocols"]

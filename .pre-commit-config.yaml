@@ -1,3 +1,8 @@
+# Wire both the pre-commit and commit-msg stages on a plain `pre-commit install`
+# (no separate `--hook-type commit-msg` needed). The commit-msg stage carries the
+# Airtable ID guard below.
+default_install_hook_types: [pre-commit, commit-msg]
+
 repos:
   # --- Ruff: lint + format ---
   - repo: https://github.com/astral-sh/ruff-pre-commit
@@ -96,6 +101,18 @@ repos:
         language: python
         always_run: true
         pass_filenames: false
+
+  # --- Airtable ID guard (commit message) ---
+  # Layer 2 of rec-ID leak prevention. classification-gate scans staged FILE
+  # content; this scans the commit MESSAGE, which that gate cannot see. Runs on
+  # the commit-msg stage, where pre-commit passes the message file as the argument.
+  - repo: local
+    hooks:
+      - id: airtable-id-guard
+        name: Airtable ID guard (commit message)
+        entry: python scripts/check-airtable-ids.py
+        language: python
+        stages: [commit-msg]
 
   # --- General hygiene ---
   - repo: https://github.com/pre-commit/pre-commit-hooks
