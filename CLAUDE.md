@@ -88,7 +88,7 @@ docs/                 # STRATEGY.md, DESIGN.md, STACK.md, ROADMAP.md
 - **Synthetic examples only** — no real channelled material in repo
 - `random` usage in heuristic layer is intentional — `S311` suppressed in ruff config
 - Ruff line length: 99. Rules include isort (`I`), pyupgrade (`UP`), bugbear (`B`), bandit (`S`)
-- Pre-commit hooks: ruff, gitleaks, opengrep, osv-scanner, classification-gate.py, pytest, `uv lock --locked` (lockfile drift)
+- Pre-commit hooks: ruff, gitleaks, opengrep, osv-scanner, classification-gate.py, pytest, `uv lock --locked` (lockfile drift). A `commit-msg`-stage hook (`scripts/check-airtable-ids.py`, id `airtable-id-guard`) additionally scans the commit *message* for Airtable IDs — `classification-gate.py` only sees staged file content. `default_install_hook_types` wires both stages on a plain `pre-commit install`.
 - **`uv.lock` drift** — CI runs `uv lock --locked` and fails on drift; the same check runs in pre-commit when `pyproject.toml` or `uv.lock` change. After editing `pyproject.toml`, run `uv lock`. For Dependabot PRs that bump pyproject lower bounds, run `uv lock` locally and push the refreshed lock to the Dependabot branch before merging.
 - Coverage threshold: 70% (`fail_under` in `pyproject.toml`)
 - Topology types are frozen dataclasses with `tuple` (not `list`) for full immutability and hashability
