@@ -2,7 +2,7 @@
 
 What we're building and when. For strategic direction, see [STRATEGY.md](STRATEGY.md). For architectural reasoning, see [DESIGN.md](DESIGN.md). For the technical stack, see [STACK.md](STACK.md).
 
-**Sprint cadence:** 1 week.
+**Sprint cadence:** 3 days.
 
 ---
 
@@ -12,6 +12,7 @@ What we're building and when. For strategic direction, see [STRATEGY.md](STRATEG
 - **CVP ontology v0.1** — [machine-readable schema](https://github.com/lemur47/si-protocols/blob/main/cvp-ontology-v0.1.yaml); open analytical fragment covering the layer model L0 through L6, container taxonomy, threat pattern schemas, seven analysis dimensions, four classification axes
 - **Quick-Check v0.2** — CVP-enhanced Claude Skill; A/B validated on 24 samples ([results](https://spiritualintelligence.dev/blog/ab-evaluation-quick-check-v02/))
 - **Two-domain web presence** — [spiritualintelligence.dev](https://spiritualintelligence.dev) and [spiritualintelligence.cc](https://spiritualintelligence.cc) live on Cloudflare Pages; cross-linked via JSON-LD
+- **AI-readable surface** — JSON-LD plus structured markdown as the canonical machine-addressable format; per-page metadata, cross-site `sameAs` links
 - **note.com presence** — two notes published in SAER format (状況→分析→評価→推奨)
 - **PMO and CI posture** — Airtable work-item flow, classification gate, Dependabot, full pre-commit chain
 
@@ -23,9 +24,10 @@ For the current state of any of these, see [STACK.md](STACK.md).
 
 What the strategy needs shipped to start working in the market.
 
-- **Web demo MVP** — browser analysis tool on `.dev`, embeddable on `.cc`; zero install, zero data collection
-- **note.com expansion** — audio briefing pilot (CEO-led); paid counterintelligence reports
-- **Content filling** — `.cc` pattern library; `.dev` tutorial series; `llms.txt` / `llms-full.txt` for AI agent discoverability
+- **Quick-Check v0.3** — restructured per Anthropic Skill format; backwards-compatible with v0.2 evaluations
+- **Spiritual counterintelligence product surface** — Skills, Plugins, MCP server, and CLI as the intelligence-product distribution surface; local-only and zero-install where the channel supports it
+- **`.cc` website renewal** — parked draft PR deferred pending Book Part 0 publication; the book content will shape what the `.cc` deployment actually needs to communicate
+- **Dual-track content cadence** — Track 1 (R&D → Blog → Briefing) and Track 2 (Book → Blog → Briefing); note.com is the briefing publication channel for both tracks
 
 ---
 
@@ -33,9 +35,10 @@ What the strategy needs shipped to start working in the market.
 
 What gets the tools into daily use.
 
-- **Chrome extension MVP** — right-click analysis on any webpage; local-only processing; landing page on `.cc`
 - **Batch analysis** — multiple texts compared side-by-side
-- **note.com cadence** — two to three notes per month sustained
+- **Audio analysis** — extend the analytical surface beyond text into audio waveforms; capability covers synthetic-speech detection (AI-generated content patterns) and acoustic forensic indicators (human stress, environmental dissonance); local-only processing consistent with the data sovereignty commitment
+- **Audio briefing pilot** — CEO-led; trust-layer for non-readers
+- **Sustained cadence** — two to three notes per month across both tracks
 
 ---
 
@@ -55,5 +58,5 @@ What opens the technical surface up for external engagement.
 - Additional language support beyond EN and JA until language expansion process is established
 - Hosted analysis services (outside data sovereignty commitment — see [STRATEGY.md](STRATEGY.md))
 - Mobile applications
-- Social-media integrations beyond the Chrome extension
+- Browser extensions (superseded by the intelligence-product surface in Phase 1)
 - Anonymous contribution channels (open-core licensing does not imply open collaboration)
