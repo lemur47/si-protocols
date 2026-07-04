@@ -5,6 +5,10 @@ on:
     branches: [main]
   pull_request:
     branches: [main]
+  # Weekly re-run against the current advisory database (osv.dev moves while
+  # the repo is idle); a red scheduled run on main is the freshness signal.
+  schedule:
+    - cron: "0 21 * * 0"  # Mondays 06:00 JST
 
 permissions:
   contents: read
