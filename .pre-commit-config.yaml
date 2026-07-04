@@ -76,22 +76,6 @@ repos:
         always_run: true
         stages: [pre-commit]
 
-  # Type checking - Astro (site/ only)
-  - repo: local
-    hooks:
-      - id: astro-check-site
-        name: astro check (site)
-        entry: bash -c 'cd site && npx astro check'
-        language: system
-        pass_filenames: false
-        files: ^site/
-      - id: astro-check-site-cc
-        name: astro check (site-cc)
-        entry: bash -c 'cd site-cc && npx astro check'
-        language: system
-        pass_filenames: false
-        files: ^site-cc/
-
   # --- Classification gate (file name and content) ---
   - repo: local
     hooks:

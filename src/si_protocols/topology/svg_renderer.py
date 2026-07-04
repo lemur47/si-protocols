@@ -1,7 +1,7 @@
 """SVG renderer for topology graphs.
 
 Uses ``xml.etree.ElementTree`` - no external SVG library. Matches the
-intelligence-themed design system from ``site-cc/public/images/``.
+intelligence-themed design system from ``docs/images/``.
 """
 
 from __future__ import annotations
