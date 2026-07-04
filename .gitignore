@@ -37,14 +37,6 @@ coverage.xml
 # Linters / formatters
 .ruff_cache/
 
-# Astro sites
-site/node_modules/
-site/dist/
-site/.astro/
-site-cc/node_modules/
-site-cc/dist/
-site-cc/.astro/
-
 # Editors / IDEs
 .idea/
 .vscode/

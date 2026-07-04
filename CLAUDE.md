@@ -2,9 +2,13 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+**Boot note.** If `CLAUDE-internal.md` exists at the project root, read it before starting work — it is the operator runbook (operating model, KV-TMS boot ritual, Airtable PMO protocol, trust boundaries) and changes independently of this file. It is classified INTERNAL and gitignored, so it is absent from public clones — that's fine, proceed without it.
+
 ## What is this?
 
-Hybrid tech-psychic protocols for **Spiritual Intelligence** — open-source tools to detect disinformation in metaphysical and spiritual content. Think "cybersecurity for the soul". Local-only tool; never host, collect, or analyse third-party content.
+**VEGA** — the open-source Spiritual Intelligence tooling stream. Hybrid tech-psychic protocols to detect disinformation in metaphysical and spiritual content. Think "cybersecurity for the soul". Local-only tool; never host, collect, or analyse third-party content.
+
+This repo carries the Python toolkit, the zero-install Claude skills, and the documentation. The former documentation/editorial websites (`site/`, `site-cc/`, `books/`) were handed over to a separate web line in July 2026 — preserved at tag `web-handover-2026-07`; their toolkit docs now live under `docs/`.
 
 ## Dev commands
 
@@ -30,15 +34,6 @@ uvicorn app.main:app --host 127.0.0.1 --port 8000   # Local API server
 - `uv run si-topology examples/synthetic_topology_suspicious.txt` — topology analysis. Flags: `--engine rule|anthropic`, `--format svg|json`, `--lang en|ja`, `-o OUTPUT`.
 
 Rich output respects the `NO_COLOR` env var. `AnthropicEngine` requires the `anthropic` optional extra (`uv sync --extra anthropic`) and an `ANTHROPIC_API_KEY` environment variable.
-
-### Astro sites
-
-```bash
-cd site && npm run dev       # .dev domain local dev
-cd site && npm run build     # .dev production build
-cd site-cc && npm run dev    # .cc domain local dev (port 3001)
-cd site-cc && npm run build  # .cc production build
-```
 
 ## Architecture
 
@@ -72,12 +67,10 @@ app/
   main.py             # FastAPI REST API (POST /analyse, GET /health)
   schemas.py          # Pydantic request/response models
 skills/               # Claude Project skills (zero-install analysis)
-site/                 # Astro docs (.dev)
-site-cc/              # Astro docs (.cc)
 scripts/              # Ops scripts incl. classification-gate.py
 tests/                # pytest suite
 examples/             # Synthetic sample texts (never real material)
-docs/                 # STRATEGY.md, DESIGN.md, STACK.md, ROADMAP.md
+docs/                 # User docs, methodology, and project canon (see Docs map)
 ```
 
 ## Key conventions
@@ -108,10 +101,16 @@ The `si-protocols` repo is **public**. All remote branches (including `feature/*
 
 ## Docs map
 
+Project canon:
+
 - [`docs/STRATEGY.md`](docs/STRATEGY.md) — strategic *why*
 - [`docs/DESIGN.md`](docs/DESIGN.md) — architectural *why*
 - [`docs/STACK.md`](docs/STACK.md) — technical *what*
 - [`docs/ROADMAP.md`](docs/ROADMAP.md) — *when* things land
+
+User documentation (folded in from the former sites, July 2026): `docs/quickstart.md`, `docs/library.md`, `docs/api.md`, `docs/architecture.md`, plus the `docs/hands-on-threat-analysis.md` tutorial and `docs/ab-evaluation-quick-check-v02.md` evaluation.
+
+Methodology: `docs/the-virtualisation-model.md` (conceptual; `docs/CVP.md` is the technical model), `docs/egregores.md`, `docs/mapping-claims-and-patterns.md`, `docs/threat-modelling.md`.
 
 ## Licence
 

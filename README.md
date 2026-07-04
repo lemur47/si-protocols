@@ -54,7 +54,7 @@ app/
   main.py             # FastAPI REST API (POST /analyse, GET /health)
   schemas.py          # Pydantic request/response models
 skills/               # Claude Project skills (zero-install analysis)
-site/                 # Astro documentation site
+docs/                 # User docs, methodology, and architecture docs
 tests/                # pytest suite
 examples/             # Synthetic sample texts (never real material)
 ```
@@ -83,11 +83,29 @@ A plain `pre-commit install` is sufficient — `default_install_hook_types` in `
 
 ## Docs
 
+### User documentation
+
+- [`docs/quickstart.md`](docs/quickstart.md) — Install and first analysis in five minutes
+- [`docs/library.md`](docs/library.md) — Python library reference
+- [`docs/api.md`](docs/api.md) — REST API reference
+- [`docs/architecture.md`](docs/architecture.md) — How the analysis layers fit together
+- [`docs/hands-on-threat-analysis.md`](docs/hands-on-threat-analysis.md) — Step-by-step threat-analysis tutorial
+- [`docs/ab-evaluation-quick-check-v02.md`](docs/ab-evaluation-quick-check-v02.md) — A/B evaluation of the Quick-Check skill
+
+### Methodology
+
+- [`docs/the-virtualisation-model.md`](docs/the-virtualisation-model.md) — The consciousness-virtualisation model (conceptual introduction; see [`docs/CVP.md`](docs/CVP.md) for the technical model)
+- [`docs/egregores.md`](docs/egregores.md) — Egregores as harvesting containers
+- [`docs/mapping-claims-and-patterns.md`](docs/mapping-claims-and-patterns.md) — Claim mapping and pattern analysis
+- [`docs/threat-modelling.md`](docs/threat-modelling.md) — Threat modelling for spiritual spaces
+
+### Project canon
+
 - [`CLAUDE.md`](CLAUDE.md) — Commands, architecture details, code style conventions
-- [`docs/STRATEGY.md`](docs/STRATEGY.md) — Mission, audience, two-domain and two-channel strategy, roadmap overview
+- [`docs/STRATEGY.md`](docs/STRATEGY.md) — Mission, audience, and channel strategy
 - [`docs/DESIGN.md`](docs/DESIGN.md) — Architectural reasoning: design philosophy, CVP layer model, engine and topology architecture
-- [`docs/STACK.md`](docs/STACK.md) — Technical map: runtime, infrastructure, AI/LLM layer, CI & security, content distribution
-- [`docs/ROADMAP.md`](docs/ROADMAP.md) — Mid-term plan: topology roadmap, two-domain web presence, web demo, Chrome extension, note.com launch
+- [`docs/STACK.md`](docs/STACK.md) — Technical map: runtime, infrastructure, AI/LLM layer, CI & security
+- [`docs/ROADMAP.md`](docs/ROADMAP.md) — Mid-term plan
 
 ## Disclaimer
 
