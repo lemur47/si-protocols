@@ -44,9 +44,10 @@ coverage.xml
 *.swo
 *~
 
-# Claude Code
-.claude/settings.local.json
+# Claude Code / operator-local (skills, settings, calibration overlays)
+.claude/
 CLAUDE-internal.md
+*.local.*
 
 # OS files
 .DS_Store
