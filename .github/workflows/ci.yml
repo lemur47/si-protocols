@@ -14,6 +14,29 @@ permissions:
   contents: read
 
 jobs:
+  # Second layer for the classification gate. The pre-commit hook is the first,
+  # and it can be bypassed with --no-verify — so the same script runs here,
+  # where it cannot be skipped by whoever authored the commit.
+  classification-gate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5  # v4.3.1
+        with:
+          fetch-depth: 0  # the range check needs history back to the merge base
+      - name: Run the classification gate
+        env:
+          # Via env rather than inline expansion: these are attacker-influenced
+          # strings on a fork PR, and must never be interpolated into the shell.
+          BASE_REF: ${{ github.base_ref }}
+          EVENT: ${{ github.event_name }}
+        run: |
+          if [ "$EVENT" = "pull_request" ]; then
+            base="$(git merge-base "origin/$BASE_REF" HEAD)"
+            python scripts/classification-gate.py --range "$base" HEAD
+          else
+            python scripts/classification-gate.py --all
+          fi
+
   lint:
     runs-on: ubuntu-latest
     steps:
