@@ -1,116 +1,75 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+Guidance for Claude Code (claude.ai/code) working in this repository.
 
 **Boot note.** If `CLAUDE.local.md` exists at the project root, read it before starting work — it is the operator runbook (operating model, KV-TMS boot ritual, work-tracker protocol, trust boundaries) and changes independently of this file. It is classified INTERNAL and gitignored, so it is absent from public clones — that's fine, proceed without it.
 
 ## What is this?
 
-**VEGA** — the open-source Spiritual Intelligence tooling stream. Hybrid tech-psychic protocols to detect disinformation in metaphysical and spiritual content. Think "cybersecurity for the soul". Local-only tool; never host, collect, or analyse third-party content.
+**VEGA** — the open-source Spiritual Intelligence tooling stream. Hybrid tech-psychic protocols to detect disinformation in metaphysical and spiritual content. Think "cybersecurity for the soul".
 
-This repo carries the Python toolkit, the zero-install Claude skills, and the documentation. The former documentation/editorial websites (`site/`, `site-cc/`, `books/`) were handed over to a separate web line in July 2026 — preserved at tag `web-handover-2026-07`; their toolkit docs now live under `docs/`.
+**Local-only: never host, collect, or analyse third-party content.**
 
-## Dev commands
+The repo carries the Python toolkit, the zero-install Claude skills, and the documentation. The former editorial websites were handed over to a separate web line in July 2026, preserved at tag `web-handover-2026-07`; their toolkit docs now live under `docs/`.
+
+## Commands
+
+The usual `uv` / `ruff` / `pytest` / `pyright` invocations behave as expected. These are the ones worth knowing:
 
 ```bash
-uv sync --all-extras                                # Install all deps
-bash scripts/post-sync.sh                           # (Re)install required spaCy models
-uv run pytest                                       # Run all tests
-uv run pytest tests/test_markers.py                 # Run a single test file
-uv run pytest -k "test_deterministic"               # Run tests matching a name
-uv run pytest -m "not slow"                         # Skip slow tests (spaCy-dependent)
-uv run ruff check src/ tests/ app/                  # Lint
-uv run ruff format src/ tests/ app/                 # Format
-uv run pyright                                      # Type check
-opengrep scan --config auto --error src/ app/       # SAST scan
-osv-scanner scan source --config=osv-scanner.toml --recursive .  # Dep vuln scan
-pre-commit run --all-files                          # Run all hooks
-uvicorn app.main:app --host 127.0.0.1 --port 8000   # Local API server
+bash scripts/post-sync.sh                    # (re)install the spaCy models — needed after uv sync
+uv run pytest -m "not slow"                  # skip the spaCy-dependent tests
+osv-scanner scan source --config=osv-scanner.toml --recursive .   # the config flag is required
+uvicorn app.main:app --host 127.0.0.1 --port 8000                 # loopback only; the API is not hosted
 ```
 
-### CLI entry points
+CLI entry points:
 
-- `uv run si-threat-filter examples/synthetic_suspicious.txt` — threat filter. Flags: `--format rich|json`, `--lang en|ja`.
-- `uv run si-topology examples/synthetic_topology_suspicious.txt` — topology analysis. Flags: `--engine rule|anthropic`, `--format svg|json`, `--lang en|ja`, `-o OUTPUT`.
+- `uv run si-threat-filter <file>` — `--format rich|json`, `--lang en|ja`
+- `uv run si-topology <file>` — `--engine rule|anthropic`, `--format svg|json`, `--lang en|ja`, `-o OUTPUT`
 
-Rich output respects the `NO_COLOR` env var. `AnthropicEngine` requires the `anthropic` optional extra (`uv sync --extra anthropic`) and an `ANTHROPIC_API_KEY` environment variable.
+`AnthropicEngine` needs the `anthropic` extra and an `ANTHROPIC_API_KEY`. Rich output respects `NO_COLOR`.
 
 ## Architecture
 
-The threat filter produces a 0–100 score combining two analysis layers:
+Two tools. The **threat filter** scores 0–100 via `hybrid_score(text, lang)`, combining a tech layer (60%, spaCy marker matching) with a heuristic layer (40%, probabilistic dissonance scanner). The **topology** module extracts claims, classifies them on four axes, and builds a layered graph, behind three engine tiers — `RuleEngine` (local, default), `AnthropicEngine` (Claude API), `OllamaEngine` (stub). Both return frozen dataclasses.
 
-1. **Tech layer** (60%) — NLP marker matching in `src/si_protocols/threat_filter.py` using spaCy pipelines.
-2. **Heuristic layer** (40%) — probabilistic dissonance scanner (placeholder for future biofeedback integration).
+Full architectural reasoning: [`docs/DESIGN.md`](docs/DESIGN.md).
 
-Core entry point: `hybrid_score(text, lang="en")` returning a `ThreatResult` frozen dataclass. spaCy models are lazy-loaded via `_get_nlp(lang)` to avoid import-time side effects in tests; NLP-exercising tests are marked `@pytest.mark.slow`.
+## Gotchas
 
-The topology module (`src/si_protocols/topology/`) extracts claims, classifies them along four axes (falsifiability, verifiability, domain coherence, logical dependency), and builds a layered graph. Claims are assigned a `VariableKind` (`PSEUDO`, `TRUE`, `INDETERMINATE`) and placed at one of three `TopologyLevel`s (`MACRO`, `MESO`, `MICRO`). Three engine tiers implement the `AnalysisEngine` protocol:
+- spaCy models are lazy-loaded via `_get_nlp(lang)` to keep import-time side effects out of tests; NLP-exercising tests are marked `@pytest.mark.slow`.
+- `random` in the heuristic layer is deliberate — `S311` is suppressed in the ruff config, not an oversight.
+- Python 3.14 is blocked by spaCy. `requires-python = ">=3.12"`; CI tests 3.12 and 3.13.
+- **`uv.lock` drift fails CI.** After editing `pyproject.toml`, run `uv lock`. For Dependabot PRs that bump lower bounds, run `uv lock` locally and push the refreshed lock to the Dependabot branch before merging.
+- Adding a language takes four coordinated edits: a `markers_<lang>.py` file, a loader in `marker_registry.py`, an entry in `_LANG_MODELS`, and the `SupportedLang` literal.
+- Topology types are frozen dataclasses using `tuple`, not `list` — they must stay hashable.
+- Two guard layers, because one cannot see the other's surface: `classification-gate.py` scans staged file *content*, while `check-airtable-ids.py` runs at the `commit-msg` stage to scan the commit *message*. `default_install_hook_types` wires both on a plain `pre-commit install`.
+- British English in docs and comments ("analyse", "colour", "licence").
+- Examples are synthetic only — never real channelled material.
 
-- **Tier 0 `RuleEngine`** — deterministic, local spaCy + markers
-- **Tier 1 `AnthropicEngine`** — Claude API-based extraction
-- **Tier 2 `OllamaEngine`** — stub for future local-LLM integration
+## Classification and git workflow
 
-Output: `TopologyResult` frozen dataclass. `render_svg(result)` / `save_svg(result, path)` produce intelligence-themed SVGs; `render_topology_json(result)` serialises to JSON.
+**The repo is public. Every pushed branch is world-readable the moment it lands.**
 
-For full architectural reasoning, see [`docs/DESIGN.md`](docs/DESIGN.md).
-
-## Project layout
-
-```
-src/si_protocols/
-  threat_filter.py    # Hybrid NLP + heuristic scorer
-  markers.py          # Disinformation marker definitions
-  marker_registry.py  # Multi-language marker loader
-  output.py           # Rich and JSON output formatting
-  topology/           # Fractal-topology claim analysis
-app/
-  main.py             # FastAPI REST API (POST /analyse, GET /health)
-  schemas.py          # Pydantic request/response models
-skills/               # Claude Project skills (zero-install analysis)
-scripts/              # Ops scripts incl. classification-gate.py
-tests/                # pytest suite
-examples/             # Synthetic sample texts (never real material)
-docs/                 # User docs, methodology, and project canon (see Docs map)
-```
-
-## Key conventions
-
-- **British English** in all docs and comments (e.g. "analyse", "colour", "licence")
-- **src layout** — all library code under `src/si_protocols/`
-- **`requires-python = ">=3.12"`** — dev on 3.13, CI tests 3.12 + 3.13. spaCy does not yet support 3.14.
-- **Synthetic examples only** — no real channelled material in repo
-- `random` usage in heuristic layer is intentional — `S311` suppressed in ruff config
-- Ruff line length: 99. Rules include isort (`I`), pyupgrade (`UP`), bugbear (`B`), bandit (`S`)
-- Pre-commit hooks: ruff, gitleaks, opengrep, osv-scanner, classification-gate.py, pytest, `uv lock --locked` (lockfile drift). A `commit-msg`-stage hook (`scripts/check-airtable-ids.py`, id `airtable-id-guard`) additionally scans the commit *message* for Airtable IDs — `classification-gate.py` only sees staged file content. `default_install_hook_types` wires both stages on a plain `pre-commit install`.
-- **`uv.lock` drift** — CI runs `uv lock --locked` and fails on drift; the same check runs in pre-commit when `pyproject.toml` or `uv.lock` change. After editing `pyproject.toml`, run `uv lock`. For Dependabot PRs that bump pyproject lower bounds, run `uv lock` locally and push the refreshed lock to the Dependabot branch before merging.
-- Coverage threshold: 70% (`fail_under` in `pyproject.toml`)
-- Topology types are frozen dataclasses with `tuple` (not `list`) for full immutability and hashability
-- Adding a new language: a `markers_<lang>.py` file, a loader in `marker_registry.py`, a model entry in `_LANG_MODELS`, and the `SupportedLang` Literal updated
-- Skills in `skills/` are standalone prompt files encoding the detection methodology for use in Claude Projects (claude.ai) without installing the Python toolkit
-
-## Classification & git workflow
-
-The `si-protocols` repo is **public**. All remote branches (including `feature/*`) are publicly visible and trigger Cloudflare Pages preview deployments.
-
-- Only **Open**-classified content goes to remote. Internal and Classified docs stay local — never `git push`.
+- Only **Open**-classified content goes to remote. Internal and Classified stay local — never push them.
 - Use `tmp/` (gitignored) for classified working files and handoffs.
-- The `scripts/classification-gate.py` pre-commit hook enforces this — never bypass it.
-- Always work on a `feature/*` branch; open a PR for review; all pre-commit hooks must pass before pushing.
+- **Never bypass `scripts/classification-gate.py`.**
+- Always work on a `feature/*` branch and open a PR. All pre-commit hooks must pass before pushing.
 
-**PMO operations** (Airtable protocol, sprints, work items, firing pin drills, capacity anchor reviews, decision logging, trust-boundary config) live in `CLAUDE.local.md` — operator-local, gitignored, populated from CTO handoff.
+Operator-local material — work-tracker protocol, sprints, decision logging, trust-boundary config — lives in `CLAUDE.local.md`.
+
+## Directories worth a note
+
+`skills/` holds standalone prompt files encoding the detection methodology, for use in Claude Projects without installing the Python toolkit. `examples/` holds synthetic sample texts. The rest of the layout is conventional src-layout and reads clearly from `ls`.
 
 ## Docs map
 
-Project canon:
+Everything below lives under `docs/`.
 
-- [`docs/STRATEGY.md`](docs/STRATEGY.md) — strategic *why*
-- [`docs/DESIGN.md`](docs/DESIGN.md) — architectural *why*
-- [`docs/STACK.md`](docs/STACK.md) — technical *what*
-- [`docs/ROADMAP.md`](docs/ROADMAP.md) — *when* things land
-
-User documentation (folded in from the former sites, July 2026): `docs/quickstart.md`, `docs/library.md`, `docs/api.md`, `docs/architecture.md`, plus the `docs/hands-on-threat-analysis.md` tutorial and `docs/ab-evaluation-quick-check-v02.md` evaluation.
-
-Methodology: `docs/the-virtualisation-model.md` (conceptual; `docs/CVP.md` is the technical model), `docs/egregores.md`, `docs/mapping-claims-and-patterns.md`, `docs/threat-modelling.md`.
+- **Canon** — `STRATEGY.md` (strategic *why*) · `DESIGN.md` (architectural *why*) · `STACK.md` (technical *what*) · `ROADMAP.md` (*when*)
+- **User docs** — `quickstart.md`, `library.md`, `api.md`, `architecture.md`, plus the `hands-on-threat-analysis.md` tutorial and the `ab-evaluation-quick-check-v02.md` evaluation
+- **Methodology** — `the-virtualisation-model.md` (conceptual) and `CVP.md` (technical), `egregores.md`, `mapping-claims-and-patterns.md`, `threat-modelling.md`
 
 ## Licence
 
