@@ -241,6 +241,23 @@ class TestGateMainExitCode:
         monkeypatch.setattr(gate, "get_changed_files", lambda _argv: ["notes.md"])
         assert gate.main([]) == 0
 
+    def test_success_reports_what_it_scanned(
+        self,
+        gate: ModuleType,
+        tmp_path: Path,
+        monkeypatch: pytest.MonkeyPatch,
+        capsys: pytest.CaptureFixture[str],
+    ) -> None:
+        """A silent green cannot be told apart from a gate that scanned nothing."""
+        monkeypatch.chdir(tmp_path)
+        _write(tmp_path / "notes.md", "Clean.\n")
+        (tmp_path / "diagram.png").write_bytes(UNDECODABLE)
+        monkeypatch.setattr(gate, "get_changed_files", lambda _argv: ["notes.md", "diagram.png"])
+        assert gate.main([]) == 0
+        out = capsys.readouterr().out
+        assert "1 file(s) scanned" in out
+        assert "1 allowlisted binary" in out
+
     def test_main_exits_0_when_id_in_tmp(
         self, gate: ModuleType, tmp_path: Path, monkeypatch: pytest.MonkeyPatch
     ) -> None:

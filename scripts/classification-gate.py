@@ -240,12 +240,16 @@ def check_airtable_ids(filepath: str, content: str) -> str | None:
 
 def main(argv: list[str] | None = None) -> int:
     """Run the classification gate. Returns 0 if clear, 1 if blocked."""
-    changed = get_changed_files(list(sys.argv[1:] if argv is None else argv))
+    args = list(sys.argv[1:] if argv is None else argv)
+    changed = get_changed_files(args)
+    mode = args[0].lstrip("-") if args else "staged"
 
     if not changed:
+        print(f"Classification gate: no files to check ({mode}).")
         return 0
 
     violations: list[tuple[str, str]] = []
+    exempted = 0
 
     for filepath in changed:
         # Check filename
@@ -266,7 +270,8 @@ def main(argv: list[str] | None = None) -> int:
             violations.append((filepath, reason))
             continue
         if content is None:
-            continue  # allowlisted binary type, deliberately not scanned
+            exempted += 1  # allowlisted binary type, deliberately not scanned
+            continue
 
         # Check content for classification markers
         reason = check_content(content)
@@ -306,6 +311,14 @@ def main(argv: list[str] | None = None) -> int:
         print("=" * 60 + "\n")
         return 1
 
+    # Say what was actually examined. A gate that prints nothing on success
+    # produces a green indistinguishable from one that scanned no files at all,
+    # which is not evidence of anything.
+    scanned = len(changed) - exempted
+    summary = f"Classification gate: {scanned} file(s) scanned, 0 violations ({mode})."
+    if exempted:
+        summary += f" {exempted} allowlisted binary file(s) not scanned."
+    print(summary)
     return 0
 
 
