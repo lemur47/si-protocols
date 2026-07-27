@@ -25,13 +25,19 @@ regex = '''(?i)(api_key|secret|token|password)\s*=\s*["\'][a-zA-Z0-9\-_]{16,}["\
 path = '''\.py$'''
 tags = ["python", "secret"]
 
-# Allowlist for false positives
+# Allowlist for false positives.
+#
+# Markdown is deliberately NOT exempt. A blanket '''\.md$''' entry lived here
+# until 2026-07-27, from when markdown meant a few prose files. The July 2026
+# handover folded the whole documentation corpus into markdown under docs/, so
+# the exemption had quietly made the repo's largest body of text invisible to
+# secret scanning — in a public repo. Do not restore it: allowlist individual
+# findings by path and rule instead, with a comment saying why each is benign.
 [allowlist]
 description = "Global allowlist"
 paths = [
     '''^\.gitleaks\.toml$''',
     '''^tests/.*test.*\.py$''',
-    '''\.md$''',
     '''__pycache__''',
     '''(.*?)(jpg|gif|doc|pdf|bin|svg|png|webp)$''',
 ]
