@@ -37,10 +37,29 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5  # v4.3.1
+      # Direct release-asset download, pinned by version AND binary SHA-256 — no
+      # installer script. The upstream install.sh is fetched from a moving `main`,
+      # so any change there would execute here on the next run, including the
+      # weekly scheduled one that nobody triggers. It also resolves versions via
+      # an unauthenticated api.github.com call (rate-limited per shared runner IP
+      # → random CI failures) and installs LATEST when called without a version.
+      # Release assets come from GitHub's CDN (no API rate limit), and the
+      # checksum covers the binary itself. Keep OPENGREP_VERSION in step with the
+      # local install so CI == local. On bump, regenerate the checksum:
+      #   curl -fsSL "https://github.com/opengrep/opengrep/releases/download/<tag>/opengrep_manylinux_x86" | sha256sum
       - name: Install opengrep
+        env:
+          OPENGREP_VERSION: v1.25.0
+          OPENGREP_BIN_SHA256: 9ac4aebb47ba3f7b0d8fc641ac8749cb6c2f253f616131a67d9631e00d4bea33
         run: |
-          curl -fsSL https://raw.githubusercontent.com/opengrep/opengrep/main/install.sh | bash
-          echo "$HOME/.opengrep/cli/latest" >> "$GITHUB_PATH"
+          install_dir="$HOME/.opengrep/bin"
+          mkdir -p "$install_dir"
+          curl -fsSL -o "$install_dir/opengrep" \
+            "https://github.com/opengrep/opengrep/releases/download/${OPENGREP_VERSION}/opengrep_manylinux_x86"
+          echo "${OPENGREP_BIN_SHA256}  $install_dir/opengrep" | sha256sum -c -
+          chmod +x "$install_dir/opengrep"
+          echo "$install_dir" >> "$GITHUB_PATH"
+          "$install_dir/opengrep" --version
       - name: Run opengrep SAST
         run: opengrep scan --config auto --error src/ app/
 
