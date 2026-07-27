@@ -3,7 +3,7 @@
 
 Stops Airtable record/table/field IDs leaking into *public artefacts*:
 commit messages, PR titles/bodies, and issue bodies. These IDs are
-operator-local intelligence — they belong in CLAUDE-internal.md (gitignored)
+operator-local intelligence — they belong in CLAUDE.local.md (gitignored)
 or R2, never on the public repo.
 
 Companion to ``scripts/classification-gate.py``, which scans staged FILE
@@ -118,7 +118,7 @@ def _emit_deny(found: str) -> None:
     reason = (
         f"Airtable ID '{found}' detected in a git/gh command. Record/table/field "
         "IDs must not leak into commit messages, PR titles/bodies, or issue bodies — "
-        "they are operator-local (CLAUDE-internal.md / R2). Remove the ID and retry."
+        "they are operator-local (CLAUDE.local.md / R2). Remove the ID and retry."
     )
     decision = {
         "hookSpecificOutput": {
@@ -141,7 +141,7 @@ def _print_commit_block(found: str) -> None:
         f"  Airtable ID leaked into the commit message: {found}",
         "",
         "  Record/table/field IDs are operator-local intelligence. They",
-        "  belong in CLAUDE-internal.md (gitignored) or R2 — never in a",
+        "  belong in CLAUDE.local.md (gitignored) or R2 — never in a",
         "  public commit message, PR title/body, or issue body.",
         "",
         "  Action: remove the ID from your commit message and retry.",

@@ -63,7 +63,7 @@ The programme is managed as code: work items, sprints, and decisions are structu
 
 | Surface | Purpose | Notes |
 |---|---|---|
-| Airtable base | Projects, Sprints, Work Items, Decisions, Documents | Specific IDs and protocol in `CLAUDE-internal.md` (operator-local) |
+| Airtable base | Projects, Sprints, Work Items, Decisions, Documents | Specific IDs and protocol in `CLAUDE.local.md` (operator-local) |
 | GitHub (`lemur47/si-protocols`) | Public monorepo: library, app, sites, skills, ontology, docs, scripts | `feature/*` branch discipline, PR review, Dependabot |
 | Claude Code | DevSecOps execution (isolated dev environment) | Reads `## Spec`, writes `## Execution Log` |
 | Claude (chat) | CTO planning & review | Drafts specs, reviews `## Execution Log`, writes `## Review` |

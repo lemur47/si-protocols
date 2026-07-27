@@ -2,7 +2,7 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-**Boot note.** If `CLAUDE-internal.md` exists at the project root, read it before starting work — it is the operator runbook (operating model, KV-TMS boot ritual, Airtable PMO protocol, trust boundaries) and changes independently of this file. It is classified INTERNAL and gitignored, so it is absent from public clones — that's fine, proceed without it.
+**Boot note.** If `CLAUDE.local.md` exists at the project root, read it before starting work — it is the operator runbook (operating model, KV-TMS boot ritual, work-tracker protocol, trust boundaries) and changes independently of this file. It is classified INTERNAL and gitignored, so it is absent from public clones — that's fine, proceed without it.
 
 ## What is this?
 
@@ -97,7 +97,7 @@ The `si-protocols` repo is **public**. All remote branches (including `feature/*
 - The `scripts/classification-gate.py` pre-commit hook enforces this — never bypass it.
 - Always work on a `feature/*` branch; open a PR for review; all pre-commit hooks must pass before pushing.
 
-**PMO operations** (Airtable protocol, sprints, work items, firing pin drills, capacity anchor reviews, decision logging, trust-boundary config) live in `CLAUDE-internal.md` — operator-local, gitignored, populated from CTO handoff.
+**PMO operations** (Airtable protocol, sprints, work items, firing pin drills, capacity anchor reviews, decision logging, trust-boundary config) live in `CLAUDE.local.md` — operator-local, gitignored, populated from CTO handoff.
 
 ## Docs map
 
