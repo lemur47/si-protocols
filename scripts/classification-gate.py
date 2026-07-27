@@ -36,7 +36,7 @@ CLASSIFICATION_MARKERS: list[re.Pattern[str]] = [
 ]
 
 # Airtable identifier patterns — 3-char prefix + 14 alphanumerics.
-# These belong in CLAUDE-internal.md (gitignored) or R2, never the public repo.
+# These belong in CLAUDE.local.md (gitignored) or R2, never the public repo.
 AIRTABLE_ID_PATTERNS: list[re.Pattern[str]] = [
     re.compile(r"\bapp[A-Za-z0-9]{14}\b"),
     re.compile(r"\btbl[A-Za-z0-9]{14}\b"),

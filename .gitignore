@@ -46,8 +46,12 @@ coverage.xml
 
 # Claude Code / operator-local (skills, settings, calibration overlays)
 .claude/
-CLAUDE-internal.md
 *.local.*
+# The operator runbook was renamed CLAUDE-internal.md -> CLAUDE.local.md, which
+# *.local.* already covers. This entry stays as a safety net: it costs one line,
+# and dropping it would un-ignore the old filename in any clone or backup that
+# still carries it — an INTERNAL file, one `git add` away from a public remote.
+CLAUDE-internal.md
 
 # OS files
 .DS_Store
