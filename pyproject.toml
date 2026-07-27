@@ -93,7 +93,7 @@ known-first-party = ["si_protocols"]
 [tool.pyright]
 pythonVersion = "3.12"
 typeCheckingMode = "standard"
-include = ["src"]
+include = ["src", "app"]
 exclude = ["**/__pycache__"]
 
 # --- Pytest ---
