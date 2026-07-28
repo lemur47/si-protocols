@@ -38,6 +38,24 @@ def _get_nlp(lang: SupportedLang = "en") -> spacy.language.Language:
 
 
 @dataclass(frozen=True)
+class TechSignals:
+    """Structured output from the tech layer.
+
+    Replaces the 8-tuple ``tech_analysis`` used to return, where every
+    position carried meaning and a mis-ordered unpack failed silently.
+    """
+
+    score: float
+    detected_entities: list[str] = field(default_factory=list)
+    authority_hits: list[str] = field(default_factory=list)
+    urgency_hits: list[str] = field(default_factory=list)
+    emotion_hits: list[str] = field(default_factory=list)
+    contradiction_hits: list[str] = field(default_factory=list)
+    source_attribution_hits: list[str] = field(default_factory=list)
+    escalation_hits: list[str] = field(default_factory=list)
+
+
+@dataclass(frozen=True)
 class ThreatResult:
     """Structured output from hybrid threat analysis."""
 
@@ -203,14 +221,10 @@ def tech_analysis(
     text: str,
     *,
     lang: SupportedLang = "en",
-) -> tuple[float, list[str], list[str], list[str], list[str], list[str], list[str], list[str]]:
-    """Tech layer: NLP-based suspicion signals.
-
-    Returns (score, entities, authority_hits, urgency_hits, emotion_hits,
-    contradiction_hits, source_attribution_hits, escalation_hits).
-    """
+) -> TechSignals:
+    """Tech layer: NLP-based suspicion signals."""
     if not text.strip():
-        return 0.0, [], [], [], [], [], [], []
+        return TechSignals(score=0.0)
 
     nlp = _get_nlp(lang)
     doc = nlp(text)
@@ -321,15 +335,15 @@ def tech_analysis(
         + escalation_score * 14
     )
 
-    return (
-        min(tech_score, 100.0),
-        entities,
-        authority_hits,
-        urgency_hits,
-        emotion_hits,
-        contradiction_hits,
-        source_attribution_hits,
-        escalation_hits,
+    return TechSignals(
+        score=min(tech_score, 100.0),
+        detected_entities=entities,
+        authority_hits=authority_hits,
+        urgency_hits=urgency_hits,
+        emotion_hits=emotion_hits,
+        contradiction_hits=contradiction_hits,
+        source_attribution_hits=source_attribution_hits,
+        escalation_hits=escalation_hits,
     )
 
 
@@ -353,31 +367,22 @@ def hybrid_score(
     lang: SupportedLang = "en",
 ) -> ThreatResult:
     """Combine layers: 60% tech + 40% heuristic intuition."""
-    (
-        tech_score,
-        entities,
-        authority_hits,
-        urgency_hits,
-        emotion_hits,
-        contradiction_hits,
-        source_attribution_hits,
-        escalation_hits,
-    ) = tech_analysis(text, lang=lang)
+    tech = tech_analysis(text, lang=lang)
     intuition_score = psychic_heuristic(density_bias, seed=seed)
 
-    overall = (tech_score * 0.6) + (intuition_score * 0.4)
+    overall = (tech.score * 0.6) + (intuition_score * 0.4)
 
     return ThreatResult(
         overall_threat_score=round(overall, 2),
-        tech_contribution=round(tech_score, 2),
+        tech_contribution=round(tech.score, 2),
         intuition_contribution=round(intuition_score, 2),
-        detected_entities=entities,
-        authority_hits=authority_hits,
-        urgency_hits=urgency_hits,
-        emotion_hits=emotion_hits,
-        contradiction_hits=contradiction_hits,
-        source_attribution_hits=source_attribution_hits,
-        escalation_hits=escalation_hits,
+        detected_entities=tech.detected_entities,
+        authority_hits=tech.authority_hits,
+        urgency_hits=tech.urgency_hits,
+        emotion_hits=tech.emotion_hits,
+        contradiction_hits=tech.contradiction_hits,
+        source_attribution_hits=tech.source_attribution_hits,
+        escalation_hits=tech.escalation_hits,
     )
 
 
