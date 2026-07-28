@@ -10,7 +10,7 @@ Classification: Open.
 
 ## Runtime
 
-The core library is Python; the public-facing sites are Astro.
+The core library is Python. This repository is the toolkit only — the former editorial websites were handed over to a separate web line in July 2026.
 
 | Component | Version / spec | Notes |
 |---|---|---|
@@ -19,22 +19,20 @@ The core library is Python; the public-facing sites are Astro.
 | NLP | `spaCy` (`en_core_web_sm`, `ja_core_news_sm`) | Lazy-loaded to avoid import-time side effects |
 | API surface | `FastAPI` | Local-only — `uvicorn app.main:app` on `127.0.0.1:8000` |
 | Output | `Rich` (terminal), `xml.etree` (SVG) | No external SVG/graphing packages |
-| Node (Astro sites) | `Node.js` (LTS track) | Two Astro sites: `site/` (.dev), `site-cc/` (.cc) |
 | Immutability | `frozen` dataclasses, `tuple` not `list` | Full object-graph hashability |
 
 ---
 
 ## Infrastructure
 
-Deployment is edge-first: static content served by Cloudflare Pages; persistent state lives in R2. The API is local-only by design — no hosted analysis service.
+Persistent state lives in R2. The API is local-only by design — no hosted analysis service, and since the web handover this repository deploys nothing at all.
 
 | Layer | Tool | Status |
 |---|---|---|
-| Static hosting (`.dev`, `.cc`) | Cloudflare Pages | Shipped — JSON-LD, per-page metadata, cross-site `sameAs` links |
-| Object storage | Cloudflare R2 | Shipped — bucket `si-classified` for internal artefacts; `si-open` (planned) for public assets |
+| Object storage | Cloudflare R2 | Shipped — internal artefacts; public-asset bucket still planned |
 | Edge compute | Cloudflare Workers + Durable Objects | **Planned** for the Stage 5 CVP Simulation Testbed |
 | Dev environment | Isolated dev VM | Operator-local configuration |
-| Domain | `spiritualintelligence.dev`, `spiritualintelligence.cc` | Both live |
+| Domains | `spiritualintelligence.dev`, `spiritualintelligence.cc` | **Retired** — content migrated to ohoran.org; both domains now serve redirects only |
 
 The local-only principle is architectural, not aspirational — it is enforced by the absence of any hosted analysis endpoint, not by promise.
 
@@ -50,8 +48,8 @@ Three tiers of analysis engine, plus a machine-readable ontology and skill-based
 | `AnthropicEngine` (Tier 1) | Claude API claim extraction (opt-in extra) | Shipped |
 | `OllamaEngine` (Tier 2) | Future local-LLM | Stub only |
 | CVP ontology | Machine-readable YAML (`cvp-ontology-v0.1.yaml`) | Shipped — open analytical fragment |
-| Quick-Check skill | Zero-install Claude Project skill; doubles as an empirical instrument for CVP impact on reasoning | v0.2 shipped — A/B validated on 24 samples |
-| Briefing skill | Claude Project skill for SAER-format structured briefings | Scaffold present; briefing #003 in Sprint 4 backlog |
+| Quick-Check skill | Zero-install Claude skill; doubles as an empirical instrument for CVP impact on reasoning | v0.3 shipped — Agent Skill format; carries forward the v0.2 A/B validation on 24 samples |
+| Briefing skill | Claude skill for SAER-format structured briefings | Scaffold present; publication cadence belongs to the separate web line |
 
 The tiered engines implement a single `AnalysisEngine` protocol, so a new engine slots in without changing the public API.
 
@@ -63,12 +61,12 @@ The programme is managed as code: work items, sprints, and decisions are structu
 
 | Surface | Purpose | Notes |
 |---|---|---|
-| Airtable base | Projects, Sprints, Work Items, Decisions, Documents | Specific IDs and protocol in `CLAUDE.local.md` (operator-local) |
-| GitHub (`lemur47/si-protocols`) | Public monorepo: library, app, sites, skills, ontology, docs, scripts | `feature/*` branch discipline, PR review, Dependabot |
-| Claude Code | DevSecOps execution (isolated dev environment) | Reads `## Spec`, writes `## Execution Log` |
-| Claude (chat) | CTO planning & review | Drafts specs, reviews `## Execution Log`, writes `## Review` |
+| Airtable base | Projects, Sprints, Work Items, Decisions | Specific IDs and protocol in `CLAUDE.local.md` (operator-local) |
+| GitHub (`lemur47/si-protocols`) | Public repo: library, app, skills, ontology, docs, scripts | `feature/*` branch discipline, PR review, Dependabot |
+| Claude Code | CTO function and DevSecOps execution (isolated dev environment) | Drafts specs, executes, writes `## Execution Log` |
+| Claude (chat) | Design and ad-hoc research | No longer authors specs or reviews work items |
 
-The Structured Notes Protocol on Work Items (`## Spec` → `## Execution Log` → `## Review`) removes the human bridge between CTO and Claude Code. Both read and write to the same state store.
+The Structured Notes Protocol on Work Items (`## Spec` → `## Execution Log` → `## Review`) keeps intent, execution and feedback in one record. Claude Code holds both the CTO and DevSecOps roles, so objective review comes from a fresh reviewer without authoring context, and the approval gate is human.
 
 ---
 
@@ -81,30 +79,31 @@ Every commit runs through a gate chain before it can land on `main`. The princip
 | Lint / format | `ruff` (check + format) | Style drift, unused imports, bug-prone patterns (`B`, `S`, `UP`, `I`) |
 | Secrets | `gitleaks` | API keys, tokens, private keys |
 | SAST | `opengrep` (`src/`, `app/`) | Known vulnerable patterns |
-| Dep vulns | `osv-scanner` (`--recursive`) | CVEs across `uv.lock`, `site/package-lock.json`, `site-cc/package-lock.json` |
+| Dep vulns | `osv-scanner` (`--recursive`) | CVEs across `uv.lock` |
 | Types | `pyright` | Type regressions |
 | Tests | `pytest` (coverage `fail_under = 70`) | Behaviour regressions |
-| Astro | `astro check` (per site) | Content-collection schema drift |
 | Classification | `scripts/classification-gate.py` | Prevents Internal / Classified content reaching the public repo |
 | Hygiene | trailing whitespace, large files, private keys, YAML/TOML/JSON validity | Cheap guardrails |
 
-CI matrix: Python 3.12 and 3.13 on GitHub Actions. Dependabot runs weekly on pip, npm, and GitHub Actions; major-version jumps are reviewed before merge (some are deferred — see `.github/dependabot.yml` and the Decisions record that scheduled them).
+CI matrix: Python 3.12 and 3.13 on GitHub Actions. Dependabot runs weekly on the Python ecosystem; the GitHub Actions ecosystem is queued for restoration, and npm left with the websites. Major-version jumps are reviewed before merge (some are deferred — see `.github/dependabot.yml` and the Decisions record that scheduled them).
+
+The classification gate runs twice: as a pre-commit hook, and again in CI where it is a required status check — so it cannot be skipped with `--no-verify`.
 
 ---
 
 ## Content & distribution
 
-Dual-runtime: one source, two audiences.
+The dual-audience split — developers and AI agents on one side, practitioners and the curious public on the other — outlived the two sites that used to express it. Publishing now happens elsewhere; what this repository still owns is listed first.
 
 | Channel | Audience | Optimisation | Status |
 |---|---|---|---|
-| `spiritualintelligence.dev` | Developers, AI systems | Semantic markup, JSON-LD, structured claims, citability | Shipped — docs, library/API reference, architecture deep-dive, blog |
-| `.dev` AI-first surface (`llms.txt`, `llms-full.txt`) | AI agents crawling the site | Machine-addressable table of contents per [llmstxt.org](https://llmstxt.org); aligned content chunks for LLM citation | **Planned** — concrete expression of the "AI-first epistemic infrastructure" posture from STRATEGY.md |
-| `spiritualintelligence.cc` | Practitioners, thought leaders, curious public | Accessible prose, emotional resonance, educational | Shipped — eight pages (threat modelling, egregores, privacy, etc.) |
-| `note.com` (JP) | Japanese practitioners | SAER-format briefings, nerdy/techie voice | Two notes published; target 2–3/month |
+| This repository | Developers, AI systems | Structured markdown, machine-readable ontology, citable claims | Shipped — library and API reference, architecture, methodology docs |
+| Claude skills (`skills/`) | Analysts, practitioners | Zero-install; no toolchain required | Shipped — Quick-Check v0.3, briefing scaffold |
+| ohoran.org | Both audiences, one site | Editorial voice per piece rather than per domain | Live — carries the migrated `.dev` and `.cc` content |
+| `spiritualintelligence.dev`, `spiritualintelligence.cc` | — | — | **Retired** — redirect shells; the content moved to ohoran.org |
 | Audio briefings | Trust-layer for non-readers | Voice, prosody, narrative | Planned |
 
-Cross-site linking via `sameAs` JSON-LD. Same codebase, same core technology, different editorial voice — not two products.
+Same codebase, same core technology, different editorial voice — that was never two products, which is why one site can carry both.
 
 ---
 

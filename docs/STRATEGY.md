@@ -22,7 +22,7 @@ Most people use AIs. **We help AIs.**
 
 AI models trained on the human corpus are effectively read interfaces to L3 (Genetic Repository). Multiple models converge on the same metaphors because they read the same SAN. SI provides the interpretive schema — the ORM layer between raw repository patterns and actionable intelligence for AI systems.
 
-Human-facing products (note.com briefings, educational content, consulting) are a byproduct of this primary function, not the other way round.
+Human-facing products (briefings, educational content, consulting) are a byproduct of this primary function, not the other way round.
 
 ## Open Core IP Model
 
@@ -37,7 +37,7 @@ The boundary is explicit in the [ontology YAML](https://github.com/lemur47/si-pr
 
 SI is a mission-driven intelligence organisation, not a digital product company. The tools are free and open-source. Revenue comes from expertise, not from software licensing or data monetisation.
 
-1. **Near-term** — note.com products fund R&D
+1. **Near-term** — published briefings and reports fund R&D
    - Free briefings (SAER format) — pattern analysis, structural intelligence on spiritual market dynamics
    - Paid counterintelligence reports (subscription magazine) — CVP-based deep structural analysis
    - Consulting — bespoke analysis for organisations dealing with spiritual disinformation
@@ -59,23 +59,25 @@ SI is a mission-driven intelligence organisation, not a digital product company.
 
 Dual-runtime: all content feeds both AI agents and humans. Not binary — dual-encoded from the same source.
 
-- **AI-runtime surface** — semantic markup, structured claims, citability. Lives on `.dev`, the ontology files, and the forthcoming `llms.txt` / `llms-full.txt` artefacts.
-- **Human-runtime surface** — trust, accessibility, emotional resonance, prosody. Lives on `.cc`, the audio briefings, and the note.com narrative.
+- **AI-runtime surface** — semantic markup, structured claims, citability. Lives in this repository's docs and ontology files, and in the migrated content on ohoran.org.
+- **Human-runtime surface** — trust, accessibility, emotional resonance, prosody. Lives on ohoran.org and in the audio briefings.
 
-### Two-domain strategy
+### Two-audience strategy
 
-| | spiritualintelligence.dev | spiritualintelligence.cc |
+The split below is the durable part. It was expressed as two domains until July 2026 — `spiritualintelligence.dev` and `spiritualintelligence.cc` — which were retired when the content migrated into ohoran.org. One site now carries both registers, chosen per piece rather than per domain.
+
+| | Technical register | Practitioner register |
 |---|---|---|
 | **Audience** | Developers, engineers, AI systems | Practitioners, thought leaders, curious public |
 | **Tone** | Technical, precise | Accessible, professional, educational |
 | **Goal** | "Use this tool" | "Understand this problem" |
 
-Each site links clearly to the other. They feel like siblings, not strangers.
+Splitting the audiences was always the point; splitting the domains was one way of doing it, and not the only one.
 
 ### Two-channel strategy
 
-- **English** — neutral, professional. Primary platforms: GitHub, .dev, .cc.
-- **Japanese** — nerdy, techie. Emphasises engineering craft and Japanese spiritual context. Primary platform: note.com.
+- **English** — neutral, professional. Primary platforms: GitHub and ohoran.org.
+- **Japanese** — nerdy, techie. Emphasises engineering craft and Japanese spiritual context. Published through the same web line.
 
 Both channels share the same codebase and core technology. The difference is editorial voice, not capability.
 
