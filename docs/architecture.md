@@ -52,7 +52,9 @@ A probabilistic dissonance scanner using `random.Random`. This is an intentional
 
 ### Hybrid scoring
 
-`hybrid_score()` combines the two layers: 60% tech + 40% heuristic. The result is a frozen `ThreatResult` dataclass containing the composite score, the individual layer contributions, and hit lists for every dimension. Frozen dataclasses with tuple collections ensure the entire result graph is hashable and immutable — safe to cache, log, or pass between threads.
+`hybrid_score()` combines the two layers: 60% tech + 40% heuristic. The result is a frozen `ThreatResult` dataclass containing the composite score, the individual layer contributions, and hit lists for every dimension. The tech layer returns its own frozen `TechSignals` dataclass, which `hybrid_score()` reads by name.
+
+Frozen here means the fields cannot be rebound after construction — not that the result is hashable. `ThreatResult` and `TechSignals` hold their hit lists as `list`, so `hash()` raises; it is the **topology** types that use `tuple` collections throughout and are hashable as a whole graph. Both are safe to log or pass between threads; only the topology results are safe to use as cache or set keys.
 
 ## Topology Module
 
