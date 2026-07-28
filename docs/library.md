@@ -3,7 +3,7 @@
 ## Importing the Library
 
 ```python
-from si_protocols.threat_filter import hybrid_score, tech_analysis, ThreatResult
+from si_protocols.threat_filter import hybrid_score, tech_analysis, ThreatResult, TechSignals
 from si_protocols.markers import (
     VAGUE_ADJECTIVES,
     AUTHORITY_PHRASES,
@@ -72,30 +72,39 @@ Runs only the NLP tech layer, skipping the heuristic. Useful when you want deter
 ```python
 def tech_analysis(
     text: str,
-) -> tuple[float, list[str], list[str], list[str], list[str], list[str], list[str], list[str]]
+    *,
+    lang: SupportedLang = "en",
+) -> TechSignals
 ```
 
-Returns an 8-element tuple:
+Returns a `TechSignals` frozen dataclass:
 
-| Index | Value |
-|-------|-------|
-| 0 | Tech score (0–100) |
-| 1 | Detected named entities |
-| 2 | Authority claim hits |
-| 3 | Urgency pattern hits |
-| 4 | Emotion trigger hits |
-| 5 | Logical contradiction hits |
-| 6 | Source attribution hits |
-| 7 | Commitment escalation hits |
+| Field | Type | Description |
+|-------|------|-------------|
+| `score` | `float` | Tech score (0–100) |
+| `detected_entities` | `list[str]` | Named entities found by spaCy |
+| `authority_hits` | `list[str]` | Authority claim hits |
+| `urgency_hits` | `list[str]` | Urgency pattern hits |
+| `emotion_hits` | `list[str]` | Emotion trigger hits |
+| `contradiction_hits` | `list[str]` | Logical contradiction hits |
+| `source_attribution_hits` | `list[str]` | Source attribution hits |
+| `escalation_hits` | `list[str]` | Commitment escalation hits |
 
 **Example:**
 
 ```python
 from si_protocols.threat_filter import tech_analysis
 
-score, entities, auth, urgency, emotion, contra, source, escalation = tech_analysis(text)
-print(f"Tech score: {score}/100")
+result = tech_analysis(text)
+print(f"Tech score: {result.score}/100")
+print(f"Authority claims: {result.authority_hits}")
 ```
+
+> **Changed in 0.1.0 (unreleased).** `tech_analysis()` previously returned an
+> 8-element tuple whose positions carried all the meaning. Unpacking it in the
+> wrong order failed silently. If you have code doing
+> `score, entities, ... = tech_analysis(text)`, replace the positional unpack
+> with attribute access as above.
 
 ## `ThreatResult` Fields
 

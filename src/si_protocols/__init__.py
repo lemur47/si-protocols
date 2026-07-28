@@ -6,11 +6,17 @@ from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
     from si_protocols.marker_registry import MarkerSet, SupportedLang, get_markers
-    from si_protocols.threat_filter import ThreatResult, hybrid_score, tech_analysis
+    from si_protocols.threat_filter import (
+        TechSignals,
+        ThreatResult,
+        hybrid_score,
+        tech_analysis,
+    )
 
 __all__ = [
     "MarkerSet",
     "SupportedLang",
+    "TechSignals",
     "ThreatResult",
     "get_markers",
     "hybrid_score",
@@ -22,7 +28,7 @@ __version__ = "0.1.0"
 
 def __getattr__(name: str) -> object:
     """Lazy imports to avoid loading spaCy at import time."""
-    if name in {"hybrid_score", "tech_analysis", "ThreatResult"}:
+    if name in {"hybrid_score", "tech_analysis", "ThreatResult", "TechSignals"}:
         from si_protocols import threat_filter
 
         return getattr(threat_filter, name)

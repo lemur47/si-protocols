@@ -1,8 +1,13 @@
 """Tests for the FastAPI REST API layer."""
 
+import dataclasses
+
 import pytest
 from app.main import app
+from app.schemas import AnalyseResponse
 from starlette.testclient import TestClient
+
+from si_protocols.threat_filter import ThreatResult
 
 BENIGN_TEXT = "The cat sat on the mat. It was a pleasant Tuesday afternoon."
 
@@ -164,3 +169,65 @@ class TestSanitiseJsonMiddleware:
             headers={"Content-Type": "application/json"},
         )
         assert response.status_code == 422
+
+
+# --- ThreatResult <-> AnalyseResponse field parity ---
+
+
+class TestSchemaParity:
+    """Guard the seam between the library dataclass and the API response model.
+
+    `AnalyseResponse` re-declares `ThreatResult`'s fields by hand, and Pydantic
+    drops unknown keys silently. Without this test, adding a field to
+    `ThreatResult` removes it from the API response and nothing fails — the
+    two differ in field *presence*, not type, so pyright cannot see it either.
+    """
+
+    def test_field_names_match_exactly(self) -> None:
+        result_fields = {f.name for f in dataclasses.fields(ThreatResult)}
+        response_fields = set(AnalyseResponse.model_fields)
+
+        missing_from_api = result_fields - response_fields
+        extra_in_api = response_fields - result_fields
+
+        assert not missing_from_api, (
+            f"ThreatResult fields absent from AnalyseResponse: {sorted(missing_from_api)}. "
+            "Add them to app/schemas.py or the API will silently drop them."
+        )
+        assert not extra_in_api, (
+            f"AnalyseResponse declares fields ThreatResult does not have: {sorted(extra_in_api)}. "
+            "These would always serialise as their defaults."
+        )
+
+    @pytest.mark.slow
+    def test_response_carries_every_dataclass_field(self) -> None:
+        """Parity of names is not parity of delivery — check the wire too."""
+        response = client.post("/analyse", json={"text": SUSPICIOUS_TEXT, "seed": 42})
+        assert response.status_code == 200
+
+        payload = response.json()
+        for name in (f.name for f in dataclasses.fields(ThreatResult)):
+            assert name in payload, f"{name} reached neither the schema nor the response"
+
+    @pytest.mark.slow
+    def test_response_shape_unchanged_for_existing_clients(self) -> None:
+        """The published contract, pinned literally.
+
+        Derived assertions would follow a refactor wherever it went; this list
+        is what a client written against v0.1.0 actually depends on.
+        """
+        response = client.post("/analyse", json={"text": BENIGN_TEXT, "seed": 42})
+        assert response.status_code == 200
+        assert set(response.json()) == {
+            "overall_threat_score",
+            "tech_contribution",
+            "intuition_contribution",
+            "detected_entities",
+            "authority_hits",
+            "urgency_hits",
+            "emotion_hits",
+            "contradiction_hits",
+            "source_attribution_hits",
+            "escalation_hits",
+            "message",
+        }

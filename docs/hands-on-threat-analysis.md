@@ -105,8 +105,8 @@ for path in Path("examples").glob("*.txt"):
 ```python
 from si_protocols.threat_filter import tech_analysis
 
-score, entities, auth, urgency, emotion, contra, source, escalation = tech_analysis(text)
-print(f"Deterministic tech score: {score}/100")
+result = tech_analysis(text)
+print(f"Deterministic tech score: {result.score}/100")
 ```
 
 See the [Python Library Reference](./library.md) for full API documentation.
