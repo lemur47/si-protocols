@@ -12,3 +12,19 @@ updates:
         update-types:
           - minor
           - patch
+
+  # GitHub Actions. Every `uses:` ref is SHA-pinned and the repository enforces
+  # `sha_pinning_required`, so nothing here drifts on its own — without this
+  # entry a pinned action simply stays on whatever commit it was pinned to,
+  # advisories included.
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    assignees:
+      - lemur47
+    groups:
+      minor-and-patch:
+        update-types:
+          - minor
+          - patch
