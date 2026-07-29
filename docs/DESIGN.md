@@ -133,7 +133,9 @@ Each `VariableClassification` field is a 0.0–1.0 scalar. Independent axes — 
 | `domain_coherence` | Stays in its domain | Crosses domains |
 | `logical_dependency` | Load-bearing | Decorative / emotive |
 
-The mean of the four axes drives `VariableKind` derivation: **PSEUDO** (mean ≥ 0.4 or single axis ≥ 0.5), **TRUE** (mean ≤ 0.15), **INDETERMINATE** (middle band).
+The mean of the four axes drives `VariableKind` derivation: **PSEUDO** (mean ≥ 0.4, or mean ≥ 0.25 with a single axis ≥ 0.5), **TRUE** (mean ≤ 0.15), **INDETERMINATE** (middle band). One loud axis against three quiet ones does not reach PSEUDO on its own — the mean has to clear 0.25 as well.
+
+Derivation lives in `topology/classification.py` and nowhere else. Engines produce axes; `derive_kind()` collapses them. That separation is what keeps `--engine` a choice of *how claims are extracted* rather than *how they are judged* — an engine carrying its own thresholds is drift, not calibration.
 
 ### Three fractal levels
 
