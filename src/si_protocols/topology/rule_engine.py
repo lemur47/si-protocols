@@ -12,11 +12,11 @@ from typing import TYPE_CHECKING
 import spacy
 
 from si_protocols.marker_registry import SupportedLang, get_markers
+from si_protocols.topology.classification import derive_kind
 from si_protocols.topology.types import (
     TopologyLevel,
     Variable,
     VariableClassification,
-    VariableKind,
 )
 
 if TYPE_CHECKING:
@@ -427,34 +427,6 @@ def _classify_sentence(
     )
 
 
-def _derive_kind(classification: VariableClassification) -> VariableKind:
-    """Derive variable kind from the mean of the four axes.
-
-    Thresholds: PSEUDO >= 0.4, TRUE <= 0.15, else INDETERMINATE.
-    Also checks if any single axis is notably suspicious (>= 0.5).
-    """
-    mean = (
-        classification.falsifiability
-        + classification.verifiability
-        + classification.domain_coherence
-        + classification.logical_dependency
-    ) / 4
-
-    # A strongly suspicious single axis can push towards PSEUDO
-    max_axis = max(
-        classification.falsifiability,
-        classification.verifiability,
-        classification.domain_coherence,
-        classification.logical_dependency,
-    )
-
-    if mean >= 0.4 or (mean >= 0.25 and max_axis >= 0.5):
-        return VariableKind.PSEUDO
-    if mean <= 0.15:
-        return VariableKind.TRUE
-    return VariableKind.INDETERMINATE
-
-
 def _assign_level(
     sent_idx: int,
     total_sents: int,
@@ -526,7 +498,7 @@ class RuleEngine:
                     continue
 
                 classification = _classify_sentence(sent_text, markers, lang)
-                kind = _derive_kind(classification)
+                kind = derive_kind(classification)
                 level = _assign_level(sent_idx, total_sents, para_idx, total_paras)
 
                 # Calculate approximate character offset in original text

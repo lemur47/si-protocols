@@ -11,11 +11,11 @@ import os
 from typing import TYPE_CHECKING, Any
 
 from si_protocols.marker_registry import SupportedLang
+from si_protocols.topology.classification import derive_kind
 from si_protocols.topology.types import (
     TopologyLevel,
     Variable,
     VariableClassification,
-    VariableKind,
 )
 
 if TYPE_CHECKING:
@@ -133,27 +133,13 @@ class AnthropicEngine:
                 logical_dependency=max(0.0, min(1.0, float(item.get("logical_dependency", 0.5)))),
             )
 
-            mean = (
-                classification.falsifiability
-                + classification.verifiability
-                + classification.domain_coherence
-                + classification.logical_dependency
-            ) / 4
-
-            if mean >= 0.5:
-                kind = VariableKind.PSEUDO
-            elif mean <= 0.3:
-                kind = VariableKind.TRUE
-            else:
-                kind = VariableKind.INDETERMINATE
-
             variables.append(
                 Variable(
                     id=f"v{i + 1}",
                     text=str(item.get("text", "")),
                     source_span=(int(item.get("start", 0)), int(item.get("end", 0))),
                     classification=classification,
-                    kind=kind,
+                    kind=derive_kind(classification),
                     level=TopologyLevel.MICRO,
                     confidence=0.7,
                 )
