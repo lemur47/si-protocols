@@ -43,7 +43,8 @@ uv run si-topology examples/synthetic_topology_suspicious.txt
 This generates an SVG file (`<input>.topology.svg`) visualising the claim graph. Options:
 
 - `--format json` — output JSON instead of SVG
-- `--engine anthropic` — use the Claude API engine (requires `anthropic` extra and `ANTHROPIC_API_KEY`)
+- `--engine anthropic` — use the Claude API engine (requires `anthropic` extra and `ANTHROPIC_API_KEY`).
+  ⚠️ **Currently unusable** — the pinned model reached its retirement date on 2026-06-15, so this tier is presumed non-functional. It has not been verified against a live endpoint. Use the rule engine until it is restored.
 - `--lang ja` — analyse Japanese text
 - `-o OUTPUT` — specify output file path
 

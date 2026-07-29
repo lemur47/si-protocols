@@ -28,7 +28,7 @@ CLI entry points:
 - `uv run si-threat-filter <file>` — `--format rich|json`, `--lang en|ja`
 - `uv run si-topology <file>` — `--engine rule|anthropic`, `--format svg|json`, `--lang en|ja`, `-o OUTPUT`
 
-`AnthropicEngine` needs the `anthropic` extra and an `ANTHROPIC_API_KEY`. Rich output respects `NO_COLOR`.
+`AnthropicEngine` needs the `anthropic` extra and an `ANTHROPIC_API_KEY`, and is **currently presumed broken** — its pinned model retired on 2026-06-15 and no live call has verified it since. Prefer `--engine rule`. Rich output respects `NO_COLOR`.
 
 ## Architecture
 

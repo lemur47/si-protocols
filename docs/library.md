@@ -303,12 +303,14 @@ Derived from the mean of the four classification axes:
 | `TRUE` | Mean ≤ 0.15 |
 | `INDETERMINATE` | Everything else |
 
+Derivation lives in one place — `si_protocols.topology.derive_kind()`, exported alongside `classification_mean()`. An engine implementing `AnalysisEngine` should produce axes and call it, never carry its own thresholds.
+
 ### Engine tiers
 
 | Tier | Engine | Description |
 |------|--------|-------------|
 | 0 | `RuleEngine` | Local, deterministic. Uses spaCy + marker heuristics. No API keys needed. |
-| 1 | `AnthropicEngine` | Claude API-based extraction. Requires `anthropic` extra and `ANTHROPIC_API_KEY`. |
+| 1 | `AnthropicEngine` | Claude API-based extraction. Requires `anthropic` extra and `ANTHROPIC_API_KEY`. **⚠️ **Currently unusable** — the pinned model reached its retirement date on 2026-06-15, so this tier is presumed non-functional. It has not been verified against a live endpoint. Use the rule engine until it is restored.** |
 | 2 | `OllamaEngine` | Stub for future local-LLM integration. Not yet functional. |
 
 All engines implement the `AnalysisEngine` protocol and expose `name` (property) and `extract_variables(text, *, lang)` (method).
