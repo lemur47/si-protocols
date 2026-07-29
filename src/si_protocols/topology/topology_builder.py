@@ -9,6 +9,7 @@ from __future__ import annotations
 from dataclasses import replace
 
 from si_protocols.marker_registry import SupportedLang
+from si_protocols.topology.classification import classification_mean
 from si_protocols.topology.types import (
     EdgeKind,
     TopologyEdge,
@@ -144,8 +145,8 @@ def _build_edges(
         a = micro_nodes[i]
         b = micro_nodes[i + 1]
         if a.variables and b.variables:
-            a_mean = _classification_mean(a.variables[0].classification)
-            b_mean = _classification_mean(b.variables[0].classification)
+            a_mean = classification_mean(a.variables[0].classification)
+            b_mean = classification_mean(b.variables[0].classification)
             if b_mean > a_mean + 0.05:
                 edges.append(
                     TopologyEdge(
@@ -157,17 +158,6 @@ def _build_edges(
                 )
 
     return edges
-
-
-def _classification_mean(cls: object) -> float:
-    """Mean of the four classification axes."""
-    from si_protocols.topology.types import VariableClassification
-
-    if not isinstance(cls, VariableClassification):
-        return 0.0
-    return (
-        cls.falsifiability + cls.verifiability + cls.domain_coherence + cls.logical_dependency
-    ) / 4
 
 
 # ---------------------------------------------------------------------------

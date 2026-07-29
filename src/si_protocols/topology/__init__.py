@@ -3,6 +3,7 @@
 Public API re-exports for convenient access.
 """
 
+from si_protocols.topology.classification import classification_mean, derive_kind
 from si_protocols.topology.engine import AnalysisEngine
 from si_protocols.topology.output import render_topology_json
 from si_protocols.topology.rule_engine import RuleEngine
@@ -31,6 +32,8 @@ __all__ = [
     "VariableClassification",
     "VariableKind",
     "build_topology",
+    "classification_mean",
+    "derive_kind",
     "render_svg",
     "render_topology_json",
     "save_svg",
