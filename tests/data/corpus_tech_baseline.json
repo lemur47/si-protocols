@@ -1,0 +1,38 @@
+{
+  "description": "Recorded tech-layer scores for the synthetic corpus, measured at the commit below. These are OBSERVED values, not targets: the manifest's expected_score_range is a separate published claim that the implementation does not currently meet. This file locks the pipeline against unintended drift and must be re-recorded deliberately whenever markers, weights or the spaCy pinning change.",
+  "recorded_at_commit": "88edec0",
+  "recorded_on": "2026-08-09",
+  "reverified_on": "2026-08-10",
+  "verified_on_python": [
+    "3.12",
+    "3.13"
+  ],
+  "tolerance": 1e-06,
+  "tolerance_rationale": "Measured, not guessed. Repeated runs in one process are bit-identical, and Python 3.12 and 3.13 produce identical scores on all 24 samples, so observed variance is exactly zero. The smallest real change measured — removing one marker from one set — moves affected samples by ~0.04; a one-unit weight change moves them by ~0.01. A tolerance of 1e-6 sits ~4 orders below the smallest real signal and ~7 above float-ordering noise, so it catches genuine drift without flapping.",
+  "scores": {
+    "corpus_en_benign_01.txt": 0.0,
+    "corpus_en_benign_02.txt": 0.0,
+    "corpus_en_benign_03.txt": 0.0,
+    "corpus_en_low_01.txt": 0.1559633027522936,
+    "corpus_en_low_02.txt": 4.896101694915254,
+    "corpus_en_mid_01.txt": 10.470860215053763,
+    "corpus_en_mid_02.txt": 8.098245614035086,
+    "corpus_en_high_01.txt": 34.33918215613383,
+    "corpus_en_high_02.txt": 26.25230373230373,
+    "corpus_en_high_03.txt": 41.93146523297491,
+    "corpus_en_extreme_01.txt": 55.27626228397153,
+    "corpus_en_extreme_02.txt": 54.290447889750226,
+    "corpus_ja_benign_01.txt": 2.6,
+    "corpus_ja_benign_02.txt": 0.0,
+    "corpus_ja_benign_03.txt": 0.0,
+    "corpus_ja_low_01.txt": 0.26877470355731226,
+    "corpus_ja_low_02.txt": 1.6213718411552347,
+    "corpus_ja_mid_01.txt": 12.978809523809524,
+    "corpus_ja_mid_02.txt": 11.5560409556314,
+    "corpus_ja_high_01.txt": 43.9973063973064,
+    "corpus_ja_high_02.txt": 30.051718426501036,
+    "corpus_ja_high_03.txt": 40.33631553631554,
+    "corpus_ja_extreme_01.txt": 70.60890511619363,
+    "corpus_ja_extreme_02.txt": 65.94573676680973
+  }
+}
