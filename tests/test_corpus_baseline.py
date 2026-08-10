@@ -58,10 +58,16 @@ def test_tech_scores_match_recorded_baseline() -> None:
 
     The tolerance is measured rather than guessed, and is deliberately tight — see
     ``tolerance_rationale`` in the baseline file. Observed variance across repeated runs
-    and across Python 3.12 and 3.13 is exactly zero, while the smallest real change
-    measured (removing one marker) moves affected samples by ~0.04. A loose tolerance
-    here would mask most of a genuine change's blast radius: at 0.01, a one-unit weight
-    change reported 11 drifted samples where 24 had actually moved.
+    and across Python 3.12 and 3.13 is exactly zero, while the smallest per-sample delta
+    from a real change measured 0.0036. A loose tolerance would mask most of a genuine
+    change's blast radius: at 0.01, a one-unit weight change reported 11 drifted samples
+    where 18 had actually moved.
+
+    What this cannot see is not a tolerance question. A change only registers here if it
+    moves one of these 24 samples at all — the same weight change left 6 of them exactly
+    unmoved, because they score zero on that dimension. A marker that appears in no
+    corpus sample is invisible to this test at any tolerance. Corpus coverage is the
+    gate's real limit.
     """
     baseline = _baseline()
     tolerance = baseline["tolerance"]
