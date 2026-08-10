@@ -43,6 +43,7 @@ Full architectural reasoning: [`docs/DESIGN.md`](docs/DESIGN.md).
 - Python 3.14 is blocked by spaCy. `requires-python = ">=3.12"`; CI tests 3.12 and 3.13.
 - **`uv.lock` drift fails CI.** After editing `pyproject.toml`, run `uv lock`. For Dependabot PRs that bump lower bounds, run `uv lock` locally and push the refreshed lock to the Dependabot branch before merging.
 - Adding a language takes four coordinated edits: a `markers_<lang>.py` file, a loader in `marker_registry.py`, an entry in `_LANG_MODELS`, and the `SupportedLang` literal.
+- **Editing markers or weights turns `tests/test_corpus_baseline.py` red, and that red is correct.** It pins all 24 corpus samples to recorded scores within 1e-6. Re-record `tests/data/corpus_tech_baseline.json` in the same change and say why in the PR. **Never widen the tolerance to make it pass** — it is deliberately far below the smallest real change (0.0036 measured), because observed variance is zero.
 - Topology types are frozen dataclasses using `tuple`, not `list` — they must stay hashable.
 - Two guard layers, because one cannot see the other's surface: `classification-gate.py` scans staged file *content*, while `check-airtable-ids.py` runs at the `commit-msg` stage to scan the commit *message*. `default_install_hook_types` wires both on a plain `pre-commit install`.
 - British English in docs and comments ("analyse", "colour", "licence").
