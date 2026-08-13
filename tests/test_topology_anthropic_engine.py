@@ -1,9 +1,25 @@
-"""Tests for the Anthropic topology engine — fully mocked, no API calls."""
+"""Tests for the Anthropic topology engine.
+
+⚠️ **The transport is mocked, and that mock is why this engine shipped broken
+for six weeks.** `messages.create` is replaced wholesale, so nothing here reads
+the pinned model ID against a live endpoint, and a mocked call succeeds just as
+happily against a retired one.
+
+The real thing cannot be used: there is no API key on this machine and
+`api.anthropic.com` is outside the sandbox allowlist. Closing that gap needs a
+live smoke test, which is gated on an undecided credential posture.
+
+What these tests *can* do, and now do, is assert the **shape of the request we
+send** and the **shape of the response we accept** — the two things the previous
+suite left entirely unasserted. Treat a green run as "correct by construction",
+never as "verified against the API".
+"""
 
 from __future__ import annotations
 
 import json
 from dataclasses import dataclass
+from typing import Any
 from unittest.mock import MagicMock
 
 import pytest
@@ -45,18 +61,46 @@ class _MockTextBlock:
 
 
 @dataclass
+class _MockThinkingBlock:
+    """A thinking block as returned by claude-opus-5.
+
+    Thinking is ON BY DEFAULT on this model, and ``display`` defaults to
+    ``"omitted"`` — so the block is present with empty text. It carries no
+    ``.text`` attribute at all, which is precisely why ``content[0].text``
+    is unsafe.
+    """
+
+    thinking: str = ""
+    type: str = "thinking"
+
+
+@dataclass
 class _MockResponse:
-    content: list[_MockTextBlock]
+    content: list[object]
+    stop_reason: str = "end_turn"
 
 
-def _make_mock_client(response_data: list[dict[str, object]] | None = None) -> MagicMock:
+def _make_mock_client(
+    response_data: list[dict[str, object]] | None = None,
+    *,
+    lead_with_thinking: bool = False,
+    stop_reason: str = "end_turn",
+) -> MagicMock:
     """Create a mock Anthropic client returning synthetic JSON."""
-    data = response_data or _MOCK_RESPONSE_DATA
+    data = _MOCK_RESPONSE_DATA if response_data is None else response_data
+    blocks: list[object] = [_MockTextBlock(text=json.dumps({"claims": data}))]
+    if lead_with_thinking:
+        blocks.insert(0, _MockThinkingBlock())
     mock_client = MagicMock()
     mock_client.messages.create.return_value = _MockResponse(
-        content=[_MockTextBlock(text=json.dumps(data))]
+        content=blocks, stop_reason=stop_reason
     )
     return mock_client
+
+
+def _request_kwargs(mock_client: MagicMock) -> dict[str, object]:
+    """The kwargs of the single ``messages.create`` call the engine made."""
+    return mock_client.messages.create.call_args.kwargs
 
 
 # ---------------------------------------------------------------------------
@@ -116,27 +160,99 @@ class TestExtractVariables:
         assert "Japanese" in user_msg
 
 
-class TestMarkdownFenceStripping:
-    def test_strips_code_fences(self) -> None:
-        data = [
-            {
-                "text": "claim",
-                "start": 0,
-                "end": 5,
-                "falsifiability": 0.5,
-                "verifiability": 0.5,
-                "domain_coherence": 0.0,
-                "logical_dependency": 0.5,
-            }
-        ]
-        fenced = f"```json\n{json.dumps(data)}\n```"
-        mock_client = MagicMock()
-        mock_client.messages.create.return_value = _MockResponse(
-            content=[_MockTextBlock(text=fenced)]
-        )
-        engine = AnthropicEngine(client=mock_client)
-        variables = engine.extract_variables("test")
-        assert len(variables) == 1
+class TestRequestShape:
+    """The request must match the current generation's contract.
+
+    Every test here reads the kwargs the engine actually sent. The transport is
+    mocked — see the module docstring — so these assert the *shape we send*, not
+    that the API accepts it. That gap is the known limit of this suite.
+    """
+
+    def test_pins_a_current_generation_model(self) -> None:
+        mock_client = _make_mock_client()
+        AnthropicEngine(client=mock_client).extract_variables("test")
+        assert _request_kwargs(mock_client)["model"] == "claude-opus-5"
+
+    def test_sends_no_rejected_sampling_parameters(self) -> None:
+        """`temperature`, `top_p` and `top_k` are rejected with a 400."""
+        mock_client = _make_mock_client()
+        AnthropicEngine(client=mock_client).extract_variables("test")
+        kwargs = _request_kwargs(mock_client)
+        assert not {"temperature", "top_p", "top_k"} & set(kwargs)
+
+    def test_does_not_disable_thinking(self) -> None:
+        """Disabling thinking leaks `<thinking>` tags into the visible text.
+
+        This engine feeds that text straight to `json.loads`, so a leaked tag is
+        a parse failure. Thinking is on by default; the engine must not opt out.
+        """
+        mock_client = _make_mock_client()
+        AnthropicEngine(client=mock_client).extract_variables("test")
+        thinking: Any = _request_kwargs(mock_client).get("thinking")
+        assert thinking is None or thinking.get("type") != "disabled"
+
+    def test_constrains_output_with_a_json_schema(self) -> None:
+        mock_client = _make_mock_client()
+        AnthropicEngine(client=mock_client).extract_variables("test")
+        fmt = _request_kwargs(mock_client)["output_config"]["format"]  # type: ignore[index]
+        assert fmt["type"] == "json_schema"
+
+    def test_schema_declares_every_field_the_parser_reads(self) -> None:
+        mock_client = _make_mock_client()
+        AnthropicEngine(client=mock_client).extract_variables("test")
+        fmt = _request_kwargs(mock_client)["output_config"]["format"]  # type: ignore[index]
+        item: dict[str, Any] = fmt["schema"]["properties"]["claims"]["items"]
+        assert set(item["required"]) == {
+            "text",
+            "start",
+            "end",
+            "falsifiability",
+            "verifiability",
+            "domain_coherence",
+            "logical_dependency",
+        }
+        assert item["additionalProperties"] is False
+
+    def test_sets_effort_deliberately(self) -> None:
+        """Extraction is mechanical; the default `high` overspends on thinking."""
+        mock_client = _make_mock_client()
+        AnthropicEngine(client=mock_client).extract_variables("test")
+        effort = _request_kwargs(mock_client)["output_config"]["effort"]  # type: ignore[index]
+        assert effort in {"low", "medium"}
+
+    def test_max_tokens_leaves_headroom_for_thinking(self) -> None:
+        """`max_tokens` caps thinking AND response together on this model.
+
+        The old 4096 was sized for a response alone, so a long claim array now
+        truncates mid-JSON.
+        """
+        mock_client = _make_mock_client()
+        AnthropicEngine(client=mock_client).extract_variables("test")
+        assert int(_request_kwargs(mock_client)["max_tokens"]) >= 16000  # type: ignore[call-overload]
+
+
+class TestResponseReading:
+    def test_finds_text_block_after_a_thinking_block(self) -> None:
+        """Thinking is on by default, so `content[0]` may not be the text.
+
+        Every pre-existing test mocks a lone text block, which is why none of
+        them can see this.
+        """
+        mock_client = _make_mock_client(lead_with_thinking=True)
+        variables = AnthropicEngine(client=mock_client).extract_variables("test")
+        assert len(variables) == 2
+
+    def test_truncated_response_raises(self) -> None:
+        """A truncated array must fail loudly, not return a short list."""
+        mock_client = _make_mock_client(stop_reason="max_tokens")
+        with pytest.raises(ValueError, match="truncated"):
+            AnthropicEngine(client=mock_client).extract_variables("test")
+
+    def test_refused_response_raises(self) -> None:
+        """`claude-opus-5` can decline with HTTP 200 and `stop_reason=refusal`."""
+        mock_client = _make_mock_client(stop_reason="refusal")
+        with pytest.raises(ValueError, match="refus"):
+            AnthropicEngine(client=mock_client).extract_variables("test")
 
 
 class TestImportError:

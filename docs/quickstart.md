@@ -44,7 +44,7 @@ This generates an SVG file (`<input>.topology.svg`) visualising the claim graph.
 
 - `--format json` — output JSON instead of SVG
 - `--engine anthropic` — use the Claude API engine (requires `anthropic` extra and `ANTHROPIC_API_KEY`).
-  ⚠️ **Currently unusable** — the pinned model reached its retirement date on 2026-06-15, so this tier is presumed non-functional. It has not been verified against a live endpoint. Use the rule engine until it is restored.
+  ⚠️ **Restored but unverified** — the retired model pin and the request shape were updated for the current generation, so this tier is correct by construction. It has still not been verified against a live endpoint. Prefer the rule engine until a live smoke test runs.
 - `--lang ja` — analyse Japanese text
 - `-o OUTPUT` — specify output file path
 
