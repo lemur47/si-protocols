@@ -55,7 +55,7 @@ def _engine_returning(axes: VariableClassification) -> AnthropicEngine:
     ]
     client = MagicMock()
     client.messages.create.return_value = _StubResponse(
-        content=[_StubTextBlock(text=json.dumps(payload))]
+        content=[_StubTextBlock(text=json.dumps({"claims": payload}))]
     )
     return AnthropicEngine(client=client)
 

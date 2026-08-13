@@ -310,7 +310,7 @@ Derivation lives in one place — `si_protocols.topology.derive_kind()`, exporte
 | Tier | Engine | Description |
 |------|--------|-------------|
 | 0 | `RuleEngine` | Local, deterministic. Uses spaCy + marker heuristics. No API keys needed. |
-| 1 | `AnthropicEngine` | Claude API-based extraction. Requires `anthropic` extra and `ANTHROPIC_API_KEY`. **⚠️ **Currently unusable** — the pinned model reached its retirement date on 2026-06-15, so this tier is presumed non-functional. It has not been verified against a live endpoint. Use the rule engine until it is restored.** |
+| 1 | `AnthropicEngine` | Claude API-based extraction. Requires `anthropic` extra and `ANTHROPIC_API_KEY`. **Restored and verified** — the model pin and request shape were updated for the current generation and exercised against the live endpoint on 2026-08-13 (EN + JA samples). |
 | 2 | `OllamaEngine` | Stub for future local-LLM integration. Not yet functional. |
 
 All engines implement the `AnalysisEngine` protocol and expose `name` (property) and `extract_variables(text, *, lang)` (method).
