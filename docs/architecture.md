@@ -78,7 +78,7 @@ The mean of the four axes drives `VariableKind` derivation: `TRUE`, `PSEUDO`, or
 | Tier | Engine | Trade-off |
 |---|---|---|
 | 0 | `RuleEngine` | Local, deterministic, fast. spaCy + marker heuristics. No API keys needed. |
-| 1 | `AnthropicEngine` | Higher extraction quality via Claude API. Requires `anthropic` extra and `ANTHROPIC_API_KEY`. **⚠️ **Restored but unverified** — the retired model pin and the request shape were updated for the current generation, so this tier is correct by construction. It has still not been verified against a live endpoint. Prefer the rule engine until a live smoke test runs.** |
+| 1 | `AnthropicEngine` | Higher extraction quality via Claude API. Requires `anthropic` extra and `ANTHROPIC_API_KEY`. **Restored and verified** — the model pin and request shape were updated for the current generation and exercised against the live endpoint on 2026-08-13 (EN + JA samples: request accepted, response parsed, variables classified). |
 | 2 | `OllamaEngine` | Stub for future local-LLM integration. Interface defined, not yet functional. |
 
 Tier 0 is the default and aligns with the local-only principle. Tier 1 trades local-only for extraction quality when the user explicitly opts in. Tier 2 exists as a declared interface so that contributors can implement it without changing the public API.

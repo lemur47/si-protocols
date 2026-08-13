@@ -45,7 +45,7 @@ Three tiers of analysis engine, plus a machine-readable ontology and skill-based
 | Component | Role | Status |
 |---|---|---|
 | `RuleEngine` (Tier 0) | Deterministic, local spaCy + markers | Shipped, default engine |
-| `AnthropicEngine` (Tier 1) | Claude API claim extraction (opt-in extra) | Model pin and request shape restored for the current generation — **correct by construction, still unverified** against a live endpoint |
+| `AnthropicEngine` (Tier 1) | Claude API claim extraction (opt-in extra) | Model pin and request shape restored for the current generation — **verified against a live endpoint 2026-08-13** (EN + JA) |
 | `OllamaEngine` (Tier 2) | Future local-LLM | Stub only |
 | CVP ontology | Machine-readable YAML (`cvp-ontology-v0.1.yaml`) | Shipped — open analytical fragment |
 | Quick-Check skill | Zero-install Claude skill; doubles as an empirical instrument for CVP impact on reasoning | v0.3 shipped — Agent Skill format; carries forward the v0.2 A/B validation on 24 samples |

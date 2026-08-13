@@ -28,7 +28,7 @@ CLI entry points:
 - `uv run si-threat-filter <file>` — `--format rich|json`, `--lang en|ja`
 - `uv run si-topology <file>` — `--engine rule|anthropic`, `--format svg|json`, `--lang en|ja`, `-o OUTPUT`
 
-`AnthropicEngine` needs the `anthropic` extra and an `ANTHROPIC_API_KEY`. Its retired model pin and request shape were restored for the current generation, so it is **correct by construction but still unverified** — no live call has been made from here, because there is no key on this machine and the API host is outside the sandbox allowlist. Prefer `--engine rule` until a live smoke test runs. Rich output respects `NO_COLOR`.
+`AnthropicEngine` needs the `anthropic` extra and an `ANTHROPIC_API_KEY`. Its retired model pin and request shape were restored for the current generation and **verified against the live endpoint on 2026-08-13** — EN and JA corpus samples, request accepted, response parsed, variables classified. No key is kept on this machine, so re-verification needs a fresh one. Rich output respects `NO_COLOR`.
 
 ## Architecture
 

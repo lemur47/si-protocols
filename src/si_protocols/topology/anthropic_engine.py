@@ -31,9 +31,15 @@ _DEFAULT_MODEL = "claude-opus-5"
 def _text_block(content: list[Any]) -> str:
     """Return the text of the first ``text`` block in a response.
 
-    Thinking is on by default on this model and ``display`` defaults to
-    ``"omitted"``, so a response normally opens with an empty thinking block.
-    Indexing ``content[0]`` therefore reads the wrong block.
+    Thinking is on by default on this model, so the response may carry
+    thinking blocks alongside the text one and their position is not ours
+    to control. Indexing ``content[0]`` assumes an ordering the API does not
+    promise; scanning for the first ``text`` block does not.
+
+    Observed 2026-08-13 against the live endpoint: at ``effort: "low"`` on a
+    non-streaming request, no thinking block was returned at all and the text
+    block was ``content[0]``. Thinking still ran and was billed. So this
+    helper is the defensive form rather than a fix for an observed failure.
     """
     for block in content:
         if getattr(block, "type", None) == "text":
@@ -111,7 +117,7 @@ class AnthropicEngine:
     Parameters
     ----------
     model:
-        Claude model ID. Defaults to ``claude-sonnet-4-20250514``.
+        Claude model ID. Defaults to :data:`_DEFAULT_MODEL`.
     client:
         Pre-configured ``anthropic.Anthropic`` instance for testing.
         If ``None``, creates one from the ``ANTHROPIC_API_KEY`` env var.
