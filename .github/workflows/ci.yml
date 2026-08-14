@@ -124,3 +124,9 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITLEAKS_CONFIG: .gitleaks.toml
+          # Without this the action resolves the LATEST gitleaks release at run
+          # time, so a SHA-pinned action still downloads an unpinned binary and
+          # the gate can change with no repo change. Keep in step with the
+          # gitleaks `rev` in .pre-commit-config.yaml — two gates, one rule set,
+          # and nothing but this comment forcing them to agree. No `v` prefix.
+          GITLEAKS_VERSION: "8.30.0"
