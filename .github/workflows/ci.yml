@@ -120,7 +120,11 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
         with:
           fetch-depth: 0
+      # On a pull request the action computes the correct range
+      # (`--no-merges --first-parent <base>^..<head>`) and reports findings as
+      # PR comments, so it stays. It is NOT used on push — see below.
       - uses: gitleaks/gitleaks-action@e0c47f4f8be36e29cdc102c57e68cb5cbf0e8d1e  # v3.0.0
+        if: github.event_name == 'pull_request'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITLEAKS_CONFIG: .gitleaks.toml
@@ -130,3 +134,34 @@ jobs:
           # gitleaks `rev` in .pre-commit-config.yaml — two gates, one rule set,
           # and nothing but this comment forcing them to agree. No `v` prefix.
           GITLEAKS_VERSION: "8.30.0"
+
+      # On push the action's range arithmetic cannot cover a merge commit, and
+      # is not configurable: `--log-opts` is hard-coded (src/gitleaks.js:103-116)
+      # and BASE_REF overrides only the base ref, leaving `--no-merges
+      # --first-parent` in place. That pair walks a merge commit back into
+      # main's previous tip and then drops the merge itself, so the branch
+      # commits carrying the content are never visited — 0 commits scanned, and
+      # a green tick.
+      #
+      # Scanning the whole history instead removes the range arithmetic rather
+      # than trying to get it right, so coverage no longer depends on how a pull
+      # request was merged. It costs ~0.6s over 149 commits / 2.04 MB.
+      #
+      # Checksum: gitleaks_8.30.0_checksums.txt from the release.
+      - name: Install gitleaks (pinned)
+        if: github.event_name != 'pull_request'
+        env:
+          GITLEAKS_VERSION: "8.30.0"
+          GITLEAKS_SHA256: 79a3ab579b53f71efd634f3aaf7e04a0fa0cf206b7ed434638d1547a2470a66e
+        run: |
+          install_dir="$HOME/.gitleaks/bin"
+          mkdir -p "$install_dir"
+          curl -fsSL -o /tmp/gitleaks.tar.gz \
+            "https://github.com/gitleaks/gitleaks/releases/download/v${GITLEAKS_VERSION}/gitleaks_${GITLEAKS_VERSION}_linux_x64.tar.gz"
+          echo "${GITLEAKS_SHA256}  /tmp/gitleaks.tar.gz" | sha256sum -c -
+          tar -xzf /tmp/gitleaks.tar.gz -C "$install_dir" gitleaks
+          chmod +x "$install_dir/gitleaks"
+          echo "$install_dir" >> "$GITHUB_PATH"
+      - name: Scan full history for secrets
+        if: github.event_name != 'pull_request'
+        run: gitleaks detect --redact -v --exit-code=1 --config=.gitleaks.toml
