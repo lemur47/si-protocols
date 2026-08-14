@@ -16,8 +16,11 @@ repos:
   - repo: https://github.com/gitleaks/gitleaks
     rev: v8.30.0
     hooks:
+      # No `args`: pre-commit APPENDS them to the hook's own entry
+      # (`gitleaks git --pre-commit --redact --staged --verbose`), so a
+      # positional argument lands as the scan PATH and the hook scans nothing
+      # while exiting 0. `.gitleaks.toml` is auto-discovered at the repo root.
       - id: gitleaks
-        args: ["dir", "--config=.gitleaks.toml", "--verbose"]
 
   # --- Opengrep: SAST scanning ---
   - repo: local
