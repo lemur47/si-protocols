@@ -5,7 +5,7 @@
 # Version:    0.1.1
 # Licence:    MIT
 # Scope:      Analytical (open fragment)
-# Maintainer: SI Protocols <https://spiritualintelligence.dev>
+# Maintainer: SI Protocols
 # Repository: https://github.com/lemur47/si-protocols
 #
 # This file defines the open analytical fragment of the CVP model —
@@ -40,7 +40,6 @@ metadata:
   scope: "analytical"
   language: ["en", "ja"]
   maintained_by: "SI Protocols"
-  canonical_url: "https://spiritualintelligence.dev/ontology/v0.1"
   repository: "https://github.com/lemur47/si-protocols"
   last_updated: "2026-04-13"
 

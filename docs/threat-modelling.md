@@ -50,4 +50,4 @@ Threat modelling is about proportionate response, not paranoia. Not every vague 
 
 The goal is to move from "I feel uneasy but I cannot articulate why" to "I can see three specific patterns that are worth examining more closely." That shift — from intuition to informed awareness — is the core of spiritual intelligence.
 
-Explore [common threats](https://spiritualintelligence.cc/common-threats/) to see these patterns in action.
+Explore [the pattern catalogue](https://ohoran.org/posts/pattern-catalogue/) to see these patterns in action.

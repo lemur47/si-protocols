@@ -10,7 +10,7 @@ What we're building and when. For strategic direction, see [STRATEGY.md](STRATEG
 
 - **Topology module v1** — fractal-topology claim analysis; rule and Anthropic engines; SVG/JSON output; English and Japanese support
 - **CVP ontology v0.1** — [machine-readable schema](https://github.com/lemur47/si-protocols/blob/main/cvp-ontology-v0.1.yaml); open analytical fragment covering the layer model L0 through L6, container taxonomy, threat pattern schemas, seven analysis dimensions, four classification axes
-- **Quick-Check v0.3** — CVP-enhanced Claude Skill, restructured to Anthropic's official Agent Skill format (`SKILL.md`); A/B validation from v0.2 carries forward unchanged, as v0.3 is a behaviour-preserving format migration ([results](https://spiritualintelligence.dev/blog/ab-evaluation-quick-check-v02/))
+- **Quick-Check v0.3** — CVP-enhanced Claude Skill, restructured to Anthropic's official Agent Skill format (`SKILL.md`); A/B validation from v0.2 carries forward unchanged, as v0.3 is a behaviour-preserving format migration ([results](ab-evaluation-quick-check-v02.md))
 - **Two-domain web presence** — shipped as `spiritualintelligence.dev` and `spiritualintelligence.cc` on Cloudflare Pages, **retired July 2026**: the content migrated into ohoran.org and both domains now serve redirects only
 - **AI-readable surface** — structured markdown plus the machine-readable ontology as the canonical machine-addressable format; the per-page JSON-LD and cross-site `sameAs` links left with the websites
 - **note.com presence** — two notes published in SAER format (状況→分析→評価→推奨); the channel has since been repurposed for progressive book publishing

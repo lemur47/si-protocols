@@ -45,7 +45,7 @@ si-threat-filter = "si_protocols.threat_filter:main"
 si-topology = "si_protocols.topology.cli:main"
 
 [project.urls]
-Homepage = "https://spiritualintelligence.dev"
+Homepage = "https://github.com/lemur47/si-protocols"
 Repository = "https://github.com/lemur47/si-protocols"
 Issues = "https://github.com/lemur47/si-protocols/issues"
 

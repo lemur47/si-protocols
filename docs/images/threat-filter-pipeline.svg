@@ -157,5 +157,5 @@
   <!-- Classification badge -->
   <rect x="28" y="380" width="64" height="12" rx="2" fill="none" stroke="#00ffa3" stroke-width="0.5" opacity="0.3"/>
   <text x="60" y="389" fill="#00ffa3" font-size="7" text-anchor="middle" opacity="0.5">OPEN</text>
-  <text x="104" y="389" fill="#8888a0" font-size="7" opacity="0.4">SI Protocols · spiritualintelligence.dev</text>
+  <text x="104" y="389" fill="#8888a0" font-size="7" opacity="0.4">SI Protocols · github.com/lemur47/si-protocols</text>
 </svg>

@@ -194,7 +194,7 @@ Structure your response exactly as follows. Do not add extra sections, essays, c
 
 ---
 
-*SI Protocols Quick-Check v0.3 (CVP-enhanced) — approximate analysis, not a verdict. Spiritual language often uses these patterns without manipulative intent. CVP ontology: github.com/lemur47/si-protocols | Full NLP analysis: spiritualintelligence.dev*
+*SI Protocols Quick-Check v0.3 (CVP-enhanced) — approximate analysis, not a verdict. Spiritual language often uses these patterns without manipulative intent. CVP ontology and full NLP toolkit: github.com/lemur47/si-protocols*
 ```
 
 **Formatting rules:**
