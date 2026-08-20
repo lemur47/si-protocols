@@ -166,7 +166,7 @@ Two implications follow:
 
 2. **Empirical instrument.** Because a skill is an L6 container, loading it into a Claude session instantiates a measurable configuration change in the VM (L5). We can A/B test: same model, same prompts, with-skill vs without-skill. The delta is the CVP container's effect on reasoning.
 
-Quick-Check v0.2 was validated this way: 24 samples (12 EN, 12 JA), score parity on ambiguous cases (Δ = 3.0), structural insight surfaced at 4.81/sample with the CVP-enhanced skill, false-positive control on benign content (max benign score = 8). [Full results.](https://spiritualintelligence.dev/blog/ab-evaluation-quick-check-v02/) This result is part of the credibility case for CVP as epistemic infrastructure, not just a taxonomy.
+Quick-Check v0.2 was validated this way: 24 samples (12 EN, 12 JA), score parity on ambiguous cases (Δ = 3.0), structural insight surfaced at 4.81/sample with the CVP-enhanced skill, false-positive control on benign content (max benign score = 8). [Full results.](ab-evaluation-quick-check-v02.md) This result is part of the credibility case for CVP as epistemic infrastructure, not just a taxonomy.
 
 ---
 

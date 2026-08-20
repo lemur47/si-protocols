@@ -16,7 +16,7 @@ the body.
 | [`si-quick-check/`](si-quick-check/SKILL.md) | Detects manipulation patterns in spiritual, metaphysical, and self-help text across seven dimensions plus a CVP consciousness-topology assessment. Auto-detects English or Japanese. Returns an approximate 0–100 threat score, a per-dimension table, quoted signals, and a structural assessment. **v0.3** (CVP-enhanced). |
 
 > The skills are a lightweight companion to the full
-> [SI Protocols toolkit](https://spiritualintelligence.dev) — an open-source NLP
+> SI Protocols toolkit — an open-source NLP
 > pipeline for detecting manipulation patterns in spiritual content. They run on
 > Anthropic's infrastructure; SI Protocols never receives, stores, or has access
 > to text you analyse. For fully local analysis, use the

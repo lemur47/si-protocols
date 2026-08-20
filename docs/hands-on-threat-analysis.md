@@ -125,7 +125,7 @@ The tech layer scores text across seven dimensions, each weighted independently:
 | Source attribution | 13% | Unfalsifiable and unnamed authority sources |
 | Commitment escalation | 14% | Foot-in-the-door progression from mild to coercive |
 
-A high score means the text contains many markers of potential disinformation — but **a high score is not a verdict**. Genuine spiritual content can trigger some of these patterns. The tool surfaces structure so you can examine it yourself; it does not tell you what to believe or disbelieve. For more on this philosophy, see [A Tool for Thinking, Not a Truth Oracle](https://spiritualintelligence.dev/blog/beyond-nlp-detecting-deception-without-llms/#a-tool-for-thinking-not-a-truth-oracle) in our "Beyond NLP" post.
+A high score means the text contains many markers of potential disinformation — but **a high score is not a verdict**. Genuine spiritual content can trigger some of these patterns. The tool surfaces structure so you can examine it yourself; it does not tell you what to believe or disbelieve. For more on this philosophy, see [Detecting Deception Without LLMs](https://ohoran.org/posts/detecting-deception-without-llms/).
 
 ## What's Next
 
