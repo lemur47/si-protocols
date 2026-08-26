@@ -32,14 +32,14 @@ CLI entry points:
 
 ## Architecture
 
-Two tools. The **threat filter** scores 0–100 via `hybrid_score(text, lang)`, combining a tech layer (60%, spaCy marker matching) with a heuristic layer (40%, probabilistic dissonance scanner). The **topology** module extracts claims, classifies them on four axes, and builds a layered graph, behind three engine tiers — `RuleEngine` (local, default), `AnthropicEngine` (Claude API), `OllamaEngine` (stub). Both return frozen dataclasses.
+Two tools. The **threat filter** scores 0–100 via `hybrid_score(text, lang)`, combining a tech layer (60%, spaCy marker matching) with a heuristic layer (40%) that is **currently a placeholder**: `psychic_heuristic()` takes no text parameter and returns `random.uniform(20, 80) * density_bias`, so 40% of every hybrid score is independent of the input. Use `tech_analysis()` when you need the part that actually reads the text. The **topology** module extracts claims, classifies them on four axes, and builds a layered graph, behind three engine tiers — `RuleEngine` (local, default), `AnthropicEngine` (Claude API), `OllamaEngine` (stub). Both return frozen dataclasses.
 
 Full architectural reasoning: [`docs/DESIGN.md`](docs/DESIGN.md).
 
 ## Gotchas
 
 - spaCy models are lazy-loaded via `_get_nlp(lang)` to keep import-time side effects out of tests; NLP-exercising tests are marked `@pytest.mark.slow`.
-- `random` in the heuristic layer is deliberate — `S311` is suppressed in the ruff config, not an oversight.
+- `random` in the heuristic layer is deliberate as far as the linter goes — `S311` is suppressed in the ruff config, not an oversight. **That suppression is not an endorsement of the layer.** The placeholder is scheduled for removal from the scoring path, and the 40% slot is reserved for a real replacement; do not treat the RNG as settled design. Seeding it makes results reproducible, not meaningful.
 - Python 3.14 is blocked by spaCy. `requires-python = ">=3.12"`; CI tests 3.12 and 3.13.
 - **`uv.lock` drift fails CI.** After editing `pyproject.toml`, run `uv lock`. For Dependabot PRs that bump lower bounds, run `uv lock` locally and push the refreshed lock to the Dependabot branch before merging.
 - Adding a language takes four coordinated edits: a `markers_<lang>.py` file, a loader in `marker_registry.py`, an entry in `_LANG_MODELS`, and the `SupportedLang` literal.
