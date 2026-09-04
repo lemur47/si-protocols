@@ -1,3 +1,5 @@
+> **FROZEN 2026-09-03. Superseded by https://github.com/lemur47/vega. Archived; do not operate here.**
+
 # si-protocols
 
 Hybrid tech-psychic protocols for Spiritual Intelligence — open-source tools to detect and safeguard against disinformation in metaphysical narratives.
