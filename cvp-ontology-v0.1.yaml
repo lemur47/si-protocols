@@ -41,6 +41,7 @@ metadata:
   language: ["en", "ja"]
   maintained_by: "SI Protocols"
   repository: "https://github.com/lemur47/si-protocols"
+  superseded_by: https://github.com/lemur47/vega
   last_updated: "2026-04-13"
 
 # ---------------------------------------------------------------------------
