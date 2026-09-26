@@ -1,4 +1,4 @@
-> **FROZEN 2026-09-03. Superseded by https://github.com/lemur47/vega. Archived; do not operate here.**
+> **FROZEN 2026-09-03. Superseded by https://github.com/lemur47/cogint. Archived; do not operate here.**
 
 # si-protocols
 
